@@ -7,13 +7,13 @@ class Billing extends CI_Controller
     public function index()
     {
         $this->load->model('Billing_model');
-        $model['accounts'] = $this->account_model->getallaccounts();
+        //$model['accounts'] = $this->account_model->getResources();
         $model['ptitle'] = 'Billing';
-        $data['content'] = $this->load->view('dashboard/clouds', $model, true);
+        $data['content'] = $this->load->view('dashboard/billing', $model, true);
         $this->load->view('template', $data);
     }
     
-        
+    
     
 }
 
