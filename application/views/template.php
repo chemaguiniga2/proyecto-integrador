@@ -120,6 +120,9 @@ if ($this->session->userdata('securitylevel') < 2) {
             <li class="slide"> 
               <a class="side-menu__item" href="<?php echo base_url() . 'clouds/resources' ?>"><i class="side-menu__icon fa fa-cube"></i><span class="side-menu__label">Resources</span></a> 
             </li> 
+            <li class="slide"> 
+              <a class="side-menu__item" href="<?php echo base_url() . 'billing' ?>"><i class="side-menu__icon fa fa-money"></i><span class="side-menu__label">Billing</span></a> 
+            </li> 
             <!--
             <li class="slide"> 
               <a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Settings</span><i class="angle fa fa-angle-right"></i></a> 

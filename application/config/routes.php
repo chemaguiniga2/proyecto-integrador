@@ -61,4 +61,4 @@ $route['dashboard'] = 'dashboard';
 $route['security'] = 'security';
 $route['mconfirm'] = 'site/mconfirm';
 $route['services'] = 'clouds/services';
-
+$route['billing'] = 'billing';

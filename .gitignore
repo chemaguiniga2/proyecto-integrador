@@ -34,3 +34,10 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 application/views/dashboard/changepassword.1.php
 application/views/dashboard/resources.1.php
 
+.buildpath
+.project
+.settings/org.eclipse.php.core.prefs
+.settings/org.eclipse.wst.common.project.facet.core.xml
+.settings/.jsdtscope
+.settings/org.eclipse.wst.jsdt.ui.superType.container
+.settings/org.eclipse.wst.jsdt.ui.superType.name

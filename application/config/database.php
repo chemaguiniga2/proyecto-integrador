@@ -1,13 +1,12 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 $active_group = 'default';
 $query_builder = TRUE;
 
-$dbset[0]['hostname'] = 'localhost';
-$dbset[0]['user'] = 'manuel';
-$dbset[0]['password'] = 'manuel';
+$dbset[0]['hostname'] = '52.21.205.142';
+$dbset[0]['user'] = 'devel1';
+$dbset[0]['password'] = 'devel001';
 $dbset[1]['hostname'] = '52.21.205.142'; //'54.209.1.149';
 $dbset[1]['user'] = 'webuser';
 $dbset[1]['password'] = 'WebUserPass1';
