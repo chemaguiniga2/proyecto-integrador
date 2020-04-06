@@ -12,7 +12,7 @@ class Billing extends CI_Controller
     public function bill()
     {
         $this->load->model('Billing_model');
-        $model['resources'] = $this->Billing_model->getResources();
+        $model['payment_plans'] = $this->Billing_model->getPlans();
         $model['ptitle'] = 'Billing';
         $data['content'] = $this->load->view('dashboard/billing', $model, true);
         $this->load->view('template', $data);
