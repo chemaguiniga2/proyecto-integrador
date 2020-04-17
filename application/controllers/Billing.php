@@ -18,6 +18,17 @@ class Billing extends CI_Controller
         $data['content'] = $this->load->view('dashboard/billing', $model, true);
         $this->load->view('template', $data);
     }
+    
+    public function billUser()
+    {
+        $username = 30;
+        $this->load->model('Billing_model');
+        $model['payment_plans'] = $this->Billing_model->getPlansAvailable($username);
+        $model['current_payment_plan'] = $this->Billing_model->getUserPlan($username);
+        $model['ptitle'] = 'Membership Plan';
+        $data['content'] = $this->load->view('dashboard/billing', $model, true);
+        $this->load->view('template', $data);
+    }
 
     public function createCharge() 
     {

@@ -22,7 +22,35 @@
 	<!--header start here-->
 	<div class="priceing-table w3l">
 		<div class="wrap">
-			<h1>Choose your plan.</h1>
+			<h1>Current Plan</h1>
+			<div class="priceing-table-main">
+			<?php foreach ($current_payment_plan as $plan){?>
+				<div class="price-grid">
+					<div class="price-block agile">
+						<div class="price-gd-top pric-clr1">
+							<h4><?php echo $plan['name'] ?></h4>
+							<h3>$<?php echo $plan['monthly_price'] ?></h3>
+							<h5>$<?php echo $plan['annual_price'] ?></h5>
+						</div>
+						<div class="price-gd-bottom">
+							<div class="price-list">
+								<ul>
+									<li>Full access</li>
+									<li>Documentation</li>
+									<li>Customers Support</li>
+									<li>Free Updates</li>
+									<li>Unlimited Domains</li>
+								</ul>
+							</div>
+						</div>
+						<div class="price-selet pric-sclr1">
+							<a class="popup-with-zoom-anim" data-plan="basic"
+								data-price="5.00" href="#small-dialog">Sign Up</a>
+						</div>
+					</div>
+				</div>
+			<?php } ?>
+			<h1>Choose a new Membership Plan</h1>
 			<div class="priceing-table-main">
 			<?php foreach ($payment_plans as $plan){?>
 				<div class="price-grid">

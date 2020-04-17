@@ -204,7 +204,7 @@ if ($this->session->userdata('securitylevel') < 2) {
 											<a class="dropdown-item" href="<?php echo base_url() . 'security/changepassword' ?>">
 												<i class="dropdown-icon  mdi mdi-settings"></i> Security
 											</a>
-											<a class="dropdown-item" href="<?php echo base_url() . 'billing/bill' ?>">
+											<a class="dropdown-item" href="<?php echo base_url() . 'billing/billUser' ?>">
 												<i class="dropdown-icon mdi mdi-credit-card"></i> Membership Plan
 											</a>
                       <!-- <a class="dropdown-item" href="<?php echo base_url() . 'security/enable2fa' ?>">

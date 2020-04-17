@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-$config['base_url'] = 'http://localhost/proyecto-integrador'; //"https://".$_SERVER['HTTP_HOST'];
+$config['base_url'] = 'http://localhost:82/proyecto-integrador'; //"https://".$_SERVER['HTTP_HOST'];
 
 /*
 |--------------------------------------------------------------------------
