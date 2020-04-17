@@ -43,3 +43,5 @@ application/views/dashboard/resources.1.php
 .settings/.jsdtscope
 .settings/org.eclipse.wst.jsdt.ui.superType.container
 .settings/org.eclipse.wst.jsdt.ui.superType.name
+application/config/config.php
+application/config/config.php

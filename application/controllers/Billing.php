@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require 'vendor/autoload.php';
 
 class Billing extends CI_Controller
 {
@@ -15,7 +14,7 @@ class Billing extends CI_Controller
     {
         $this->load->model('Billing_model');
         $model['payment_plans'] = $this->Billing_model->getPlans();
-        $model['ptitle'] = 'Billing';
+        $model['ptitle'] = 'Membership Plan';
         $data['content'] = $this->load->view('dashboard/billing', $model, true);
         $this->load->view('template', $data);
     }

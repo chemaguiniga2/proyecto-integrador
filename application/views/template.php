@@ -120,9 +120,6 @@ if ($this->session->userdata('securitylevel') < 2) {
             <li class="slide"> 
               <a class="side-menu__item" href="<?php echo base_url() . 'clouds/resources' ?>"><i class="side-menu__icon fa fa-cube"></i><span class="side-menu__label">Resources</span></a> 
             </li> 
-            <li class="slide"> 
-              <a class="side-menu__item" href="<?php echo base_url() . 'billing/bill' ?>"><i class="side-menu__icon fa fa-credit-card"></i><span class="side-menu__label">Billing</span></a> 
-            </li> 
 			<li class="slide"> 
               <a class="side-menu__item" href="<?php echo base_url() . 'billing/createCharge' ?>"><i class="side-menu__icon fa fa-money"></i><span class="side-menu__label">Testing Charges</span></a> 
             </li> 
@@ -206,6 +203,9 @@ if ($this->session->userdata('securitylevel') < 2) {
 											</a>
 											<a class="dropdown-item" href="<?php echo base_url() . 'security/changepassword' ?>">
 												<i class="dropdown-icon  mdi mdi-settings"></i> Security
+											</a>
+											<a class="dropdown-item" href="<?php echo base_url() . 'billing/bill' ?>">
+												<i class="dropdown-icon mdi mdi-credit-card"></i> Membership Plan
 											</a>
                       <!-- <a class="dropdown-item" href="<?php echo base_url() . 'security/enable2fa' ?>">
 												<i class="dropdown-icon  mdi mdi-settings"></i> 2FA Authentication

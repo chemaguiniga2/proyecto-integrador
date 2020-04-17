@@ -45,7 +45,7 @@
 						</div>
 						<div class="price-selet pric-sclr1">
 							<a class="popup-with-zoom-anim" data-plan="basic"
-								data-price="5.00" href="#small-dialog">Sign Up</a>e
+								data-price="5.00" href="#small-dialog">Sign Up</a>
 						</div>
 					</div>
 				</div>
