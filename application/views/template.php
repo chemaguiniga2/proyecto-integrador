@@ -121,10 +121,10 @@ if ($this->session->userdata('securitylevel') < 2) {
               <a class="side-menu__item" href="<?php echo base_url() . 'clouds/resources' ?>"><i class="side-menu__icon fa fa-cube"></i><span class="side-menu__label">Resources</span></a> 
             </li> 
 			<li class="slide"> 
-              <a class="side-menu__item" href="<?php echo base_url() . 'billing/createCharge' ?>"><i class="side-menu__icon fa fa-money"></i><span class="side-menu__label">Testing Charges</span></a> 
+              <a class="side-menu__item" href="<?php echo base_url() . 'billing/createCharge' ?>"><i class="side-menu__icon fa fa-money"></i><span class="side-menu__label">Testing Charges Creating Stripe User</span></a> 
             </li> 
 			<li class="slide"> 
-              <a class="side-menu__item" href="<?php echo base_url() . 'billing/createChargeWithObject' ?>"><i class="side-menu__icon fa fa-money"></i><span class="side-menu__label">Testing Charges with Stripe Object</span></a> 
+              <a class="side-menu__item" href="<?php echo base_url() . 'billing/createChargeWithObject' ?>"><i class="side-menu__icon fa fa-money"></i><span class="side-menu__label">Create a User with Card Obj</span></a> 
             </li> 
             <!--
             <li class="slide"> 

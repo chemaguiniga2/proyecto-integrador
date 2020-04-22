@@ -33,7 +33,13 @@ class Billing extends CI_Controller
 
     public function createCharge() 
     {
-        $this->load->view('dashboard/createCharge');
+        $username = 30;
+        $this->load->model('Billing_model');
+        $model['payment_plans'] = $this->Billing_model->getPlansAvailable($username);
+        $model['current_payment_plan'] = $this->Billing_model->getUserPlan($username);
+        $model['ptitle'] = 'Membership Plan';
+        $data['content'] = $this->load->view('dashboard/createCharge', $model, true);
+        $this->load->view('template', $data);
     }
 
 
@@ -70,13 +76,20 @@ class Billing extends CI_Controller
         //     'customer' => $customer_id, // Previously stored, then retrieved
         // ]);
 
-        echo "<pre>", print_r($customer->id), "</pre>";
+        echo "<pre>", print_r($customer), "</pre>";
 
     }
 
     public function createChargeWithObject()
     {
-        $this->load->view('dashboard/createChargeWithObj');
+        // $this->load->view('dashboard/createChargeWithObj');
+        $username = 30;
+        $this->load->model('Billing_model');
+        $model['payment_plans'] = $this->Billing_model->getPlansAvailable($username);
+        $model['current_payment_plan'] = $this->Billing_model->getUserPlan($username);
+        $model['ptitle'] = 'Membership Plan';
+        $data['content'] = $this->load->view('dashboard/createChargeWithObj', $model, true);
+        $this->load->view('template', $data);
     }
 
 
