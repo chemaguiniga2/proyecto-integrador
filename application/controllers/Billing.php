@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+require 'vendor/autoload.php';
 
 class Billing extends CI_Controller
 {
@@ -40,18 +41,62 @@ class Billing extends CI_Controller
     {
         // echo "holaaaaa";
         \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
-        $token = $_POST["stripeToken"];
+        //$token = $_POST["stripeToken"];
+
+        $customer = \Stripe\Customer::create([
+            'source' => 'tok_mastercard',
+            'email' => 'paying.user@example.com',
+            //'payment_method' => $intent->'{{PAYMENT_METHOD_ID}}'
+        ]);
+
+        // $charge = \Stripe\Charge::create([
+        //     "amount" => 1500,
+        //     "currency" => "usd",
+        //     "description" => "Pago OneCloud",
+        //     "source" => $token
+        // ]);
+        $charge = \Stripe\Charge::create([
+            'amount' => 1000,
+            'currency' => 'usd',
+            'customer' => $customer->id,
+        ]);
+
+        // YOUR CODE: Save the customer ID and other info in a database for later.
+
+        // When it's time to charge the customer again, retrieve the customer ID.
+        // $charge = \Stripe\Charge::create([
+        //     'amount' => 1500, // $15.00 this time
+        //     'currency' => 'usd',
+        //     'customer' => $customer_id, // Previously stored, then retrieved
+        // ]);
+
+        echo "<pre>", print_r($customer->id), "</pre>";
+
+    }
+
+    public function createChargeWithObject()
+    {
+        $this->load->view('dashboard/createChargeWithObj');
+    }
+
+
+    public function chargeWithObject()
+    {
+        \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
+
+        $customer_id = 'cus_H8pYi3j5cT50351';
 
         $charge = \Stripe\Charge::create([
-            "amount" => 1500,
-            "currency" => "usd",
-            "description" => "Pago OneCloud",
-            "source" => $token
+            'amount' => 1500, // $15.00 this time
+            'currency' => 'usd',
+            'customer' => $customer_id, // Previously stored, then retrieved
         ]);
 
         echo "<pre>", print_r($charge), "</pre>";
 
     }
+
+    
     
 }
 

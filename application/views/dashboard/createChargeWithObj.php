@@ -38,18 +38,8 @@
     </head>
     <body>
     <div class="m-4">
-        <form action="/billing/chargeTest" method="post" id="payment-form">
-            <div class="form-row">
-                <label for="card-element">
-                Tarjeta de crédito o débito
-                </label>
-                <div id="card-element">
-                <!-- A Stripe Element will be inserted here. -->
-            </div>
-
-            <!-- Used to display form errors. -->
-            <div id="card-errors" role="alert"></div>
-        </div>
+        <form action="/billing/chargeWithObject" method="post" id="payment-form">
+            
 
         <button>Pagar</button>
         </form>
