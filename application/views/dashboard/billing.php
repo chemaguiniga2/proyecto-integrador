@@ -19,6 +19,12 @@
 </div>
 </head>
 <body>
+	<div style="text-align:center; margin:65px;">
+		<h3>
+			You currently have debit balance of
+		</h3>
+		<h6><?php echo $monthly_price_user[0]['monthly_price'], ".00 USD"?></h6>
+	</div>
 	<!--header start here-->
 	<div class="priceing-table w3l">
 		<div class="wrap">
@@ -73,7 +79,7 @@
 						</div>
 						<div class="price-selet pric-sclr1">
 							<a class="popup-with-zoom-anim" data-plan="basic"
-								data-price="5.00" href="#small-dialog">Sign Up</a>
+								data-price="5.00" href="/billing/createSubscription">Sign Up</a>
 						</div>
 					</div>
 				</div>

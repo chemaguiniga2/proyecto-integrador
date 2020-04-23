@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-//require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
 class Billing extends CI_Controller
 {
@@ -34,6 +34,8 @@ class Billing extends CI_Controller
 
         $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
+        // var_dump($model['monthly_price_user']);
+        // exit();
         $model['ptitle'] = 'Membership Plan';
         $data['content'] = $this->load->view('dashboard/billing', $model, true);
         $this->load->view('template', $data);
@@ -43,8 +45,8 @@ class Billing extends CI_Controller
     {
         $username = 30;
         $this->load->model('Billing_model');
-        $model['payment_plans'] = $this->Billing_model->getPlansAvailable($username);
-        $model['current_payment_plan'] = $this->Billing_model->getUserPlan($username);
+        // $model['payment_plans'] = $this->Billing_model->getPlansAvailable($username);
+        // $model['current_payment_plan'] = $this->Billing_model->getUserPlan($username);
         $model['ptitle'] = 'Membership Plan';
         $data['content'] = $this->load->view('dashboard/createCharge', $model, true);
         $this->load->view('template', $data);
@@ -63,7 +65,7 @@ class Billing extends CI_Controller
 
         $customer = \Stripe\Customer::create([
             'source' => $token,
-            'email' => 'paying.shelly@example.com',
+            'email' => 'chemaguiniga2@gmail.com',
             //'payment_method' => $intent->'{{PAYMENT_METHOD_ID}}'
         ]);
 
@@ -151,6 +153,31 @@ class Billing extends CI_Controller
         // ]);
 
         // echo "<pre>", print_r($charge), "</pre>";
+
+    }
+
+
+    public function createSubscription()
+    {
+        \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
+
+        $subscription = \Stripe\Subscription::create([
+            'customer' => 'cus_H9FVh05dW32b7X',
+            'items' => [
+              [
+                'plan' => 'plan_H9EyoXgkZhOa5b',
+                'quantity' => 1,
+              ],
+            ],
+        ]);
+
+        $start_date = $subscription['current_period_start'];
+        $end_date = $subscription['current_period_end'];
+        $status = $subscription['status'];
+        // $fecha = new DateTime();
+        // $fecha->setTimestamp($subscription['start_date']);
+        // echo $fecha->format('U = Y-m-d H:i:s') . "\n";
+        //echo "<pre>", print_r($start_date, $end_date, $status), "</pre>";
 
     }
 
