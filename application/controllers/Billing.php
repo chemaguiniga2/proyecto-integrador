@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require 'vendor/autoload.php';
+//require 'vendor/autoload.php';
 
 class Billing extends CI_Controller
 {
@@ -22,10 +22,17 @@ class Billing extends CI_Controller
     
     public function billUser()
     {
-        $username = 30;
         $this->load->model('Billing_model');
-        $model['payment_plans'] = $this->Billing_model->getPlansAvailable($username);
+        $model['current_user'] = $this->Billing_model->getCurrentUser();
+        $username = $this->Billing_model->getCurrentUser();
         $model['current_payment_plan'] = $this->Billing_model->getUserPlan($username);
+
+        $current_plan = $this->Billing_model->getUserIDPlan($username)[0]['id'];
+        $model['current_payment_ID_plan'] = $this->Billing_model->getUserIDPlan($current_plan);
+
+        $model['payment_plans'] = $this->Billing_model->getPlansAvailable($username, $current_plan);
+
+        $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         $model['ptitle'] = 'Membership Plan';
         $data['content'] = $this->load->view('dashboard/billing', $model, true);
         $this->load->view('template', $data);

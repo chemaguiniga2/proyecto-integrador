@@ -35,11 +35,11 @@
 						<div class="price-gd-bottom">
 							<div class="price-list">
 								<ul>
-									<li>Full access</li>
-									<li>Documentation</li>
-									<li>Customers Support</li>
-									<li>Free Updates</li>
-									<li>Unlimited Domains</li>
+									<?php foreach ($feature_current_plan as $f){?>
+										<?php if($f['id'] == $plan['id_plan']){ ?>
+												<li><?php echo $f['name'] ?></li>	
+										<?php } ?>
+									<?php } ?>
 								</ul>
 							</div>
 						</div>
@@ -63,11 +63,11 @@
 						<div class="price-gd-bottom">
 							<div class="price-list">
 								<ul>
-									<li>Full access</li>
-									<li>Documentation</li>
-									<li>Customers Support</li>
-									<li>Free Updates</li>
-									<li>Unlimited Domains</li>
+									<?php foreach ($feature_current_plan as $f){?>
+										<?php if($f['id'] == $plan['id']){ ?>
+												<li><?php echo $f['name'] ?></li>	
+										<?php } ?>
+									<?php } ?>
 								</ul>
 							</div>
 						</div>
