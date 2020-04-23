@@ -107,6 +107,22 @@ class Billing_model extends CI_Model
 
         return $response;
     }
+
+    public function getMonthlyPrice($user){
+        $response = array();
+
+        $query = $this->db->select( 'plan.monthly_price, plan.id')
+        ->from('plan')
+        ->join('record_user_plan', 'record_user_plan.id_plan = plan.id')
+        ->join('users', 'users.id = record_user_plan.id_user')
+        ->where('users.id', $user)
+        ->where('status', 'a')
+        ->get();
+
+        $response = $query->result_array();
+
+        return $response;
+    }
     
     public function insertUserPlan($user, $plan){
         

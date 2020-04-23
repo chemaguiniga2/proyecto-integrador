@@ -24,15 +24,16 @@ class Billing extends CI_Controller
     {
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
-        $username = $this->Billing_model->getCurrentUser();
-        $model['current_payment_plan'] = $this->Billing_model->getUserPlan($username);
+        $user = $this->Billing_model->getCurrentUser();
+        $model['current_payment_plan'] = $this->Billing_model->getUserPlan($user);
 
-        $current_plan = $this->Billing_model->getUserIDPlan($username)[0]['id'];
+        $current_plan = $this->Billing_model->getUserIDPlan($user)[0]['id'];
         $model['current_payment_ID_plan'] = $this->Billing_model->getUserIDPlan($current_plan);
 
-        $model['payment_plans'] = $this->Billing_model->getPlansAvailable($username, $current_plan);
+        $model['payment_plans'] = $this->Billing_model->getPlansAvailable($user, $current_plan);
 
         $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
+        $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
         $model['ptitle'] = 'Membership Plan';
         $data['content'] = $this->load->view('dashboard/billing', $model, true);
         $this->load->view('template', $data);
