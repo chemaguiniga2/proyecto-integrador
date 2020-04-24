@@ -21,6 +21,7 @@ class Billing_model extends CI_Model
         
     }
     
+    
     //Regresa todos los planes, tiene que discriminar el plan al aque est� asociado el usuario
     public function getPlansAvailable($username, $current_plan){
         
@@ -35,8 +36,7 @@ class Billing_model extends CI_Model
         return $response;
         
     }
-    
-    
+        
     
     public function getUserPlan($user){
         
@@ -79,9 +79,10 @@ class Billing_model extends CI_Model
     }
 
     public function getFeatureCurrentPlan($plan){
+        
         $response = array();
 
-        $query = $this->db->select( 'feature.name')
+        $query = $this->db->select( '*')
         ->from('feature')
         ->join('plan_feature', 'plan_feature.id_feature = feature.id')
         ->join('plan', 'plan.id = plan_feature.id_plan')

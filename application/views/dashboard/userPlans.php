@@ -86,7 +86,7 @@
 								</div>
 							</div>
 							<div class="price-selet pric-sclr1">
-								<a class="popup-with-zoom-anim" data-plan="basic"
+								<a class="popup-with-zoom-anim" data-plan=<?php echo $f['id'] ?>
 									data-price="5.00"
 									href="<?php echo base_url() . 'billing/confirmPlanChange' ?>">Select</a>
 							</div>
