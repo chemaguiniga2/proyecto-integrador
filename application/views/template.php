@@ -207,8 +207,11 @@ if ($this->session->userdata('securitylevel') < 2) {
 											<a class="dropdown-item" href="<?php echo base_url() . 'security/changepassword' ?>">
 												<i class="dropdown-icon  mdi mdi-settings"></i> Security
 											</a>
-											<a class="dropdown-item" href="<?php echo base_url() . 'billing/billUser' ?>">
-												<i class="dropdown-icon mdi mdi-credit-card"></i> Membership Plan
+											<a class="dropdown-item" href="<?php echo base_url() . 'billing/membershipPlans' ?>">
+												<i class="dropdown-icon mdi mdi-wallet-membership"></i> Membership Plan
+											</a>
+											<a class="dropdown-item" href="<?php echo base_url() . 'billing/paymentMethod' ?>">
+												<i class="dropdown-icon mdi mdi-credit-card"></i> Payment Method
 											</a>
                       <!-- <a class="dropdown-item" href="<?php echo base_url() . 'security/enable2fa' ?>">
 												<i class="dropdown-icon  mdi mdi-settings"></i> 2FA Authentication

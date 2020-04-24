@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require 'vendor/autoload.php';
+//require 'vendor/autoload.php';
 
 class Billing extends CI_Controller
 {
@@ -20,7 +20,7 @@ class Billing extends CI_Controller
         $this->load->view('template', $data);
     }
     
-    public function billUser()
+    public function membershipPlans()
     {
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
@@ -37,10 +37,30 @@ class Billing extends CI_Controller
         // var_dump($model['monthly_price_user']);
         // exit();
         $model['ptitle'] = 'Membership Plan';
-        $data['content'] = $this->load->view('dashboard/billing', $model, true);
+        $data['content'] = $this->load->view('dashboard/userPlans', $model, true);
         $this->load->view('template', $data);
     }
-
+    
+    public function addPaymentMethod()
+    {
+        $this->load->model('Billing_model');
+        $model['current_user'] = $this->Billing_model->getCurrentUser();
+        $model['ptitle'] = 'New Payment Method';
+        $data['content'] = $this->load->view('dashboard/paymentForm', $model, true);
+        $this->load->view('template', $data);
+    }
+    
+    public function paymentMethod()
+    {
+        $this->load->model('Billing_model');
+        $model['current_user'] = $this->Billing_model->getCurrentUser();
+        $user = $this->Billing_model->getCurrentUser();
+        $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);        
+        $model['ptitle'] = 'Payment Method';
+        $data['content'] = $this->load->view('dashboard/userPaymentMethod', $model, true);
+        $this->load->view('template', $data);
+    }
+    
     public function createCharge() 
     {
         $username = 30;

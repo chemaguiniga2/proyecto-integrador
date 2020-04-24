@@ -40,8 +40,7 @@ class Billing_model extends CI_Model
     
     public function getUserPlan($user){
         
-        $response = array();
-        
+        $response = array();       
         
         $query = $this->db->select('*')
         ->from('plan')
@@ -121,6 +120,21 @@ class Billing_model extends CI_Model
 
         $response = $query->result_array();
 
+        return $response;
+    }
+    
+    public function getUserPaymentMethod($user){
+        $response = array();
+        
+        $query = $this->db->select('plan.id')
+        ->from('plan')
+        ->join('record_user_plan', 'record_user_plan.id_plan = plan.id')
+        ->where('id_user', $user)
+        ->where('status', 'a')
+        ->get();
+        
+        $response = $query->result_array();
+        
         return $response;
     }
     
