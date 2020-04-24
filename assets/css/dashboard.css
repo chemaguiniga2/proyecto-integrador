@@ -8783,19 +8783,19 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 /*------ Card -------*/
 .card {
-	position: relative;
+	/* position: relative; */
 	display: -ms-flexbox;
-	display: flex;
+	/* display: flex; */
 	-ms-flex-direction: column;
-	flex-direction: column;
-	min-width: 0;
-	word-wrap: break-word;
-	background-color: rgba(0, 0, 0, 0.2);
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	background-clip: border-box;
-	box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
-	border-radius: 1rem;
-	margin-bottom: 1.5rem;
+	/* flex-direction: column; */
+	/* min-width: 0; */
+	/* word-wrap: break-word; */
+	/* background-color: rgba(0, 0, 0, 0.2); */
+	/* border: 1px solid rgba(0, 0, 0, 0.2); */
+	/* background-clip: border-box; */
+	/* box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2); */
+	/* border-radius: 1rem; */
+	/* margin-bottom: 1.5rem; */
 	width: 100%;
 }
 .card:hover {
