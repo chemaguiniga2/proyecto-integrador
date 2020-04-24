@@ -12,11 +12,18 @@
 <link href="../assets/css/billing.css" rel="stylesheet" type="text/css"
 	media="all" />
 
+
+
+<!-- extrasssss -->
+
+
+
+
+<!-- extrasssss -->
+
 <link href="https://fonts.googleapis.com/css?family=Monda"
 	rel="stylesheet">
 	
-<!--- FONT-ICONS CSS -->
-<link href="../assets/css/icons.css" rel="stylesheet" />
 
 <script src="js/jquery-1.11.0.min.js"></script>
 <script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
@@ -38,7 +45,7 @@
 			<?php foreach ($current_payment_plan as $plan){?>
 				<div class="price-grid">
 					<div class="price-block agile">
-						<div class="price-gd-top pric-clr1">
+						<div class="price-gd-top-selected pric-clr1">
 							<h4><?php echo $plan['name'] ?></h4>
 							<h3>$<?php echo $plan['monthly_price'] ?></h3>
 							<h5>$<?php echo $plan['annual_price'] ?></h5>
@@ -48,7 +55,7 @@
 								<ul>
 									<?php foreach ($feature_current_plan as $f){?>
 										<?php if($f['id'] == $plan['id_plan']){ ?>
-												<li class="mdi-check-circle"><?php echo $f['name'] ?></li>	
+												<li class="mdi mdi-check-circle">  <?php echo $f['name'] ?></li><br>	
 										<?php } ?>
 									<?php } ?>
 								</ul>
@@ -72,7 +79,7 @@
 									<ul>
 									<?php foreach ($feature_current_plan as $f){?>
 										<?php if($f['id'] == $plan['id']){ ?>
-												<li class="mdi-check-circle"><?php echo $f['name'] ?></li>	
+												<li class="mdi mdi-check-circle"><?php echo $f['name'] ?></li><br>	
 										<?php } ?>
 									<?php } ?>
 								</ul>
@@ -81,7 +88,7 @@
 							<div class="price-selet pric-sclr1">
 								<a class="popup-with-zoom-anim" data-plan="basic"
 									data-price="5.00"
-									href="<?php echo base_url() . 'billing/addPaymentMethod' ?>">Select</a>
+									href="<?php echo base_url() . 'billing/confirmPlanChange' ?>">Select</a>
 							</div>
 						</div>
 					</div>

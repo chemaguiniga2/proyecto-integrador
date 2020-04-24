@@ -61,6 +61,17 @@ class Billing extends CI_Controller
         $this->load->view('template', $data);
     }
     
+    public function confirmPlanChange()
+    {
+        $this->load->model('Billing_model');
+        $model['current_user'] = $this->Billing_model->getCurrentUser();
+        $user = $this->Billing_model->getCurrentUser();
+        $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
+        $model['ptitle'] = 'Confirmation';
+        $data['content'] = $this->load->view('dashboard/confirmationPlan', $model, true);
+        $this->load->view('template', $data);
+    }
+    
     public function createCharge() 
     {
         $username = 30;

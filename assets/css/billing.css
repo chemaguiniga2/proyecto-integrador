@@ -69,8 +69,9 @@ a:hover{
     /* justify-items: center; */
     margin: 0% 5% 0% 0%;
     position: relative;
-    left: 10%;
+    left: 2%;
     /* align-content: center; */
+    min-width: 300px;
 }
 .priceing-table h1 {
     font-size: 3em;
@@ -78,6 +79,7 @@ a:hover{
     text-align: center;
     margin:1em 0em;
 }
+
 .priceing-table h3 {
 	color: #ffff;
 }
@@ -88,7 +90,7 @@ a:hover{
     margin: 0% 0% 0% 0%;
 }
 .priceing-table-main {
-    width:50%;
+    width:80%;
     margin: -2 0 0 0;
 }
 .prices-head h2 {
@@ -106,6 +108,11 @@ a:hover{
     text-align: center;
     border-radius: 5px 5px 0px 0px;
 }
+.price-gd-top-selected {
+    background:#79d077;
+    text-align: center;
+    border-radius: 5px 5px 0px 0px;
+}
 .price-gd-top h4 {
     font-size: 1.8em;
     color: #ffff;
@@ -113,8 +120,20 @@ a:hover{
     background: #621cb2;
     border-radius: 5px 5px 0px 0px;
 }
+.price-gd-top-selected h4 {
+    font-size: 1.8em;
+    color: #ffff;
+    padding: 0.4em 0em 0.4em 0em;
+    background: #2d7d2b;
+    border-radius: 5px 5px 0px 0px;
+}
 /*-- w3layouts --*/
 .price-gd-top h3 {
+    padding:0.2em 0em 0.1em 0em;
+    font-size:2.5em;
+    color: #fffff;
+}
+.price-gd-top-selected h3 {
     padding:0.2em 0em 0.1em 0em;
     font-size:2.5em;
     color: #fffff;
@@ -125,10 +144,17 @@ a:hover{
     padding: 0.5em 0em 0.8em 0em;
     text-align: center;
 }
+.price-gd-top-selected h5 {
+    font-size: 1em;
+    color: #fff;
+    padding: 0.5em 0em 0.8em 0em;
+    text-align: center;
+}
 .price-gd-bottom {
     background: #2d2e3d;
     text-align: center;
     padding: 1em 0em;
+    min-height: 300px;
 }
 .price-gd-top.pric-clr2 h4 {
     background: #0067bf;
@@ -150,7 +176,7 @@ a:hover{
 }
 .price-list ul li {
     padding: 0.5em 0em;
-    font-size:0.9em;
+    font-size:1.3em;
     color: #fffff;
 }
 .price-selet {
@@ -174,7 +200,7 @@ a:hover{
     border-radius: 3px;
 }
 .price-grid {
-    margin-bottom: 3em;
+    margin-bottom: 0em;
     /* text-align: center; */
 }
 .price-block {
@@ -184,6 +210,7 @@ a:hover{
     align-content: center;
     -moz-transition: 0.5s all;
     -o-transition: 0.5s all;
+    min-width:300px;
 }
 .price-block:hover {
     transform: scale(1.1);
@@ -930,6 +957,7 @@ p.bottom {
 }
 .price-grid {
     width: 86%;
+    min-width:300px;
 }
 .price-gd-bottom {
     padding: 0.5em 0em;
