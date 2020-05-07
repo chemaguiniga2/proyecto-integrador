@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-//require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
 class Billing extends CI_Controller
 {
