@@ -41,13 +41,23 @@ class Billing extends CI_Controller
         $this->load->view('template', $data);
     }
     
+    public function showPlans()
+    {
+        $this->load->model('Billing_model');
+        $model['payment_plans'] = $this->Billing_model->getPlans();
+        $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
+        $model['ptitle'] = 'Membership Plan';
+        $data['content'] = $this->load->view('dashboard/plans', $model, true);
+        $this->load->view('dashboard/plans', $data);        
+    }
+    
     public function addPaymentMethod()
     {
         $this->load->model('Billing_model');
-        $model['current_user'] = $this->Billing_model->getCurrentUser();
-        $model['ptitle'] = 'New Payment Method';
+        //$model['current_user'] = $this->Billing_model->getCurrentUser();
+        $model['ptitle'] = 'Add Payment Method';
         $data['content'] = $this->load->view('dashboard/paymentForm', $model, true);
-        $this->load->view('template', $data);
+        $this->load->view('dashboard/paymentForm', $data);
     }
     
     public function paymentMethod()

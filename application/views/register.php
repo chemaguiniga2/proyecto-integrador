@@ -94,7 +94,8 @@
                   </span>
               </div>
 							<div class="">
-								<button type="submit" class="btn btn-primary-light btn-block">Register</button>
+<!-- 								<button type="submit" class="btn btn-primary-light btn-block">Register</button> -->
+								<p class="mb-0"><a href="<?php echo base_url() . 'billing/showPlans' ?>" class="text-primary ml-1">Register</a></p>
 							</div>
 							<div class="text-center pt-3">
 								<p class="mb-0">Already have account?<a href="<?php echo base_url() . 'login' ?>" class="text-primary ml-1">Sign In</a></p>
