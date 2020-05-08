@@ -82,10 +82,24 @@ class Billing_model extends CI_Model
         
         $response = array();
 
+        $query = $this->db->select('plan.id, feature.name')
+        ->from('plan')
+        ->join('plan_feature', 'plan.id = plan_feature.id_plan')
+        ->join('feature', 'plan_feature.id_feature = feature.id')        
+        ->where('plan.id', $plan)
+        ->get();
+
+        $response = $query->result_array();
+
+        return $response;
+    }
+
+    public function getSelectedPlan($plan){
+        
+        $response = array();
+
         $query = $this->db->select( '*')
-        ->from('feature')
-        ->join('plan_feature', 'plan_feature.id_feature = feature.id')
-        ->join('plan', 'plan.id = plan_feature.id_plan')
+        ->from('plan')     
         ->where('plan.id', $plan)
         ->get();
 

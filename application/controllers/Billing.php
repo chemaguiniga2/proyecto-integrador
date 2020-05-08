@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require 'vendor/autoload.php';
+//require 'vendor/autoload.php';
 
 class Billing extends CI_Controller
 {
@@ -66,10 +66,11 @@ class Billing extends CI_Controller
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         $user = $this->Billing_model->getCurrentUser();        
-        $id_plan = 3;
-        $model['selected_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
         
-        $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
+        $id_plan = $this->input->get('id_plan');
+        $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
+        
+        $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
         $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
         
         $model['ptitle'] = 'Confirmation';
