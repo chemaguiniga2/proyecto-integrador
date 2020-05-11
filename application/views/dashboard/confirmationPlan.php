@@ -40,9 +40,7 @@
 							<div class="price-list">
 								<ul>
 									<?php foreach ($feature_current_plan as $f){?>
-										<?php if($f['id'] == $plan['id_plan']){ ?>
-												<li class="mdi mdi-check-circle">  <?php echo $f['name'] ?></li><br>	
-										<?php } ?>
+											<li class="mdi mdi-check-circle">  <?php echo $f['name'] ?></li><br>	
 									<?php } ?>
 								</ul>
 							</div>

@@ -29,9 +29,10 @@ class Billing extends CI_Controller
 
         $current_plan = $this->Billing_model->getUserIDPlan($user)[0]['id'];
         $model['current_payment_ID_plan'] = $this->Billing_model->getUserIDPlan($current_plan);
-
-        $model['payment_plans'] = $this->Billing_model->getPlansAvailable($user, $current_plan);
-
+        //echo $model['current_payment_ID_plan'];
+        //$model['payment_plans'] = $this->Billing_model->getPlansAvailable($user, $current_plan);
+        $model['payment_plans'] = $this->Billing_model->getPlans();
+        
         $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
         // var_dump($model['monthly_price_user']);
@@ -76,10 +77,11 @@ class Billing extends CI_Controller
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         $user = $this->Billing_model->getCurrentUser();        
-        $id_plan = 3;
-        $model['selected_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
         
-        $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
+        $id_plan = $this->input->get('id_plan');
+        $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
+        
+        $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
         $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
         
         $model['ptitle'] = 'Confirmation';
