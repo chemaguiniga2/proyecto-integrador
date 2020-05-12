@@ -29,16 +29,37 @@ class Billing extends CI_Controller
 
         $current_plan = $this->Billing_model->getUserIDPlan($user)[0]['id'];
         $model['current_payment_ID_plan'] = $this->Billing_model->getUserIDPlan($current_plan);
-        //echo $model['current_payment_ID_plan'];
-        //$model['payment_plans'] = $this->Billing_model->getPlansAvailable($user, $current_plan);
         $model['payment_plans'] = $this->Billing_model->getPlans();
         
         $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
-        // var_dump($model['monthly_price_user']);
-        // exit();
+
         $model['ptitle'] = 'Membership Plan';
         $data['content'] = $this->load->view('dashboard/userPlans', $model, true);
+        $this->load->view('template', $data);
+    }
+    
+    public function accountBilling()
+    {
+        $this->load->model('Billing_model');
+        $model['current_user'] = $this->Billing_model->getCurrentUser();
+        $user = $this->Billing_model->getCurrentUser();
+        $model['current_payment_plan'] = $this->Billing_model->getUserPlan($user);
+        
+        $current_plan = $this->Billing_model->getUserIDPlan($user)[0]['id'];
+        $model['current_payment_ID_plan'] = $this->Billing_model->getUserIDPlan($current_plan);
+        $model['payment_plans'] = $this->Billing_model->getPlans();
+        
+        $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
+        $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
+        
+        $model['ptitle'] = 'Account Billing';
+        $model['ptitlePlans'] = 'Membership Plans';
+        $model['ptitlePayment'] = 'Payment';
+        $model['contentPlans'] = $this->load->view('dashboard/userPlans', $model, true);
+        $model['contentPaymentInfo'] = $this->load->view('dashboard/userpaymentinfo', $model, true);
+        
+        $data['content'] = $this->load->view('dashboard/accountbilling', $model, true);
         $this->load->view('template', $data);
     }
     

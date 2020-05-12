@@ -1,24 +1,28 @@
-.priceing-table h1 {
-	font-size: 3em;
+.page-division h1 {
+	color: #fffff;
+	font-weight: 100;
+	allign: right;
+	font-size: 1.5em;
+}
+
+.billing-table {
+	background: #2d2d3e;
+	margin: -3em;
+	border-radius: 15px 15px 15px 15px;
+}
+
+.billing-table:hover {	
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+}
+
+.billing-table h1 {
+	width: 100%;
+	font-size: 1.5em;
 	color: #fffff;
 	text-align: center;
-	margin: 1em 0em;
-}
-
-.priceing-table h3 {
-	color: #ffff;
-}
-
-@media ( max-width :1366px) {
-	.priceing-table h1 {
-		font-size: 2.5em;
-	}
-}
-
-@media ( max-width :768px) {
-	.priceing-table-main {
-		width: 90%;
-	}
+	margin: 1em 0em 1em 0em;
+	font-weight: 100;
+	display: inline-block;
 }
 
 .price-grid {
@@ -32,8 +36,8 @@
 	position: relative;
 	left: -7%;
 	/* align-content: center; */
-	max-width: 200px;
-	margin-bottom: 5em;
+	max-width: 150px;
+	margin-bottom: 3em;
 }
 
 .price-block {
@@ -136,7 +140,7 @@
 }
 
 .price-gd-top {
-	background: #a8b7ff;
+	background: #94c4f3;
 	text-align: center;
 	border-radius: 5px 5px 0px 0px;
 }
@@ -148,89 +152,122 @@
 }
 
 .price-gd-top h4 {
-	font-size: 1.8em;
+	background: rgba(24, 98, 148, 1);
+	background: -moz-linear-gradient(top, rgba(24, 98, 148, 1) 0%,
+		rgba(24, 98, 148, 1) 2%, rgba(40, 105, 189, 1) 23%,
+		rgba(44, 112, 201, 1) 60%, rgba(85, 138, 207, 1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(24, 98, 148,
+		1)), color-stop(2%, rgba(24, 98, 148, 1)),
+		color-stop(23%, rgba(40, 105, 189, 1)),
+		color-stop(60%, rgba(44, 112, 201, 1)),
+		color-stop(100%, rgba(85, 138, 207, 1)));
+	background: -webkit-linear-gradient(top, rgba(24, 98, 148, 1) 0%,
+		rgba(24, 98, 148, 1) 2%, rgba(40, 105, 189, 1) 23%,
+		rgba(44, 112, 201, 1) 60%, rgba(85, 138, 207, 1) 100%);
+	background: -o-linear-gradient(top, rgba(24, 98, 148, 1) 0%,
+		rgba(24, 98, 148, 1) 2%, rgba(40, 105, 189, 1) 23%,
+		rgba(44, 112, 201, 1) 60%, rgba(85, 138, 207, 1) 100%);
+	background: -ms-linear-gradient(top, rgba(24, 98, 148, 1) 0%,
+		rgba(24, 98, 148, 1) 2%, rgba(40, 105, 189, 1) 23%,
+		rgba(44, 112, 201, 1) 60%, rgba(85, 138, 207, 1) 100%);
+	background: linear-gradient(to bottom, rgba(24, 98, 148, 1) 0%,
+		rgba(24, 98, 148, 1) 2%, rgba(40, 105, 189, 1) 23%,
+		rgba(44, 112, 201, 1) 60%, rgba(85, 138, 207, 1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#186294',
+		endColorstr='#558acf', GradientType=0);
+	font-weight: 100;
+	font-size: 1.3em;
 	color: #ffff;
-	padding: 0.4em 0em 0.4em 0em;
-	background: #015a9c;
+	padding: 0.2em 0em 0.2em 0em;
 	border-radius: 5px 5px 0px 0px;
 }
 
 .price-gd-top-selected h4 {
-	background: rgba(45, 125, 43, 1);
-	background: -moz-linear-gradient(top, rgba(45, 125, 43, 1) 0%,
-		rgba(45, 125, 43, 1) 48%, rgba(45, 125, 43, 1) 64%,
-		rgba(58, 153, 55, 1) 88%, rgba(83, 171, 80, 1) 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(45, 125, 43,
-		1)), color-stop(48%, rgba(45, 125, 43, 1)),
-		color-stop(64%, rgba(45, 125, 43, 1)),
-		color-stop(88%, rgba(58, 153, 55, 1)),
-		color-stop(100%, rgba(83, 171, 80, 1)));
-	background: -webkit-linear-gradient(top, rgba(45, 125, 43, 1) 0%,
-		rgba(45, 125, 43, 1) 48%, rgba(45, 125, 43, 1) 64%,
-		rgba(58, 153, 55, 1) 88%, rgba(83, 171, 80, 1) 100%);
-	background: -o-linear-gradient(top, rgba(45, 125, 43, 1) 0%,
-		rgba(45, 125, 43, 1) 48%, rgba(45, 125, 43, 1) 64%,
-		rgba(58, 153, 55, 1) 88%, rgba(83, 171, 80, 1) 100%);
-	background: -ms-linear-gradient(top, rgba(45, 125, 43, 1) 0%,
-		rgba(45, 125, 43, 1) 48%, rgba(45, 125, 43, 1) 64%,
-		rgba(58, 153, 55, 1) 88%, rgba(83, 171, 80, 1) 100%);
-	background: linear-gradient(to bottom, rgba(45, 125, 43, 1) 0%,
-		rgba(45, 125, 43, 1) 48%, rgba(45, 125, 43, 1) 64%,
-		rgba(58, 153, 55, 1) 88%, rgba(83, 171, 80, 1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d7d2b',
-		endColorstr='#53ab50', GradientType=0);
-	font-size: 1.8em;
+	background: rgba(45, 126, 1, 1);
+	background: -moz-linear-gradient(top, rgba(45, 126, 1, 1) 0%,
+		rgba(45, 126, 1, 1) 2%, rgba(62, 130, 22, 1) 23%, rgba(87, 150, 51, 1)
+		60%, rgba(112, 161, 84, 1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(45, 126, 1,
+		1)), color-stop(2%, rgba(45, 126, 1, 1)),
+		color-stop(23%, rgba(62, 130, 22, 1)),
+		color-stop(60%, rgba(87, 150, 51, 1)),
+		color-stop(100%, rgba(112, 161, 84, 1)));
+	background: -webkit-linear-gradient(top, rgba(45, 126, 1, 1) 0%,
+		rgba(45, 126, 1, 1) 2%, rgba(62, 130, 22, 1) 23%, rgba(87, 150, 51, 1)
+		60%, rgba(112, 161, 84, 1) 100%);
+	background: -o-linear-gradient(top, rgba(45, 126, 1, 1) 0%,
+		rgba(45, 126, 1, 1) 2%, rgba(62, 130, 22, 1) 23%, rgba(87, 150, 51, 1)
+		60%, rgba(112, 161, 84, 1) 100%);
+	background: -ms-linear-gradient(top, rgba(45, 126, 1, 1) 0%,
+		rgba(45, 126, 1, 1) 2%, rgba(62, 130, 22, 1) 23%, rgba(87, 150, 51, 1)
+		60%, rgba(112, 161, 84, 1) 100%);
+	background: linear-gradient(to bottom, rgba(45, 126, 1, 1) 0%,
+		rgba(45, 126, 1, 1) 2%, rgba(62, 130, 22, 1) 23%, rgba(87, 150, 51, 1)
+		60%, rgba(112, 161, 84, 1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d7e01',
+		endColorstr='#70a154', GradientType=0);
+	font-weight: 100;
+	font-size: 1.3em;
 	color: #ffff;
-	padding: 0.4em 0em 0.4em 0em;
+	padding: 0.2em 0em 0.2em 0em;
 	border-radius: 5px 5px 0px 0px;
 }
 
 .price-gd-top h3 {
-	padding: 0.2em 0em 0.1em 0em;
-	font-size: 2.5em;
-	color: #fffff;
+	font-weight: 100;
+	padding: 0.2em 0em 0.0em 0em;
+	font-size: 1.5em;
+	color: #455163;
 }
 
 .price-gd-top-selected h3 {
-	padding: 0.2em 0em 0.1em 0em;
-	font-size: 2.5em;
-	color: #fffff;
+	font-weight: 100;
+	padding: 0.2em 0em 0.0em 0em;
+	font-size: 1.5em;
+	color: #455163;
 }
 
 .price-gd-top h5 {
 	font-size: 1em;
-	color: #fff;
-	padding: 0.5em 0em 0.8em 0em;
+	color: #455163;
+	padding: 0.0em 0em 0.8em 0em;
 	text-align: center;
 }
 
 .price-gd-top-selected h5 {
 	font-size: 1em;
-	color: #fff;
-	padding: 0.5em 0em 0.8em 0em;
+	color: #455163;
+	padding: 0.0em 0em 0.8em 0em;
 	text-align: center;
 }
 
 /* Ocasiona espacio en negro superior */
 .price-gd-bottom {
 	text-align: center;
-	padding: -1em 0em;
-	min-height: 200px;
+	padding: -0em 0em;
+	min-height: 150px;
 }
 
 /* no hace cambios */
 .price-list ul {
-	padding: 10px;
-	list-style: none;
+	padding: -50em 0em list-style: none;
 }
 
+/*List de features  */
 .price-list ul li {
-	padding: 0.5em 0em;
+	padding: 0.4em 0em;
 	font-size: 1.3em;
 	color: #fffff;
 }
 
 .price-selet {
+	padding: 1em 0em;
+	text-align: center;
+	background: #27262e;
+	border-radius: 0px 0px 5px 5px;
+}
+
+.price-selet-selected {
 	padding: 1em 0em;
 	text-align: center;
 	background: #27262e;
@@ -243,12 +280,18 @@
 	display: block;
 }
 
+.price-selet-selected a {
+	font-size: 1.1em;
+	color: #ff8000;
+	display: block;
+}
+
 .price-selet a {
 	font-size: 0.9em;
-	color: #ffffff;
+	color: #455163;
 	display: inline-block;
 	padding: 0.5em 1.5em;
-	background: #229cf1;
+	background: #94c4f3;
 	border-radius: 3px;
 }
 
@@ -257,7 +300,7 @@
 	color: #ffffff;
 	display: inline-block;
 	padding: 0.5em 1.5em;
-	background: #c0c0c0;
+	background: #455163;
 	border-radius: 3px;
 }
 
@@ -268,3 +311,94 @@ a.popup-with-zoom-anim {
 .price-selet-selected a.popup-with-zoom-anim {
 	outline: none;
 }
+
+/*Payment*/
+.payment-grid {
+	width: 80%;
+	heigth: auto;/* 
+	background: #ff8040; */
+	/*float: left; 
+	 */
+	/* text-align: center; */
+	display: inline-block;
+	/* justify-items: center; */
+	margin: 0% 5% 0% 0%;
+	position: relative;
+	/* align-content: center; */
+	margin-bottom: 3em;
+}
+
+.payment-grid h2{
+	font-size: 1.5em;
+	font-weight: 100;
+}
+
+.payment-grid h3{
+	font-size: 1.5em;
+	font-weight: 100;
+}
+
+.payment-cat {
+	display:inline-block;
+	position: relative;/* 
+	background: #0080ff; */
+	text-allign: center;
+	width: 20%;
+	/*top, right, bottom, left*/
+	margin: 0% 0% 0% 0%;
+}
+
+.payment-info{
+	display:inline-block;
+	position: relative;/* 
+	background: #008080; */
+	text-allign: center;
+	width: 20%;
+	margin: 0% 0% 0% 0%;
+}
+
+.payment-division {
+  border-left: 2px solid white;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  margin-left: -3px;
+  top: 0;
+}
+
+.payment-card {
+	display:inline-block;
+	position: relative;/* 
+	background: #800040; */
+	text-allign: center;
+	width: 100%;
+}
+
+
+
+.card-info{	
+	float: left;
+	width: 50%;
+}
+
+.card-info p{	
+	font-size: 1.5em;
+}
+
+.button-change-payment{
+	display:inline-block;
+  	position: absolute;
+	width: 30%;
+}
+
+.date-info{	
+	float: left;
+	width: 100%;
+}
+
+.date-info p{	
+	font-size: 1.5em;
+}
+
+
+
