@@ -24,31 +24,27 @@
 <!-- A Stripe Element will be inserted here. -->
 </head>
 <body>
-	<div style="text-align: center; margin: 65px;">
+	<div style=" margin-top:60px; border-radius: 15px 15px 15px 15px;">
 		<div class="billing-table w3l">
 			<div class="wrap" align='center'>
 				<h1>Payment Method</h1>
 				<div class="payment-grid">
-					<div class=payment-cat>
-						<h2>Alexis Rubio</h2>
-						<h2>Last Payment</h2>
+					<div class="card-info">
+						<p>Alexis Rubio</p><br>
+						<i class="mdi mdi-credit-card"></i><i>   4444</i>
+						<a href="<?php //echo base_url() . 'billing/paymentMethod'?>">Change</a>
 					</div>
 					<div class="payment-division"></div>
 					<div class="payment-info">
-						<div class="payment-card">
-							<div class="card-info">
-								<p class= "mdi mdi-credit-card">  4444</p>
-							</div>		
-							<a href="<?php echo base_url() . 'billing/paymentMethod'?>">Change</a>
-						</div>					
-						<div class="date-info">
-							<p class= "mdi mdi-calendar">  May 11, 2020</p>
-						</div>
+						<p>Last Payment</p><br>
+						<i class="mdi mdi-calendar"></i><i>   May 11, 2011</i>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
+	<br>
+	<br>
+	<br>
 </body>
 </html>

@@ -26,7 +26,7 @@
 	<div class="side-app">
 		<!-- PAGE-HEADER -->
 		<div class="page-division">
-			<h1><?php echo $ptitlePlans ?></h4>
+			<h1><?php echo $ptitlePlans ?></h1>
 		</div>
 		<!-- PAGE-HEADER END -->
             <?php echo $contentPlans ?>
@@ -34,7 +34,7 @@
 	<div class="side-app">
 		<!-- PAGE-HEADER -->
 		<div class="page-division">
-			<h1><?php echo $ptitlePayment ?></h4>
+			<h1><?php echo $ptitlePayment ?></h1>
 		</div>
 		<!-- PAGE-HEADER END -->
             <?php echo $contentPaymentInfo ?>

@@ -1150,3 +1150,90 @@ p.bottom {
 		padding: 0.5em 0em 1.5em 0em;
 	}
 }
+
+
+
+
+
+
+/*Payment*/
+.payment-grid {
+	width: 80%;
+	heigth: 40%;
+	background: #ff8040; 
+	/*float: left; 
+	 */
+	/* text-align: center; */
+	display: inline-block;
+	/* justify-items: center; */
+	margin: 0% 5% 0% 0%;
+	position: relative;
+	/* align-content: center; */
+	margin-bottom: 3em;
+}
+
+.payment-grid h2{
+	font-size: 1em;
+	font-weight: 100;
+}
+
+.payment-grid h3{
+	font-size: 1em;
+	font-weight: 100;
+}
+
+.payment-cat {
+	display:inline-block;
+	position: relative;
+	background: #0080ff; 
+	text-allign: center;
+	width: 50%;
+	/*top, right, bottom, left*/
+}
+
+
+.payment-info{
+	display:inline-block;
+	position: relative; 
+	background: #008080; 
+	text-allign: center;
+	width: 50%;
+}
+
+.payment-division {
+  border-left: 2px solid white;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  margin-left: -3px;
+  top: 0;
+}
+
+.payment-card {
+	background: #800040; 
+	width: 100%;
+}
+
+.card-info{	
+	float: left;
+	width: 50%;
+}
+
+.card-info p{	
+	font-size: 1em;
+}
+
+.button-change-payment{
+	display:inline-block;
+  	position: absolute;
+	width: 30%;
+}
+
+.date-info{	
+	float: left;
+	width: 100%;
+}
+
+.date-info p{	
+	font-size: 1em;
+}

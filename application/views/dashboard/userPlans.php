@@ -33,7 +33,7 @@
 <!-- A Stripe Element will be inserted here. -->
 </head>
 <body>
-	<div style="text-align: center; margin: 65px;">
+	<div style=" margin-top:60px; border-radius: 15px 15px 15px 15px;">
 		<!-- 		<h3>You currently have debit balance of</h3> -->
 		<!--		<h6><?php //echo $monthly_price_user[0]['monthly_price'], ".00 USD"?></h6> -->
 		<!-- 	</div> -->
@@ -41,7 +41,6 @@
 		<div class="billing-table w3l">
 			<div class="wrap" align='center'>
 				<h1>Choose the OneCloud plan that fits your needs</h1>
-				<div class="priceing-table-main">
 			<?php
 foreach ($payment_plans as $plan) {
 
@@ -102,7 +101,6 @@ foreach ($payment_plans as $plan) {
     }
 }
 ?>
-				</div>
 			</div>
 		</div>
 	</div>
