@@ -164,6 +164,20 @@ class Billing_model extends CI_Model
         
     }
     
+    public function lastPayByUser($id_user){
+        $response = array();
+
+        $query = $this->db->select_max('payment_date')
+        ->from('payment_user_plan')     
+        ->join('record_user_plan', 'record_user_plan.id = payment_user_plan.id_record_user_plan')
+        ->where('record_user_plan.id_user', $id_user)
+        ->where('record_user_plan.status', 'a')
+        ->get();
+        $response = $query->result_array();
+
+        return $response;
+
+    }
 
 }
 

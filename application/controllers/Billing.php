@@ -52,6 +52,8 @@ class Billing extends CI_Controller
         
         $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
+
+        $model['last_payment_user'] = $this->Billing_model->lastPayByUser($user);
         
         $model['ptitle'] = 'Account Billing';
         $model['ptitlePlans'] = 'Membership Plans';
