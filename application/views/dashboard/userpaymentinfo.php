@@ -32,7 +32,7 @@
 					<div class="card-info">
 						<p>Alexis Rubio</p><br>
 						<i class="mdi mdi-credit-card"></i><i>   4444</i>
-						<a href="<?php //echo base_url() . 'billing/paymentMethod'?>">Change</a>
+						<a href="<?php echo base_url() . 'billing/paymentMethod'?>">Change</a>
 					</div>
 					<div class="payment-division"></div>
 					<div class="payment-info">
