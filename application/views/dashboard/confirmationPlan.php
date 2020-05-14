@@ -21,49 +21,16 @@
 <!-- A Stripe Element will be inserted here. -->
 </head>
 <body>
-	<!--header start here-->
-	<div style="margin-top: 60px; border-radius: 15px 15px 15px 15px;">
-		<div class="confirmation-table w3l">
-			<div class="plan-table-main">
-				<h1>Selected Plan</h1>
-			<?php foreach ($selected_plan as $plan){?>
-				<div class="price-grid">
-					<div class="price-block agile">
-						<div class="price-gd-top pric-clr1">
-							<h4><?php echo $plan['name'] ?></h4>
-							<h3>$<?php echo $plan['monthly_price'] ?></h3>
-							<h5>$<?php echo $plan['annual_price'] ?></h5>
-						</div>
-						<div class="price-gd-bottom">
-							<div class="price-list">
-								<ul>
-									<?php foreach ($feature_current_plan as $f){?>
-											<li class="mdi mdi-check-circle">  <?php echo $f['name'] ?></li>
-									<br>	
-									<?php } ?>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			<?php } ?>
-				
-			</div>
-			<div class="pay-table-main">
-				<h1>Payment method</h1>
-				<i class="mdi mdi-credit-card"></i><i> 4444</i> <a
-					class="popup-with-zoom-anim" data-plan=<?php echo $f['id'] ?>
-					data-price="5.00" <?php $id_plan = $plan['id']?>
-					href="<?php echo base_url() . 'billing/confirmPlanChange?id_plan=' . $id_plan?>">Confirm</a>
-				<a class="popup-with-zoom-anim" href="<?php echo base_url() . 'billing/accountBilling'?>">Cancel</a>
-			</div>
-
-
-			<br /> <br /> <br /> <br />
-		</div>
-	</div>
-
-
+	
+	<h2>Your membership plan has been successfully changed!</h2>
+	<h3>New membership Plan</h3>
+	<p><?php echo $selected_plan[0]['name']?></p>
+	<h3>Type</h3>	
+	<p><?php echo $type?></p>
+	<br>
+	<p>Your next charge will be on </p>
+	<button >Back to Dashboard</button>
+	
 </body>
 </html>
 

@@ -26,8 +26,9 @@
 <body>
 	<div style=" margin-top:60px; border-radius: 15px 15px 15px 15px;">
 		<div class="billing-table w3l">
-			<div class="wrap" align='center'>
+			<div class="wrap" align='center' style="border-radius: 15px 15px 15px 15px;">
 				<h1>Payment Method</h1>
+				<div class="billing-table-division"></div>
 				<div class="payment-grid">
 					<div class="card-info">
 						<p>Alexis Rubio</p><br>

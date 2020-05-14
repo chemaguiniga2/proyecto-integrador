@@ -1,5 +1,5 @@
 .page-division {
-	left: -10%
+	left: -10%;
 }
 
 .page-division h1 {
@@ -10,11 +10,19 @@
 }
 
 .billing-table {
+	border: 1px solid;
+	border-color: #1f1f29;
 	background: #2d2d3e;
 	margin: -3em -10em 0em 0em;
 	border-radius: 15px 15px 15px 15px;
 	width: 100%;
 	min-width: 1000px;
+}
+
+.billing-table-division {
+  	border-top: 1px solid rgba(173, 173, 192, .3);
+	width: 100%;	
+	margin: -0.5em 0em 1em 0em;
 }
 
 .billing-table:hover {
@@ -24,7 +32,8 @@
 
 .billing-table h1 {
 	width: 100%;
-	font-size: 1.2em;
+	font-size: 1em;
+	font-weight: 120;
 	color: #fffff;
 	text-align: center;
 	margin: 1em 0em 1em 0em;
@@ -43,8 +52,9 @@
 	position: relative;
 	left: -7%;
 	/* align-content: center; */
-	max-width: 100px;
-	margin-bottom: 3em;
+	max-width: 100px;	
+	margin-top: 0.5em;
+	margin-bottom: 1.5em;
 }
 
 .price-block {
@@ -277,14 +287,14 @@
 .price-selet .button-change {
 	border: 0px solid;
 	background: linear-gradient(to bottom, #91a6c9 5%, #447fc7 100%);
-	border-radius: 8px;
+	border-radius: 5px;
 	display: inline-block;
 	cursor: pointer;
 	color: #ffffff;
 	font-family: Arial;
 	font-size: 0.8em;
-	font-weight: 300;
-	padding: 5px 5px;
+	font-weight: bold;
+	padding: 5px 10px 5px 10px;
 	text-decoration: none;
 	margin: 5px;
 }
@@ -370,7 +380,7 @@ a.popup-with-zoom-anim {
 }
 
 .payment-division {
-	background: #ffffff;
+	background: rgba(173, 173, 192, .3);;
 	width: 30%;
 	height: 2px;
 	margin-bottom: 1em;
@@ -383,7 +393,7 @@ a.popup-with-zoom-anim {
 }
 
 /*Confirmation*/
-#popup1 {
+#popup-grid {
 	visibility: hidden;
 	opacity: 0;
 }
@@ -406,6 +416,8 @@ a.popup-with-zoom-anim {
 	margin: 20% 10% 10% 40%;
 	padding: 20px;
 	background: #455163;
+	border: 2px solid;
+	border-color: rgba(31, 31, 41, 0.7);
 	border-radius: 5px;
 	width: 30%;
 	position: relative;

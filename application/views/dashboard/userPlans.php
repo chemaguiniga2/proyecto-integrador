@@ -35,22 +35,19 @@
 </head>
 <body>
 	<div style="margin-top: 60px; border-radius: 15px 15px 15px 15px;">
-		<!-- 		<h3>You currently have debit balance of</h3> -->
-		<!--		<h6><?php //echo $monthly_price_user[0]['monthly_price'], ".00 USD"?></h6> -->
-		<!-- 	</div> -->
-		<!--header start here-->
-		<div class="billing-table w3l">
-			<div class="wrap" align='center'>
+		<div class="billing-table">
+			<div class="wrap" align='center'
+				style="border-radius: 15px 15px 15px 15px;">
 				<h1>Choose the OneCloud plan that fits your needs</h1>
+				<div class="billing-table-division"></div>
 			<?php
-
 $id_plan_selected = 0;
 
 foreach ($payment_plans as $plan) {
 
     if ($plan['id'] == $current_payment_plan[0]['id_plan']) {
         ?>
-        				<div class="price-grid">
+					<div class="price-grid">
 					<div class="price-block-selected agile">
 						<div class="price-gd-top-selected">
 							<h4><?php echo $plan['name'] ?></h4>
@@ -95,8 +92,9 @@ foreach ($payment_plans as $plan) {
 							</div>
 						</div>
 						<div class="price-selet">
-							<button class="button-change" onclick="myFunction(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Change</button>
-							
+							<button class="button-change"
+								onclick="myFunction(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Change</button>
+
 
 						</div>
 					</div>
@@ -109,14 +107,15 @@ foreach ($payment_plans as $plan) {
 		</div>
 	</div>
 
-	<div id="popup1" class="overlay">
+	<div id="popup-grid" class="overlay">
 		<div class="popup">
 			<h2 id="sel-plan">Membership Change Confirmation</h2>
 			<p id="message-top"></p>
 			<p id="message-down"></p>
 			<button id="btnClose" class="cancel">Cancel</button>
-			<button id="btnConfirmAnnual" class="confirm" >Confirm annual plan</button>
-			<button id="btnConfirmMonthly" class="confirm" onclick="close()">Confirm monthly plan</button>
+			<button id="btnConfirmAnnual" class="confirm">Confirm annual plan</button>
+			<button id="btnConfirmMonthly" class="confirm" onclick="close()">Confirm
+				monthly plan</button>
 			<div class="content"></div>
 		</div>
 	</div>
@@ -129,8 +128,8 @@ foreach ($payment_plans as $plan) {
 // // 		  division[0].innerHTML = id;
 // 		  document.getElementsByClassName("overlay")[0].style.visibility = "visible";
 // 		  document.getElementsByClassName("overlay")[0].style.opacity = "1";
-		document.getElementById("popup1").style.visibility = "visible";
-		document.getElementById("popup1").style.opacity = "1";
+		document.getElementById("popup-grid").style.visibility = "visible";
+		document.getElementById("popup-grid").style.opacity = "1";
 		document.getElementById("message-top").innerHTML = 'Your membership will change to ' + name + '.';
 		document.getElementById("message-down").innerHTML = 'Confirm the payment period and will start on next bill date.';
 		document.getElementById("btnConfirmAnnual").setAttribute("plan", id);
@@ -141,8 +140,8 @@ foreach ($payment_plans as $plan) {
 
 	document.getElementById("btnClose").onclick = function() {
 		
-		  document.getElementById("popup1").style.visibility = "hidden";
-		  document.getElementById("popup1").style.opacity = "0";
+		  document.getElementById("popup-grid").style.visibility = "hidden";
+		  document.getElementById("popup-grid").style.opacity = "0";
 
 	}
 
@@ -150,14 +149,14 @@ foreach ($payment_plans as $plan) {
 
 		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan=3'?>';
 		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
-		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan='?>' + plan;
+		location.href='<?php echo base_url() . 'billing/confirmAnnualPlanChange?id_plan='?>' + plan;
 	}
 
 	document.getElementById("btnConfirmMonthly").onclick = function() {
 
 		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan=3'?>';
 		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
-		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan='?>' + plan;
+		location.href='<?php echo base_url() . 'billing/confirmMonthlyPlanChange?id_plan='?>' + plan;
 	}
 
 	
