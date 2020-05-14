@@ -15,9 +15,7 @@
 <link href="https://fonts.googleapis.com/css?family=Monda"
 	rel="stylesheet">
 
-<script src="js/jquery-1.11.0.min.js"></script>
-<script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
-<script src="js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="js/confirmationPlan.js" type="text/javascript"></script>
 <script src="https://js.stripe.com/v3/"></script>
 
 <!-- A Stripe Element will be inserted here. -->
@@ -68,3 +66,5 @@
 
 </body>
 </html>
+
+

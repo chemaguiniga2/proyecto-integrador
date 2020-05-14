@@ -50,9 +50,9 @@ foreach ($payment_plans as $plan) {
 
     if ($plan['id'] == $current_payment_plan[0]['id_plan']) {
         ?>
-				<div class="price-grid">
+        				<div class="price-grid">
 					<div class="price-block-selected agile">
-						<div class="price-gd-top-selected pric-clr1">
+						<div class="price-gd-top-selected">
 							<h4><?php echo $plan['name'] ?></h4>
 							<h3>$<?php echo $plan['monthly_price'] ?>/ month </h3>
 							<h5>$<?php echo $plan['annual_price'] ?>/ year</h5>
@@ -75,9 +75,9 @@ foreach ($payment_plans as $plan) {
 					</div>
 				</div>
 		    <?php }else{?>
-				<div class="price-grid">
+        				<div class="price-grid">
 					<div class="price-block agile">
-						<div class="price-gd-top pric-clr1">
+						<div class="price-gd-top">
 							<h4><?php echo $plan['name'] ?></h4>
 							<h3>$<?php echo $plan['monthly_price'] ?>/ month </h3>
 							<h5>$<?php echo $plan['annual_price'] ?>/ year</h5>
@@ -94,32 +94,79 @@ foreach ($payment_plans as $plan) {
         								</ul>
 							</div>
 						</div>
-						<div class="price-selet pric-sclr1">
-							<a class="popup-with-zoom-anim" id=<?php echo $plan['id'] ?>
-								data-price="5.00" <?php $id_plan = $plan['id']?>
-								href="#popup1<?php echo $plan['id']?>">Change</a>
+						<div class="price-selet">
+							<button class="button-change" onclick="myFunction(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Change</button>
+							
+
 						</div>
-					</div>
-				</div>
-				<div id="popup1<?php echo $plan['id']?>" class="overlay">
-					<div class="popup">
-						<h2><?php echo $plan['name'] ?></h2>
-						<a class="close" href="#">&times;</a>
-						<a class="" href="<?php echo base_url() . 'billing/accountBilling'?>">Cancel</a>
-			
-						<div class="content"></div>
 					</div>
 				</div>
 			<?php
     }
 }
 ?>
-
 			</div>
 		</div>
 	</div>
 
+	<div id="popup1" class="overlay">
+		<div class="popup">
+			<h2 id="sel-plan">Membership Change Confirmation</h2>
+			<p id="message-top"></p>
+			<p id="message-down"></p>
+			<button id="btnClose" class="cancel">Cancel</button>
+			<button id="btnConfirmAnnual" class="confirm" >Confirm annual plan</button>
+			<button id="btnConfirmMonthly" class="confirm" onclick="close()">Confirm monthly plan</button>
+			<div class="content"></div>
+		</div>
+	</div>
 
+	<script>
+
+	function myFunction(id,name,monthly,annnual) {	
+		
+// 		  var division = document.getElementsByClassName("example");
+// // 		  division[0].innerHTML = id;
+// 		  document.getElementsByClassName("overlay")[0].style.visibility = "visible";
+// 		  document.getElementsByClassName("overlay")[0].style.opacity = "1";
+		document.getElementById("popup1").style.visibility = "visible";
+		document.getElementById("popup1").style.opacity = "1";
+		document.getElementById("message-top").innerHTML = 'Your membership will change to ' + name + '.';
+		document.getElementById("message-down").innerHTML = 'Confirm the payment period and will start on next bill date.';
+		document.getElementById("btnConfirmAnnual").setAttribute("plan", id);
+		document.getElementById("btnConfirmMonthly").setAttribute("plan", id);
+					
+		  
+	}
+
+	document.getElementById("btnClose").onclick = function() {
+		
+		  document.getElementById("popup1").style.visibility = "hidden";
+		  document.getElementById("popup1").style.opacity = "0";
+
+	}
+
+	document.getElementById("btnConfirmAnnual").onclick = function() {
+
+		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan=3'?>';
+		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
+		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan='?>' + plan;
+	}
+
+	document.getElementById("btnConfirmMonthly").onclick = function() {
+
+		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan=3'?>';
+		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
+		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan='?>' + plan;
+	}
+
+	
+	
+// function myFunction(id) {
+//   document.getElementsByClassName("overlay").style.visibility = "visible";
+//   document.getElementsByClassName("overlay").style.opacity = 1;
+// }
+</script>
 
 </body>
 </html>

@@ -52,8 +52,6 @@ class Billing extends CI_Controller
         
         $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
-
-        $model['last_payment_user'] = $this->Billing_model->lastPayByUser($user);
         
         $model['ptitle'] = 'Account Billing';
         $model['ptitlePlans'] = 'Membership Plans';
@@ -95,18 +93,21 @@ class Billing extends CI_Controller
         $this->load->view('template', $data);
     }
     
-    public function confirmPlanChange($id_plan)
+    public function confirmPlanChange()
     {
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         $user = $this->Billing_model->getCurrentUser();        
         
-//         $id_plan = $this->input->get('id_plan');
+        $id_plan = $this->input->get('id_plan');
         $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
         
         $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
-//         $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
+        $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
         
+        $model['ptitle'] = 'Confirmation';
+        $data['content'] = $this->load->view('dashboard/confirmationPlan', $model, true);
+        $this->load->view('template', $data);
     }
     
     public function createCharge() 
