@@ -420,6 +420,7 @@ a.popup-with-zoom-anim {
 	border-color: rgba(31, 31, 41, 0.7);
 	border-radius: 5px;
 	width: 30%;
+	min-width: 400px;
 	position: relative;
 	transition: all 5s ease-in-out;
 }
