@@ -163,6 +163,53 @@ class Billing_model extends CI_Model
         $this->db->insert('record_user_plan', $toinsert);
         
     }
+
+    public function insertRecordUserPlan($user, $id_plan, $pay_freq){
+        // update previous status record_user_plan
+        $this->Billing_model->updatePrevStatusRUserPlan($user);
+
+        // insert record_user_plan
+        $toinsert = array(
+            'id_user' => $user,
+            'id_plan' => $id_plan,
+            'start_date' => date('Y-m-d'),
+            'status' => 'a',
+            'payment_frequency' => $pay_freq
+        );        
+        $this->db->insert('record_user_plan', $toinsert);
+
+        $idRecordUserPlan = $this->Billing_model->getActualRecordUserPlan($user, $id_plan);
+
+        // insert payment_user_plan
+        $this->Billing_model->insertPaymentUserPlan($idRecordUserPlan);
+        
+    }
+
+    public function updatePrevStatusRUserPlan($user){
+        $toupdate = array(
+            'status'=>'i',
+            'end_date'=>date('Y-m-d')
+          );
+        $this->db->where('id_user', $user);
+        $this->db->where('status', 'a');
+        $this->db->update('record_user_plan', $toupdate);
+    }
+
+    public function getActualRecordUserPlan($user, $id_plan){
+        $record_u_p = $this->db->select('id')->from('record_user_plan')->where('id_user', $user)->where('id_plan', $id_plan)->where('status', 'a')->get()->row();
+        $id = $record_u_p->id;
+        return $id;
+        
+    }
+
+    public function insertPaymentUserPlan($id_record_user_plan){
+        $toinsertPayUserPlan = array(
+            'id_record_user_plan' => $id_record_user_plan,
+            'payment_date' => date('Y-m-d')
+        );        
+        $this->db->insert('payment_user_plan', $toinsertPayUserPlan);
+    }
+
     
     public function lastPayByUser($id_user){
         $response = array();

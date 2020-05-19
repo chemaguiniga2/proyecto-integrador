@@ -109,6 +109,9 @@ class Billing extends CI_Controller
         
         $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
         $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
+
+        $pay_freq = 'm';
+        $this->Billing_model->insertRecordUserPlan($user, $id_plan, $pay_freq);
         
         $model['type'] = 'Monthly';
         $model['ptitle'] = 'Membership Plan Updated';
@@ -127,6 +130,9 @@ class Billing extends CI_Controller
         
         $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
         $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
+
+        $pay_freq = 'a';
+        $this->Billing_model->insertRecordUserPlan($user, $id_plan, $pay_freq);
         
         $model['type'] = 'Annual';
         $model['ptitle'] = 'Membership Plan Updated';
