@@ -4,33 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-	
-<!-- TITLE -->
-<title>Pricing Plans and Subscription Payment | by PHPJabbers.com</title>
 
-<!-- DASHBOARD CSS -->
-<link href="../assets/css/billing.css" rel="stylesheet" type="text/css"
-	media="all" />
+<!-- TITLE -->
+<title>Membership Plans</title>
+
 
 
 
 <!-- extrasssss -->
-
-<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="msapplication-TileColor" content="#0061da">
-		<meta name="theme-color" content="#1643a3">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="mobile-web-app-capable" content="yes">
-		<meta name="HandheldFriendly" content="True">
-		<meta name="MobileOptimized" content="320">
-		<link rel="icon" href="../assets/images/favicon.png" type="image/x-icon"/>
-		<link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon.png"/>
-
-		<!-- TITLE -->
-		<title>The OneCloud Management Framework</title>
 
 		<!-- DASHBOARD CSS -->
 		<link href="../assets/css/dashboard.css" rel="stylesheet"/>
@@ -84,55 +65,123 @@
 
 <link href="https://fonts.googleapis.com/css?family=Monda"
 	rel="stylesheet">
-	
+
 
 <script src="js/jquery-1.11.0.min.js"></script>
 <script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
 <script src="js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="js/confirmationpopup.js" type="text/javascript"></script>
 <script src="https://js.stripe.com/v3/"></script>
 
 <!-- A Stripe Element will be inserted here. -->
 </head>
 <body>
-	<div style="background-color:#413d57 ;">
-			<!--header start here-->
-	<div class="priceing-table w3l">
-		<div class="wrap" align='center'>
-			<h1>Choose a new Membership Plan</h1>
-				<div class="priceing-table-main">
-			<?php foreach ($payment_plans as $plan){?>
+	<div style="margin-top: 60px; border-radius: 15px 15px 15px 15px;">
+		<div class="billing-table">
+			<div class="wrap" align='center'
+				style="border-radius: 15px 15px 15px 15px;">
+				<h1>Choose the OneCloud plan that fits your needs</h1>
+				<div class="billing-table-division"></div>
+			<?php
+$id_plan_selected = 0;
+
+foreach ($payment_plans as $plan) {
+    ?>
 				<div class="price-grid">
-						<div class="price-block agile">
-							<div class="price-gd-top pric-clr1">
-								<h4><?php echo $plan['name'] ?></h4>
-								<h3>$<?php echo $plan['monthly_price'] ?></h3>
-								<h5>$<?php echo $plan['annual_price'] ?></h5>
-							</div>
-							<div class="price-gd-bottom">
-								<div class="price-list">
-									<ul>
-									<?php foreach ($feature_current_plan as $f){?>
-										<?php if($f['id'] == $plan['id']){ ?>
-												<li class="mdi mdi-check-circle"><?php echo $f['name'] ?></li><br>	
-										<?php } ?>
-									<?php } ?>
-								</ul>
-								</div>
-							</div>
-							<div class="price-selet pric-sclr1">
-								<a class="popup-with-zoom-anim" data-plan=<?php echo $f['id'] ?>
-									data-price="5.00"
-									href="<?php echo base_url() . 'billing/addPaymentMethod' ?>">Select</a>
+					<div class="price-block agile">
+						<div class="price-gd-top">
+							<h4><?php echo $plan['name'] ?></h4>
+							<h3>$<?php echo $plan['monthly_price'] ?>/ month </h3>
+							<h5>$<?php echo $plan['annual_price'] ?>/ year</h5>
+						</div>
+						<div class="price-gd-bottom">
+							<div class="price-list">
+								<ul>
+        									<?php foreach ($feature_current_plan as $f){?>
+        										<?php if($f['id'] == $plan['id']){ ?>
+        												<li class="mdi mdi-check-circle">  <?php echo $f['name'] ?></li>
+									<br>	
+        										<?php } ?>
+        									<?php } ?>
+        								</ul>
 							</div>
 						</div>
+						<div class="price-selet">
+							<button class="button-change"
+								onclick="myFunction(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Change</button>
+
+
+						</div>
 					</div>
-			<?php } ?>
 				</div>
+			<?php
+}
+
+?>
 			</div>
-			<br /> <br /> <br /> <br />
 		</div>
 	</div>
 
+	<div id="popup-grid" class="overlay">
+		<div class="popup">
+			<h2 id="sel-plan">Membership Change Confirmation</h2>
+			<p id="message-top"></p>
+			<p id="message-down"></p>
+			<button id="btnClose" class="cancel">Cancel</button>
+			<button id="btnConfirmAnnual" class="confirm">Confirm annual plan</button>
+			<button id="btnConfirmMonthly" class="confirm" onclick="close()">Confirm
+				monthly plan</button>
+			<div class="content"></div>
+		</div>
+	</div>
+
+	<script>
+
+	function myFunction(id,name,monthly,annnual) {	
+		
+// 		  var division = document.getElementsByClassName("example");
+// // 		  division[0].innerHTML = id;
+// 		  document.getElementsByClassName("overlay")[0].style.visibility = "visible";
+// 		  document.getElementsByClassName("overlay")[0].style.opacity = "1";
+		document.getElementById("popup-grid").style.visibility = "visible";
+		document.getElementById("popup-grid").style.opacity = "1";
+		document.getElementById("message-top").innerHTML = 'Your membership will change to ' + name + '.';
+		document.getElementById("message-down").innerHTML = 'Confirm the payment period and will start on next bill date.';
+		document.getElementById("btnConfirmAnnual").setAttribute("plan", id);
+		document.getElementById("btnConfirmMonthly").setAttribute("plan", id);
+					
+		  
+	}
+
+	document.getElementById("btnClose").onclick = function() {
+		
+		  document.getElementById("popup-grid").style.visibility = "hidden";
+		  document.getElementById("popup-grid").style.opacity = "0";
+
+	}
+
+	document.getElementById("btnConfirmAnnual").onclick = function() {
+
+		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan=3'?>';
+		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
+		location.href='<?php echo base_url() . 'billing/confirmAnnualPlanChange?id_plan='?>' + plan;
+	}
+
+	document.getElementById("btnConfirmMonthly").onclick = function() {
+
+		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan=3'?>';
+		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
+		location.href='<?php echo base_url() . 'billing/confirmMonthlyPlanChange?id_plan='?>' + plan;
+	}
+
+	
+	
+// function myFunction(id) {
+//   document.getElementsByClassName("overlay").style.visibility = "visible";
+//   document.getElementsByClassName("overlay").style.opacity = 1;
+// }
+</script>
 
 </body>
 </html>
+

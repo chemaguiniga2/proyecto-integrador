@@ -1,18 +1,92 @@
-.confirmation-table{	
+.confirmation-table {
+	border: 1px solid;
+	border-color: #1f1f29;
+	background: #2d2d3e;
+	margin: 0em -10em 0em 0em;
+	border-radius: 15px 15px 15px 15px;
+	width: 100%;
+	min-width: 1000px;
 }
 
-.plan-table-main{	
-	display: inline-block;/* 
-	background: #ff8040; */
-	width: 30%;
-	height: 8em; 
-	margin-bottom: 3em; 
+.confirmation-table-division {
+	border-top: 1px solid rgba(173, 173, 192, .3);
+	width: 100%;
+	margin: -0.5em 0em 1em 0em;
 }
 
-.pay-table-main{	
-	display: inline-block;/* 
-	background: #ff8040; */
-	width: 30%;
-	height: 8em; 
-	margin-bottom: 3em; 
+.confirmation-table:hover {
+	box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0
+		rgba(255, 255, 255, 0.19);
+}
+
+.confirmation-table h1 {
+	width: 100%;
+	font-size: 1em;
+	font-weight: 120;
+	color: #fffff;
+	text-align: center;
+	margin: 1em 0em 1em 0em;
+	font-weight: bold;
+	display: inline-block;
+}
+
+.confirmation-table h2 {
+	width: 100%;
+	font-size: 1em;
+	font-weight: 120;
+	color: #fffff;
+	text-align: left;
+	margin: 0em 0em 0em 10em;
+	font-weight: bold;
+	display: inline-block;
+}
+
+.confirmation-table p {
+	width: 100%;
+	font-size: 1em;
+	font-weight: 120;
+	color: #fffff;
+	text-align: left;
+	margin: 0em 0em 1em 12em;
+	font-weight: 100;
+	display: inline-block;
+}
+
+.confirmation-table .informative {
+	width: 100%;
+	font-size: 1em;
+	font-weight: 120;
+	color: #fffff;
+	text-align: left;
+	margin: 0em 0em 1em 10em;
+	font-weight: 100;
+	display: inline-block;
+}
+
+.confirmation-table .generic-button {
+	/* background: #04bd2e; */
+	position: relative;
+	background: rgba(4, 189, 46, 0.4);
+	margin: 3em 0em 1em 0em;
+	border: 1px solid;
+	border-color: rgba(4, 189, 46);
+	border-radius: 5px 5px 5px 5px;
+	display: inline-block;
+	color: #ffffff;
+	padding: 5px 5px;
+	text-decoration: none;
+	font-size: 0.9em;
+	transition: background-color 0.3s ease;
+	text-align: center;
+	width: 70%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.confirmation-table .generic-button:hover {
+	background: #1ec600;
+	cursor: pointer;
+	 /* 
+	box-shadow: 0 0 50px #39ff14; */
 }

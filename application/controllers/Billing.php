@@ -145,6 +145,7 @@ class Billing extends CI_Controller
         $this->load->view('template', $data);
     }
 
+       
 
     public function chargeTest()
     {

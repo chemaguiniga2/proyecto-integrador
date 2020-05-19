@@ -20,8 +20,8 @@
 }
 
 .billing-table-division {
-  	border-top: 1px solid rgba(173, 173, 192, .3);
-	width: 100%;	
+	border-top: 1px solid rgba(173, 173, 192, .3);
+	width: 100%;
 	margin: -0.5em 0em 1em 0em;
 }
 
@@ -52,7 +52,7 @@
 	position: relative;
 	left: -7%;
 	/* align-content: center; */
-	max-width: 100px;	
+	max-width: 100px;
 	margin-top: 0.5em;
 	margin-bottom: 1.5em;
 }
@@ -285,7 +285,7 @@
 }
 
 .price-selet .button-change {
-	border: 0px solid;
+	/* 	border: 0px solid;
 	background: linear-gradient(to bottom, #91a6c9 5%, #447fc7 100%);
 	border-radius: 5px;
 	display: inline-block;
@@ -296,13 +296,29 @@
 	font-weight: bold;
 	padding: 5px 10px 5px 10px;
 	text-decoration: none;
+	margin: 5px; */
+	background: #028bbf;
+	background: rgba(2, 139, 191, 0.4);
 	margin: 5px;
+	border: 1px solid;
+	border-color: rgba(2, 139, 191);
+	border-radius: 5px 5px 5px 5px;
+	display: inline-block;
+	color: #ffffff;
+	padding: 5px 10px 5px 10px;
+	text-decoration: none;
+	font-size: 0.8em;
+	font-weight: bold;
+	transition: background-color 0.3s ease;
+	text-align: center;
 }
 
 .price-selet .button-change:hover {
-	background: linear-gradient(to bottom, #447fc7 5%, #91a6c9 100%);
+	/* 	background: linear-gradient(to bottom, #447fc7 5%, #91a6c9 100%);
 	box-shadow: 0px 1px 5px 0.5px #ffffff;
-	background-color: #447fc7;
+	background-color: #447fc7; */
+	background: #00c9ce;
+	cursor: pointer;
 }
 
 .price-selet .button-change:active {
@@ -439,7 +455,7 @@ a.popup-with-zoom-anim {
 }
 
 .popup .cancel {
-	border: 0px solid;
+	/* 	border: 0px solid;
 	box-shadow: 0px 1px 5px 0.5px #ffffff;
 	background: linear-gradient(to bottom, #91a6c9 5%, #447fc7 100%);
 	border-radius: 8px;
@@ -452,13 +468,33 @@ a.popup-with-zoom-anim {
 	padding: 5px 5px;
 	text-decoration: none;
 	float: right;
+	margin: 0px 10px 5px 20px; */
+	/* background: #028bbf; */
+	background: rgba(2, 139, 191, 0.4);
+	box-shadow: 0px 1px 5px 0.5px #028bbf;
 	margin: 0px 10px 5px 20px;
+	border: 1px solid;
+	border-color: rgba(2, 139, 191);
+	border-radius: 5px 5px 5px 5px;
+	display: inline-block;
+	color: #ffffff;
+	padding: 5px 5px;
+	text-decoration: none;
+	font-size: 0.8em;
+	font-weight: bold;
+	text-decoration: none;
+	text-align: center;
+	float: right;
+	transition: all 0.3s ease;
 }
 
 .popup .cancel:hover {
-	background: linear-gradient(to bottom, #447fc7 5%, #91a6c9 100%);
+	/* 	background: linear-gradient(to bottom, #447fc7 5%, #91a6c9 100%);
 	box-shadow: 0px 1px 10px 0.5px #ffffff;
-	background-color: #447fc7;
+	background-color: #447fc7; */
+	box-shadow: 0px 1px 10px 5px #028bbf;
+	background: #00c9ce;
+	cursor: pointer;
 }
 
 .popup .cancel:active {
@@ -467,7 +503,7 @@ a.popup-with-zoom-anim {
 }
 
 .popup .confirm {
-	border: 0px solid;
+	/* 	border: 0px solid;
 	box-shadow: 0px 1px 5px 0.5px #ffffff;
 	background: linear-gradient(to bottom, #85c7a2 5%, #409955 100%);
 	border-radius: 8px;
@@ -480,13 +516,34 @@ a.popup-with-zoom-anim {
 	padding: 5px 5px;
 	text-decoration: none;
 	float: right;
+	margin: 0px 5px 5px 5px; */
+	/* background: #04bd2e; */
+	
+	background: rgba(4, 189, 46, 0.4);
+	box-shadow: 0px 1px 5px 0.5px #04bd2e;
 	margin: 0px 5px 5px 5px;
+	border: 1px solid;
+	border-color: rgba(4, 189, 46);
+	border-radius: 5px 5px 5px 5px;
+	display: inline-block;
+	color: #ffffff;
+	padding: 5px 5px;
+	text-decoration: none;
+	font-size: 0.8em;
+	font-weight: bold;
+	text-decoration: none;
+	text-align: center;
+	float: right;
+	transition: all 0.3s ease;
 }
 
 .popup .confirm:hover {
-	background: linear-gradient(to bottom, #409955 5%, #85c7a2 100%);
+	/* 	background: linear-gradient(to bottom, #409955 5%, #85c7a2 100%);
 	background-color: #409955;
-	box-shadow: 0px 1px 10px 0.5px #ffffff;
+	box-shadow: 0px 1px 10px 0.5px #ffffff; */
+	box-shadow: 0px 1px 10px 5px #04bd2e;
+	background: #1ec600;
+	cursor: pointer;
 }
 
 /* .popup .content {
