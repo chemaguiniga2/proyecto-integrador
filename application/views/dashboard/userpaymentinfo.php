@@ -14,12 +14,14 @@
 
 
 
-<!-- extrasssss -->
+<!-- notas 
 
+Falta añadir botón cancelar suscripción
+Falta añadir botón otrogar recibo
 
+-->
 
-
-<!-- extrasssss -->
+<!-- notas -->
 
 <!-- A Stripe Element will be inserted here. -->
 </head>

@@ -8,60 +8,22 @@
 <!-- TITLE -->
 <title>Membership Plans</title>
 
+<!-- extrasssss -->
+
+<!-- DASHBOARD CSS -->
+
+<!--- FONT-ICONS CSS -->
+<link href="../assets/css/icons.css" rel="stylesheet" />
 
 
 
 <!-- extrasssss -->
 
-		<!-- DASHBOARD CSS -->
-		<link href="../assets/css/dashboard.css" rel="stylesheet"/>
-		<link href="../assets/css/boxed.css" rel="stylesheet"/>
-
-		<!-- COLOR-THEMES CSS -->
-		<link href="../assets/css/color-themes.css" rel="stylesheet"/>
-
-		<!-- C3.JS CHARTS PLUGIN -->
-		<link href="../assets/plugins/charts-c3/c3-chart.css" rel="stylesheet"/>
-
-		<!-- TABS CSS -->
-		<link href="../assets/plugins/tabs/tabs-style2.css" rel="stylesheet" type="text/css">
-
-    <link href="../assets/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
-
-		<!-- CUSTOM SCROLL BAR CSS-->
-		<link href="../assets/plugins/mcustomscrollbar/jquery.mCustomScrollbar.css" rel="stylesheet"/>
-
-		<!--- FONT-ICONS CSS -->
-		<link href="../assets/css/icons.css" rel="stylesheet"/>
-
-		<!-- RIGHT-MENU CSS -->
-		<link href="../assets/plugins/sidebar/sidebar.css" rel="stylesheet">
-
-		<!-- LEFT-SIDEMENU CSS -->
-		<link href="../assets/plugins/jquery-jside-menu-master/css/jside-menu.css" rel="stylesheet"/>
-		<link href="../assets/plugins/jquery-jside-menu-master/css/jside-skins.css" rel="stylesheet"/>
-
-		<!-- Sidemenu css -->
-		<link href="../assets/plugins/side-menu/sidemenu-model2.css" rel="stylesheet" />
-
-		<!-- Sidebar Accordions css -->
-		<link href="../assets/plugins/sidemenu-responsive-tabs/css/easy-responsive-tabs.css" rel="stylesheet">
-    <link href="../assets/css/sweetalert2.css" rel="stylesheet">
-
-    <link href="../assets/plugins/formwizard/smart_wizard.css" rel="stylesheet">
-    <link href="../assets/plugins/form-wizard/css/form-wizard.css" rel="stylesheet">
-    <link href="../assets/plugins/formwizard/smart_wizard_theme_dots.css" rel="stylesheet">
-    <link href="../assets/plugins/formwizard/smart_wizard_theme_circles.css" rel="stylesheet">
-    <link href="../assets/plugins/formwizard/smart_wizard_theme_arrows.css" rel="stylesheet">
-    <style>
-    /* Hide all steps by default: */
-    .wtab {
-      display: none;
-    }
-    </style>
+<link href="../assets/css/billingRegistration.css" rel="stylesheet"
+	type="text/css" media="all" />
 
 
-<!-- extrasssss -->
+
 
 <link href="https://fonts.googleapis.com/css?family=Monda"
 	rel="stylesheet">
@@ -76,6 +38,11 @@
 <!-- A Stripe Element will be inserted here. -->
 </head>
 <body>
+	<div class="top-div">
+		<img src="../assets/images/logo.png" class="header-image"
+			alt="OneCloud logo">
+	</div>
+
 	<div style="margin-top: 60px; border-radius: 15px 15px 15px 15px;">
 		<div class="billing-table">
 			<div class="wrap" align='center'
@@ -83,8 +50,6 @@
 				<h1>Choose the OneCloud plan that fits your needs</h1>
 				<div class="billing-table-division"></div>
 			<?php
-$id_plan_selected = 0;
-
 foreach ($payment_plans as $plan) {
     ?>
 				<div class="price-grid">
@@ -108,7 +73,7 @@ foreach ($payment_plans as $plan) {
 						</div>
 						<div class="price-selet">
 							<button class="button-change"
-								onclick="myFunction(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Change</button>
+								onclick="confirmNewPlan(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Select</button>
 
 
 						</div>
@@ -125,22 +90,52 @@ foreach ($payment_plans as $plan) {
 	<div id="popup-grid" class="overlay">
 		<div class="popup">
 			<h2 id="sel-plan">Membership Change Confirmation</h2>
+			<input type="text" id="user" name="user" placeholder="Username"><br>
+			<br> <input type="password" id="password" name="user"
+				placeholder="Password"><br> <br> <input type="text" id="email"
+				name="user" placeholder="Email"><br> <br>
+			<div class="billing-table-division"></div>
+			<p id="info-payment">Payment Information</p>
+			<input type="text" id="owner" name="owner" placeholder="Owner"><br> <br>
+			<input type="password" id="card-number" name="card-number"
+				placeholder="Card number"> <input type="password" id="cvv"
+				name="cvv" placeholder="CVV">
+			<div class="form-group" id="expiration-date">
+				<label>Expiration Date</label> <select>
+					<option value="01">January</option>
+					<option value="02">February</option>
+					<option value="03">March</option>
+					<option value="04">April</option>
+					<option value="05">May</option>
+					<option value="06">June</option>
+					<option value="07">July</option>
+					<option value="08">August</option>
+					<option value="09">September</option>
+					<option value="10">October</option>
+					<option value="11">November</option>
+					<option value="12">December</option>
+				</select> <select>
+					<option value="16">2016</option>
+					<option value="17">2017</option>
+					<option value="18">2018</option>
+					<option value="19">2019</option>
+					<option value="20">2020</option>
+					<option value="21">2021</option>
+				</select>
+			</div>
 			<p id="message-top"></p>
 			<p id="message-down"></p>
 			<button id="btnClose" class="cancel">Cancel</button>
-			<button id="btnConfirmAnnual" class="confirm">Confirm annual plan</button>
-			<button id="btnConfirmMonthly" class="confirm" onclick="close()">Confirm
-				monthly plan</button>
+			<button id="btnRegister" class="confirm">Start your free trial!</button>
 			<div class="content"></div>
 		</div>
 	</div>
 
 	<script>
 
-	function myFunction(id,name,monthly,annnual) {	
+	function confirmNewPlan(id,name,monthly,annnual) {	
 		
-// 		  var division = document.getElementsByClassName("example");
-// // 		  division[0].innerHTML = id;
+
 // 		  document.getElementsByClassName("overlay")[0].style.visibility = "visible";
 // 		  document.getElementsByClassName("overlay")[0].style.opacity = "1";
 		document.getElementById("popup-grid").style.visibility = "visible";
@@ -175,11 +170,7 @@ foreach ($payment_plans as $plan) {
 	}
 
 	
-	
-// function myFunction(id) {
-//   document.getElementsByClassName("overlay").style.visibility = "visible";
-//   document.getElementsByClassName("overlay").style.opacity = 1;
-// }
+
 </script>
 
 </body>

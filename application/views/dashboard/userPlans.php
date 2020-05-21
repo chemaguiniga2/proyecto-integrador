@@ -93,7 +93,7 @@ foreach ($payment_plans as $plan) {
 						</div>
 						<div class="price-selet">
 							<button class="button-change"
-								onclick="myFunction(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Change</button>
+								onclick="changeConfirmation(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Change</button>
 
 
 						</div>
@@ -122,7 +122,7 @@ foreach ($payment_plans as $plan) {
 
 	<script>
 
-	function myFunction(id,name,monthly,annnual) {	
+	function changeConfirmation(id,name,monthly,annnual) {	
 		
 // 		  var division = document.getElementsByClassName("example");
 // // 		  division[0].innerHTML = id;
@@ -147,14 +147,12 @@ foreach ($payment_plans as $plan) {
 
 	document.getElementById("btnConfirmAnnual").onclick = function() {
 
-		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan=3'?>';
 		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
 		location.href='<?php echo base_url() . 'billing/confirmAnnualPlanChange?id_plan='?>' + plan;
 	}
 
 	document.getElementById("btnConfirmMonthly").onclick = function() {
 
-		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan=3'?>';
 		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
 		location.href='<?php echo base_url() . 'billing/confirmMonthlyPlanChange?id_plan='?>' + plan;
 	}
