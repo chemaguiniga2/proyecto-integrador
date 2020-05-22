@@ -53,7 +53,7 @@
 					<div class="access-container p-6">
             <?php
             $foptions = array('id' => "loginform", 'onsubmit' => "return checkOk()");
-              echo form_open('login', $foptions)
+              echo form_open('site/login', $foptions)
             ?>
 							<span class="login-form-title">
 								Login
@@ -89,7 +89,10 @@
 								<button type="submit" class="btn btn-primary-light btn-block">Login</button>
 							</div>
 							<div class="text-center pt-3">
+							<!-- 
 								<p class="mb-0">Not registered?<a href="<?php echo base_url() . 'register' ?>" class="text-primary ml-1">Sign up</a></p>
+								-->
+								<p class="mb-0">Not registered?<a href="<?php echo base_url() . 'site/register' ?>" class="text-primary ml-1">Sign up</a></p>								
 								<p class="mb-0">Not registered?<a href="<?php echo base_url() . 'billing/showPlans' ?>" class="text-primary ml-1">Sign up Plans</a></p>
 							</div>
 

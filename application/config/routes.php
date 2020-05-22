@@ -53,8 +53,8 @@ $route['default_controller'] = 'dashboard';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['register'] = 'site/register';
-$route['login'] = 'site/login';
+//$route['register'] = 'site/register';
+//$route['login'] = 'site/login';
 $route['passwordrecovery'] = 'site/passwordrecovery';
 $route['recovery'] = 'site/recover';
 $route['dashboard'] = 'dashboard';

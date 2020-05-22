@@ -11,6 +11,7 @@
 <!-- extrasssss -->
 
 <!-- DASHBOARD CSS -->
+<link href="../assets/css/dashboard.css" rel="stylesheet" />
 
 <!--- FONT-ICONS CSS -->
 <link href="../assets/css/icons.css" rel="stylesheet" />
@@ -37,7 +38,9 @@
 
 <!-- A Stripe Element will be inserted here. -->
 </head>
-<body>
+<body
+	style="background: rgb(81, 53, 125); background: radial-gradient(circle, rgba(81, 53, 125, 1) 0%, rgba(56, 55, 55, 1) 100%);">
+
 	<div class="top-div">
 		<img src="../assets/images/logo.png" class="header-image"
 			alt="OneCloud logo">
@@ -73,7 +76,7 @@ foreach ($payment_plans as $plan) {
 						</div>
 						<div class="price-selet">
 							<button class="button-change"
-								onclick="confirmNewPlan(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Select</button>
+								onclick="confirmPlan(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Suscribe</button>
 
 
 						</div>
@@ -88,41 +91,162 @@ foreach ($payment_plans as $plan) {
 	</div>
 
 	<div id="popup-grid" class="overlay">
+
 		<div class="popup">
-			<h2 id="sel-plan">Membership Change Confirmation</h2>
-			<input type="text" id="user" name="user" placeholder="Username"><br>
-			<br> <input type="password" id="password" name="user"
-				placeholder="Password"><br> <br> <input type="text" id="email"
-				name="user" placeholder="Email"><br> <br>
-			<div class="billing-table-division"></div>
-			<p id="info-payment">Payment Information</p>
-			<input type="text" id="owner" name="owner" placeholder="Owner"><br> <br>
-			<input type="password" id="card-number" name="card-number"
-				placeholder="Card number"> <input type="password" id="cvv"
-				name="cvv" placeholder="CVV">
-			<div class="form-group" id="expiration-date">
-				<label>Expiration Date</label> <select>
-					<option value="01">January</option>
-					<option value="02">February</option>
-					<option value="03">March</option>
-					<option value="04">April</option>
-					<option value="05">May</option>
-					<option value="06">June</option>
-					<option value="07">July</option>
-					<option value="08">August</option>
-					<option value="09">September</option>
-					<option value="10">October</option>
-					<option value="11">November</option>
-					<option value="12">December</option>
-				</select> <select>
-					<option value="16">2016</option>
-					<option value="17">2017</option>
-					<option value="18">2018</option>
-					<option value="19">2019</option>
-					<option value="20">2020</option>
-					<option value="21">2021</option>
-				</select>
+
+			<div class="container-1">
+				<div class="access-container p-6">
+          <?php
+        $foptions = array(
+            'id' => "registerform",
+            'onsubmit' => "return checkOk()"
+        );
+        echo form_open('register', $foptions)?>
+						<form class="login-form validate-form">
+
+						<div class="input-icons access-input validate-input"
+							data-validate="Username must have 8 characters">
+							<i class="mdi mdi-account icon" aria-hidden="true"></i> <input
+								class="input-field" type="text" id="username" name="username"
+								placeholder="Username">
+						</div>
+
+						<div class="input-icons access-input validate-input"
+							data-validate="Valid email is required: ex@abc.xyz">
+							<i class="zmdi zmdi-email icon" aria-hidden="true"></i> <input
+								class="input-field" type="text" id="email" name="email"
+								placeholder="Email">
+						</div>
+
+						<div class="input-icons access-input validate-input"
+							data-validate="Password is required">
+							<i class="zmdi zmdi-lock icon" aria-hidden="true"></i> <input
+								class="input-field" type="password" id="pass" name="pass"
+								placeholder="Password">
+						</div>
+
+						<!-- 						<div class="access-input validate-input" -->
+						<!-- 							data-validate="Username must have 8 characters"> -->
+						<!-- 							<input class="login-input form-control" type="text" id="username" -->
+						<!-- 								name="username" placeholder="Username"> <span -->
+						<!-- 								class="input-focus"></span> <span class="input-symbol"> <i -->
+						<!-- 								class="mdi mdi-account" aria-hidden="true"></i> -->
+						<!-- 							</span> -->
+						<!-- 						</div> -->
+
+						<!-- 						<div class="access-input validate-input" -->
+						<!-- 							data-validate="Valid email is required: ex@abc.xyz"> -->
+						<!-- 							<input class="login-input form-control" type="text" id="email" -->
+						<!-- 								name="email" placeholder="Email"> <span class="input-focus"></span> -->
+						<!-- 							<span class="input-symbol"> <i class="zmdi zmdi-email" -->
+						<!-- 								aria-hidden="true"></i> -->
+						<!-- 							</span> -->
+						<!-- 						</div> -->
+
+						<!-- 						<div class="access-input validate-input" -->
+						<!-- 							data-validate="Password is required"> -->
+						<!-- 							<input class="login-input form-control" type="password" id="pass" -->
+						<!-- 								name="pass" placeholder="Password"> <span class="input-focus"></span> -->
+						<!-- 							<span class="input-symbol"> <i class="zmdi zmdi-lock" -->
+						<!-- 								aria-hidden="true"></i> -->
+						<!-- 							</span> -->
+						<!-- 						</div> -->
+
+						<label class="custom-control custom-checkbox mt-4 mb-4"> <input
+							type="checkbox" id="agree" class="custom-control-input"> <span
+							class="custom-control-label">Agree the <a href="terms.html">terms
+									and policy</a></span>
+						</label>
+						<div class="alert alert-warning form-control" id="warningdiv" style="max-width:300px;<?php if (!isset($message)){echo 'display:none;';} ?>" role="alert">
+							<span class="alert-inner--icon"></span> <span
+								class="alert-inner--text" id="warningtext">
+                  <?php
+                if (isset($message)) {
+                    echo ($message);
+                }
+                ?>
+                  </span>
+						</div>
+						<div class="">
+							<button type="submit" class="btn btn-primary-light btn-block">Register</button>
+						</div>
+						<div class="text-center pt-3">
+							<p class="mb-0">
+								Already have account?<a
+									href="<?php echo base_url() . 'login' ?>"
+									class="text-primary ml-1">Sign In</a>
+							</p>
+						</div>
+
+						<?php echo form_close() ?>	
+				
+				
+				</div>
 			</div>
+			<!-- 			<p id="info-payment">Payment Information</p> -->
+
+			<!-- 			<div class="card__container"> -->
+			<!-- 				<div class="card"> -->
+
+			<!-- 					<div class="row credit"> -->
+			<!-- 						<div class="left"> -->
+			<!-- 							<label for="cd">Enter your payment information.</label> -->
+			<!-- 						</div> -->
+			<!-- 						<div class="right"></div> -->
+			<!-- 					</div> -->
+			<!-- 					<div class="row cardholder"> -->
+			<!-- 						<div class="info"> -->
+			<!-- 							<label for="cardholdername">Name</label> <input -->
+			<!-- 								placeholder="e.g. Carmelo Milan" id="cardholdername" type="text" /> -->
+			<!-- 						</div> -->
+			<!-- 					</div> -->
+			<!-- 					<div class="row number"> -->
+			<!-- 						<div class="info"> -->
+			<!-- 							<label for="cardnumber">Card number</label> <input -->
+			<!-- 								id="cardnumber" type="text" pattern="[0-9]{16,19}" -->
+			<!-- 								maxlength="19" placeholder="6969-6969-6969-6969" /> -->
+			<!-- 						</div> -->
+			<!-- 					</div> -->
+			<!-- 					<div class="row details"> -->
+			<!-- 						<div class="left"> -->
+			<!-- 							<label for="expiry-date">Expiry</label> <select id="expiry-date"> -->
+			<!-- 								<option>MM</option> -->
+			<!-- 								<option value="1">01</option> -->
+			<!-- 								<option value="2">02</option> -->
+			<!-- 								<option value="3">03</option> -->
+			<!-- 								<option value="4">04</option> -->
+			<!-- 								<option value="5">05</option> -->
+			<!-- 								<option value="6">06</option> -->
+			<!-- 								<option value="7">07</option> -->
+			<!-- 								<option value="8">08</option> -->
+			<!-- 								<option value="9">10</option> -->
+			<!-- 								<option value="11">11</option> -->
+			<!-- 								<option value="12">12</option> -->
+			<!-- 							</select> <span>/</span> <select id="expiry-date"> -->
+			<!-- 								<option>YYYY</option> -->
+			<!-- 								<option value="2020">2020</option> -->
+			<!-- 								<option value="2021">2021</option> -->
+			<!-- 								<option value="2022">2022</option> -->
+			<!-- 								<option value="2023">2023</option> -->
+			<!-- 								<option value="2024">2024</option> -->
+			<!-- 								<option value="2025">2025</option> -->
+			<!-- 								<option value="2026">2026</option> -->
+			<!-- 								<option value="2027">2027</option> -->
+			<!-- 								<option value="2028">2028</option> -->
+			<!-- 								<option value="2029">2029</option> -->
+			<!-- 								<option value="2030">2030</option> -->
+			<!-- 							</select> -->
+			<!-- 						</div> -->
+			<!-- 						<div class="right"> -->
+			<!-- 							<label for="cvv">CVC/CVV</label> <input type="text" maxlength="4" -->
+			<!-- 								placeholder="123" /> <span data-balloon-length="medium" -->
+			<!-- 								data-balloon="The 3 or 4-digit number on the back of your card." -->
+			<!-- 								data-balloon-pos="up">i</span> -->
+			<!-- 						</div> -->
+			<!-- 					</div> -->
+			<!-- 				</div> -->
+			<!-- 			</div> -->
+
 			<p id="message-top"></p>
 			<p id="message-down"></p>
 			<button id="btnClose" class="cancel">Cancel</button>
@@ -133,42 +257,109 @@ foreach ($payment_plans as $plan) {
 
 	<script>
 
-	function confirmNewPlan(id,name,monthly,annnual) {	
-		
-
-// 		  document.getElementsByClassName("overlay")[0].style.visibility = "visible";
-// 		  document.getElementsByClassName("overlay")[0].style.opacity = "1";
-		document.getElementById("popup-grid").style.visibility = "visible";
-		document.getElementById("popup-grid").style.opacity = "1";
-		document.getElementById("message-top").innerHTML = 'Your membership will change to ' + name + '.';
-		document.getElementById("message-down").innerHTML = 'Confirm the payment period and will start on next bill date.';
-		document.getElementById("btnConfirmAnnual").setAttribute("plan", id);
-		document.getElementById("btnConfirmMonthly").setAttribute("plan", id);
-					
-		  
-	}
-
 	document.getElementById("btnClose").onclick = function() {
 		
 		  document.getElementById("popup-grid").style.visibility = "hidden";
 		  document.getElementById("popup-grid").style.opacity = "0";
 
 	}
+	
+   $(window).on("load", function(e) {
+	        $("#global-loader").fadeOut("slow");
+  	})
 
-	document.getElementById("btnConfirmAnnual").onclick = function() {
+	$(function() {
+		$("input#username").on("keydown", function (e) {
+			return e.which !== 32;
+          })
+	});
 
-		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan=3'?>';
-		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
-		location.href='<?php echo base_url() . 'billing/confirmAnnualPlanChange?id_plan='?>' + plan;
+	function confirmPlan(id,name,monthly,annnual) {	
+		
+		document.getElementById("popup-grid").style.visibility = "visible";
+		document.getElementById("popup-grid").style.opacity = "1";
+		document.getElementById("message-top").innerHTML = 'You choose ' + name + '.';
+		document.getElementById("message-down").innerHTML = 'Confirm the payment period and will start on next bill date.';
+		document.getElementById("btnConfirmAnnual").setAttribute("plan", id);
+		document.getElementById("btnConfirmMonthly").setAttribute("plan", id);				
+		  
 	}
 
-	document.getElementById("btnConfirmMonthly").onclick = function() {
 
-		location.href='<?php echo base_url() . 'billing/confirmPlanChange?id_plan=3'?>';
-		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
-		location.href='<?php echo base_url() . 'billing/confirmMonthlyPlanChange?id_plan='?>' + plan;
+
+	function validateEmail(email) {
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
 	}
 
+	var myInput = document.getElementById("pass");
+		myInput.onkeyup = function() {
+		// Validate lowercase letters
+	        
+		valid = validatePass()
+	        
+        if (valid) {
+        	document.getElementById("pass").classList.remove('is-invalid');
+			document.getElementById("pass").classList.add('is-valid');
+        } else {
+			document.getElementById("pass").classList.remove('is-valid');
+			document.getElementById("pass").classList.add('is-invalid');
+		}
+	}
+
+	function validatePass() {
+		// Validate lowercase letters
+	        
+		valid = true
+		var lowerCaseLetters = /[a-z]/g;
+		if(!myInput.value.match(lowerCaseLetters)) {  
+			valid = false
+	         
+		}
+	        
+		// Validate capital letters
+		var upperCaseLetters = /[A-Z]/g;
+		if(!myInput.value.match(upperCaseLetters)) {  
+			valid = false
+        }
+
+		// Validate numbers
+		var numbers = /[0-9]/g;
+		if(!myInput.value.match(numbers)) {  
+			valid = false
+		}
+	        
+		// Validate length
+		if(!myInput.value.length >= 8) {
+			valid = false
+        }
+	        
+    	return(valid)
+	}
+
+	function checkOk() {
+		if (!validatePass()) {
+			$("#warningtext").html('Pasword must contain at least 8 characters, upercase, lowercase and numbers')
+			$("#warningdiv").show()
+			return(false)
+		}
+		if(!validateEmail($("#email").val())) {
+			$("#warningtext").html('Please verify your email')
+			$("#warningdiv").show()
+			return(false)
+		}
+		if($("#username").val().length < 5) {
+			$("#warningtext").html('Username is too short')
+			$("#warningdiv").show()
+			return(false)
+        }
+        if(!$("#agree").prop('checked')) {
+    		$("#warningtext").html('You must agree with terms and conditions')
+	        $("#warningdiv").show()
+	        return(false)
+        }
+		return(true)
+	}
 	
 
 </script>
