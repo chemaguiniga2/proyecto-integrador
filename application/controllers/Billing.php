@@ -5,12 +5,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Billing extends CI_Controller
 {
-    
+
     public function index()
     {
-        
+
     }
-    
+
     public function bill()
     {
         $this->load->model('Billing_model');
@@ -19,7 +19,7 @@ class Billing extends CI_Controller
         $data['content'] = $this->load->view('dashboard/billing', $model, true);
         $this->load->view('template', $data);
     }
-    
+
     public function membershipPlans()
     {
         $this->load->model('Billing_model');
@@ -30,7 +30,7 @@ class Billing extends CI_Controller
         $current_plan = $this->Billing_model->getUserIDPlan($user)[0]['id'];
         $model['current_payment_ID_plan'] = $this->Billing_model->getUserIDPlan($current_plan);
         $model['payment_plans'] = $this->Billing_model->getPlans();
-        
+
         $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
 
@@ -38,33 +38,37 @@ class Billing extends CI_Controller
         $data['content'] = $this->load->view('dashboard/userPlans', $model, true);
         $this->load->view('template', $data);
     }
-    
+
     public function accountBilling()
     {
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         $user = $this->Billing_model->getCurrentUser();
         $model['current_payment_plan'] = $this->Billing_model->getUserPlan($user);
-        
-        $current_plan = $this->Billing_model->getUserIDPlan($user)[0]['id'];
-        $model['current_payment_ID_plan'] = $this->Billing_model->getUserIDPlan($current_plan);
+
+
+        if($model['current_payment_plan'] == NULL){
+          $model['current_payment_plan'] = 'empty';
+        }
+        //$current_plan = $this->Billing_model->getUserIDPlan($user)[0]['id'];
+        //$model['current_payment_ID_plan'] = $this->Billing_model->getUserIDPlan($current_plan);
         $model['payment_plans'] = $this->Billing_model->getPlans();
-        
+
         $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
-        
+
         $model['last_payment_user'] = $this->Billing_model->lastPayByUser($user);
-        
+
         $model['ptitle'] = 'Account Billing';
         $model['ptitlePlans'] = 'Membership Plans';
         $model['ptitlePayment'] = 'Payment';
         $model['contentPlans'] = $this->load->view('dashboard/userPlans', $model, true);
         $model['contentPaymentInfo'] = $this->load->view('dashboard/userpaymentinfo', $model, true);
-        
+
         $data['content'] = $this->load->view('dashboard/accountbilling', $model, true);
         $this->load->view('template', $data);
     }
-    
+
     public function showPlans()
     {
         $this->load->model('Billing_model');
@@ -72,9 +76,9 @@ class Billing extends CI_Controller
         $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         $model['ptitle'] = 'Membership Plan';
         $data['content'] = $this->load->view('dashboard/plans', $model, true);
-        $this->load->view('dashboard/plans', $data);        
+        $this->load->view('dashboard/plans', $data);
     }
-    
+
     public function addPaymentMethod()
     {
         $this->load->model('Billing_model');
@@ -83,64 +87,64 @@ class Billing extends CI_Controller
         $data['content'] = $this->load->view('dashboard/paymentForm', $model, true);
         $this->load->view('dashboard/paymentForm', $data);
     }
-    
+
     public function paymentMethod()
     {
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         $user = $this->Billing_model->getCurrentUser();
-        $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);        
+        $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
         $model['ptitle'] = 'Payment Method';
         $data['content'] = $this->load->view('dashboard/userPaymentMethod', $model, true);
         $this->load->view('template', $data);
     }
-    
+
     public function confirmMonthlyPlanChange()
     {
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
-        
+
         $type = "monthly";
-        
-        $user = $this->Billing_model->getCurrentUser();        
-        
+
+        $user = $this->Billing_model->getCurrentUser();
+
         $id_plan = $this->input->get('id_plan');
         $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
-        
+
         $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
         $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
 
         $pay_freq = 'm';
         $this->Billing_model->insertRecordUserPlan($user, $id_plan, $pay_freq);
-        
+
         $model['type'] = 'Monthly';
         $model['ptitle'] = 'Membership Plan Updated';
         $data['content'] = $this->load->view('dashboard/confirmationPlan', $model, true);
         $this->load->view('template', $data);
     }
-    
+
     public function confirmAnnualPlanChange()
     {
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         $user = $this->Billing_model->getCurrentUser();
-        
+
         $id_plan = $this->input->get('id_plan');
         $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
-        
+
         $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
         $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
 
         $pay_freq = 'a';
         $this->Billing_model->insertRecordUserPlan($user, $id_plan, $pay_freq);
-        
+
         $model['type'] = 'Annual';
         $model['ptitle'] = 'Membership Plan Updated';
         $data['content'] = $this->load->view('dashboard/confirmationPlan', $model, true);
         $this->load->view('template', $data);
     }
-    
-    public function createCharge() 
+
+    public function createCharge()
     {
         $username = 30;
         $this->load->model('Billing_model');
@@ -151,7 +155,7 @@ class Billing extends CI_Controller
         $this->load->view('template', $data);
     }
 
-       
+
 
     public function chargeTest()
     {
@@ -176,7 +180,7 @@ class Billing extends CI_Controller
         //     "source" => $token
         // ]);
 
-        //test charge 
+        //test charge
         // $charge = \Stripe\Charge::create([
         //     'amount' => 1000,
         //     'currency' => 'usd',
@@ -281,7 +285,38 @@ class Billing extends CI_Controller
 
     }
 
-    
-    
-}
+    public function cancelSubscription(){
+        $this->load->model('Billing_model');
+        $user = $this->Billing_model->getCurrentUser();
 
+        $this->Billing_model->updatePlanToCancel($user);
+        //Todo se copio de la funcion accoutnBilling
+        $model['current_payment_plan'] = $this->Billing_model->getUserPlan($user);
+
+        if($model['current_payment_plan']==NULL){
+          $model['current_payment_plan'] = 'empty';
+        }
+
+        //$current_plan = $this->Billing_model->getUserIDPlan($user)[0]['id'];
+        //$model['current_payment_ID_plan'] = $this->Billing_model->getUserIDPlan($current_plan);
+        $model['payment_plans'] = $this->Billing_model->getPlans();
+
+        $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
+        $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
+
+        $model['last_payment_user'] = $this->Billing_model->lastPayByUser($user);
+
+        $model['ptitle'] = 'Account Billing';
+        $model['ptitlePlans'] = 'Membership Plans';
+        $model['ptitlePayment'] = 'Payment';
+        $model['contentPlans'] = $this->load->view('dashboard/userPlans', $model, true);
+        $model['contentPaymentInfo'] = $this->load->view('dashboard/userpaymentinfo', $model, true);
+
+        $data['content'] = $this->load->view('dashboard/accountbilling', $model, true);
+        $this->load->view('template', $data);
+
+
+
+    }
+
+}

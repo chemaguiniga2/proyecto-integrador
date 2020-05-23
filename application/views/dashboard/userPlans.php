@@ -45,7 +45,7 @@ $id_plan_selected = 0;
 
 foreach ($payment_plans as $plan) {
 
-    if ($plan['id'] == $current_payment_plan[0]['id_plan']) {
+    if ($current_payment_plan != 'empty' && $plan['id'] == $current_payment_plan[0]['id_plan']) {
         ?>
 					<div class="price-grid">
 					<div class="price-block-selected agile">
@@ -60,7 +60,7 @@ foreach ($payment_plans as $plan) {
         									<?php foreach ($feature_current_plan as $f){?>
         										<?php if($f['id'] == $plan['id']){ ?>
         												<li class="mdi mdi-check-circle">  <?php echo $f['name'] ?></li>
-									<br>	
+									<br>
         										<?php } ?>
         									<?php } ?>
         								</ul>
@@ -85,7 +85,7 @@ foreach ($payment_plans as $plan) {
         									<?php foreach ($feature_current_plan as $f){?>
         										<?php if($f['id'] == $plan['id']){ ?>
         												<li class="mdi mdi-check-circle">  <?php echo $f['name'] ?></li>
-									<br>	
+									<br>
         										<?php } ?>
         									<?php } ?>
         								</ul>
@@ -99,11 +99,13 @@ foreach ($payment_plans as $plan) {
 						</div>
 					</div>
 				</div>
+
 			<?php
     }
 }
 ?>
 			</div>
+			<button class="button-change" id="btnCancel"> Cancel </button>
 		</div>
 	</div>
 
@@ -122,8 +124,8 @@ foreach ($payment_plans as $plan) {
 
 	<script>
 
-	function changeConfirmation(id,name,monthly,annnual) {	
-		
+	function changeConfirmation(id,name,monthly,annnual) {
+
 // 		  var division = document.getElementsByClassName("example");
 // // 		  division[0].innerHTML = id;
 // 		  document.getElementsByClassName("overlay")[0].style.visibility = "visible";
@@ -134,12 +136,13 @@ foreach ($payment_plans as $plan) {
 		document.getElementById("message-down").innerHTML = 'Confirm the payment period and will start on next bill date.';
 		document.getElementById("btnConfirmAnnual").setAttribute("plan", id);
 		document.getElementById("btnConfirmMonthly").setAttribute("plan", id);
-					
-		  
+
+
+
 	}
 
 	document.getElementById("btnClose").onclick = function() {
-		
+
 		  document.getElementById("popup-grid").style.visibility = "hidden";
 		  document.getElementById("popup-grid").style.opacity = "0";
 
@@ -157,8 +160,13 @@ foreach ($payment_plans as $plan) {
 		location.href='<?php echo base_url() . 'billing/confirmMonthlyPlanChange?id_plan='?>' + plan;
 	}
 
-	
-	
+	document.getElementById("btnCancel").onclick = function() {
+		location.href='<?php echo base_url() . 'billing/cancelSubscription'?>';
+
+		//document.getElementById("btnCancel").style.background = "red";
+	}
+
+
 // function myFunction(id) {
 //   document.getElementsByClassName("overlay").style.visibility = "visible";
 //   document.getElementsByClassName("overlay").style.opacity = 1;

@@ -1,10 +1,10 @@
 <?php
 if (!$this->session->userdata('isLogIn')) {
-  redirect(base_url() . 'login'); 
+  redirect(base_url() . 'login');
 }
 if ($this->session->userdata('securitylevel') < 2) {
   if (current_url() != (base_url() . 'security/squestions')) {
-    redirect(base_url() . 'security/squestions'); 
+    redirect(base_url() . 'security/squestions');
   }
 }
 ?>
@@ -75,12 +75,12 @@ if ($this->session->userdata('securitylevel') < 2) {
     </style>
 	</head>
 	<body class="app sidebar-mini rtl body-dark">
-  
+
 
 <?php
   echo '<script>';
   if ($_SERVER["HTTP_HOST"] == 'localhost') {
-    
+
     echo 'const sDef = "http://localhost";';
     echo 'const cDef = "http://localhost:9900";';
   } else {
@@ -90,7 +90,7 @@ if ($this->session->userdata('securitylevel') < 2) {
   echo '</script>';
 ?>
 
-  
+
 		<!-- GLOBAL-LOADER -->
 		<div id="global-loader">
 			<img src="../assets/images/loader.svg" class="loader-img" alt="Loader">
@@ -99,55 +99,55 @@ if ($this->session->userdata('securitylevel') < 2) {
 		<div class="page">
 			<div class="page-main">
 
-        <!-- Sidebar menu--> 
-        <div class="app-sidebar__overlay" data-toggle="sidebar"></div> 
-        <aside class="app-sidebar app-sidebar2"> 
-            <a class="header-brand left-meu-header-brand" href="<?php echo base_url()?>"> 
-                <img src="../assets/images/logo.png" class="header-brand-img desktop-logo" alt="OneCloud logo"> 
-                <img src="../assets/images/logo.png" class="header-brand-img mobile-view-logo" alt="OneCloud logo"> 
-            </a> 
-          <ul class="side-menu"> 
-            <li> 
-                <a class="side-menu__item" href="<?php echo base_url() . '' ?>"><i class="side-menu__icon fa fa-tachometer"></i><span class="side-menu__label">Dashboard</span></a> 
-            </li> 
-            <li > 
-              <a class="side-menu__item" href="<?php echo base_url() . 'clouds' ?>"><i class="side-menu__icon fa fa-cloud"></i><span class="side-menu__label">Clouds</span></a> 
-   
-            </li> 
-            <li class="slide"> 
-              <a class="side-menu__item" href="<?php echo base_url() . 'services' ?>"><i class="side-menu__icon fa fa-cubes"></i><span class="side-menu__label">Resource Groups</span></a> 
-            </li> 
-            <li class="slide"> 
-              <a class="side-menu__item" href="<?php echo base_url() . 'clouds/resources' ?>"><i class="side-menu__icon fa fa-cube"></i><span class="side-menu__label">Resources</span></a> 
-            </li> 
-            <li class="slide"> 
-              <a class="side-menu__item" href="<?php echo base_url() . 'clouds/resources' ?>"><i class="side-menu__icon fa fa-cube"></i><span class="side-menu__label">Administration</span></a> 
-            </li> 
+        <!-- Sidebar menu-->
+        <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+        <aside class="app-sidebar app-sidebar2">
+            <a class="header-brand left-meu-header-brand" href="<?php echo base_url()?>">
+                <img src="../assets/images/logo.png" class="header-brand-img desktop-logo" alt="OneCloud logo">
+                <img src="../assets/images/logo.png" class="header-brand-img mobile-view-logo" alt="OneCloud logo">
+            </a>
+          <ul class="side-menu">
+            <li>
+                <a class="side-menu__item" href="<?php echo base_url() . '' ?>"><i class="side-menu__icon fa fa-tachometer"></i><span class="side-menu__label">Dashboard</span></a>
+            </li>
+            <li >
+              <a class="side-menu__item" href="<?php echo base_url() . 'clouds' ?>"><i class="side-menu__icon fa fa-cloud"></i><span class="side-menu__label">Clouds</span></a>
+
+            </li>
+            <li class="slide">
+              <a class="side-menu__item" href="<?php echo base_url() . 'services' ?>"><i class="side-menu__icon fa fa-cubes"></i><span class="side-menu__label">Resource Groups</span></a>
+            </li>
+            <li class="slide">
+              <a class="side-menu__item" href="<?php echo base_url() . 'clouds/resources' ?>"><i class="side-menu__icon fa fa-cube"></i><span class="side-menu__label">Resources</span></a>
+            </li>
+            <li class="slide">
+              <a class="side-menu__item" href="<?php echo base_url() . 'clouds/resources' ?>"><i class="side-menu__icon fa fa-cube"></i><span class="side-menu__label">Administration</span></a>
+            </li>
 <!-- 			<li class="slide">  -->
-              <a class="side-menu__item" href="<?php// echo base_url() . 'billing/createCharge' ?>"><i class="side-menu__icon fa fa-money"></i><span class="side-menu__label">Testing Charges Creating Stripe User</span></a> 
-<!--             </li>  -->
+              <!--<a class="side-menu__item" href="< ?php echo base_url() . 'billing/createCharge' ?>"><i class="side-menu__icon fa fa-money"></i><span class="side-menu__label">Testing Charges Creating Stripe User</span></a>
+<!             </li>  -->
 <!-- 			<li class="slide">  -->
-              <a class="side-menu__item" href="<?php// echo base_url() . 'billing/createChargeWithObject' ?>"><i class="side-menu__icon fa fa-money"></i><span class="side-menu__label">Create a User with Card Obj</span></a> 
-<!--             </li>  -->
+              <!--<a class="side-menu__item" href="< ?php echo base_url() . 'billing/createChargeWithObject' ?>"><i class="side-menu__icon fa fa-money"></i><span class="side-menu__label">Create a User with Card Obj</span></a>
+<!             </li>  -->
             <!--
-            <li class="slide"> 
-              <a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Settings</span><i class="angle fa fa-angle-right"></i></a> 
-              <ul class="slide-menu"> 
-                <li> 
-                    <a href="<?php echo base_url() . 'dashboard/profile' ?>" class="slide-item">Profile</a> 
-                </li> 
-                <li> 
-                    <a href="<?php echo base_url() . 'security/changepassword' ?>" class="slide-item">Change Password</a> 
-                </li> 
-                <li> 
-                    <a href="<?php echo base_url() . 'security/enable2fa' ?>" class="slide-item">2FA Authentication</a> 
-                </li> 
-              </ul> 
-            </li> 
+            <li class="slide">
+              <a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Settings</span><i class="angle fa fa-angle-right"></i></a>
+              <ul class="slide-menu">
+                <li>
+                    <a href="<?php echo base_url() . 'dashboard/profile' ?>" class="slide-item">Profile</a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url() . 'security/changepassword' ?>" class="slide-item">Change Password</a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url() . 'security/enable2fa' ?>" class="slide-item">2FA Authentication</a>
+                </li>
+              </ul>
+            </li>
             -->
-          </ul> 
-        </aside> 
-        <!--sidemenu end--> 
+          </ul>
+        </aside>
+        <!--sidemenu end-->
 
 				<!-- app-content-->
 				<div class="app-content">
@@ -162,26 +162,26 @@ if ($this->session->userdata('securitylevel') < 2) {
 									<img src="../assets/images/logo.png" class="header-brand-img mobile-view-logo" alt="Onecloud logo">
 								</a>
 								<!-- LOGO -->
-								
+
 								<div class="d-flex order-lg-2 ml-auto header-right-icons header-search-icon">
-                <?php 
-                  
+                <?php
+
                     if ($this->session->userdata('companylogo') != "" && $_SERVER["HTTP_HOST"] != 'localhost') { ?>
                       <img src="<?php echo $this->session->userdata('companylogo') ?>" class="header-brand-img desktop-logo mCS_img_loaded" alt="logo">
                    <?php
-                   
+
                   }
                 ?>
-                  
+
                   <div style="width: auto;"></div>
 									<!-- SEARCH -->
 									<div class="dropdown d-md-flex">
-										
+
 									</div><!-- FULL-SCREEN -->
 									<div class="dropdown d-md-flex notifications">
 										<a class="nav-link icon" data-toggle="dropdown">
 											<i class="fe fe-bell"></i>
-											<span id="bellspan" style="display:none;" class="nav-unread bg-warning-1 pulse"></span> 
+											<span id="bellspan" style="display:none;" class="nav-unread bg-warning-1 pulse"></span>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right  dropdown-menu-arrow">
 											<div class="dropdown-item p-4 bg-image-2 text-center text-white">
@@ -189,7 +189,7 @@ if ($this->session->userdata('securitylevel') < 2) {
 												<span class="text-white-transparent user-semi-title">Notifications</span>
 											</div>
 											<div id="nplace"></div>
-																						
+
 										</div>
 									</div><!-- NOTIFICATIONS -->
 							<!-- MESSAGE-BOX -->
@@ -239,7 +239,7 @@ if ($this->session->userdata('securitylevel') < 2) {
 								</a>
 							</div>
 						</div>
-			
+
 					<!-- HEADER END -->
 					<div class="side-app">
 						<!-- PAGE-HEADER -->
@@ -336,9 +336,9 @@ if ($this->session->userdata('securitylevel') < 2) {
     <script src="../assets/js/sweetalert2.all.js"></script>
 
     <script src="../assets/js/d3.v5.min.js"></script>
-    
+
 		<!-- CUSTOM JS-->
-		
+
     <script src="../assets/js/omp.js"></script>
 
     <!-- form wizzard -->
