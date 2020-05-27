@@ -161,7 +161,7 @@ foreach ($payment_plans as $plan) {
 	}
 
 	document.getElementById("btnCancel").onclick = function() {
-		location.href='<?php echo base_url() . 'billing/cancelSubscription'?>';
+		location.href='<?php echo base_url() . 'billing/createSubscription'?>';
 
 		//document.getElementById("btnCancel").style.background = "red";
 	}
