@@ -1,9 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-//require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
 class Billing extends CI_Controller
+//Pedirle a Furby que nos regrese el usuario de stripe
+//Igual id suscripción
+
 {
 
     public function index()
@@ -198,6 +201,12 @@ class Billing extends CI_Controller
         //     'customer' => $customer_id, // Previously stored, then retrieved
         // ]);
 
+
+        //Guardar id stripe en BD
+
+
+
+
         echo "<pre>", print_r($customer), "</pre>";
         
         $user = $this->Billing_model->getCurrentUser();
@@ -271,7 +280,7 @@ class Billing extends CI_Controller
         \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
 
         $subscription = \Stripe\Subscription::create([
-            'customer' => 'cus_H9FVh05dW32b7X',
+            'customer' => 'cus_H9FVh05dW32b7X', //Pedir id stripe para crear subscripción
             'items' => [
               [
                 'plan' => 'plan_H9EyoXgkZhOa5b',
@@ -279,10 +288,10 @@ class Billing extends CI_Controller
               ],
             ],
         ]);
-
-        $start_date = $subscription['current_period_start'];
-        $end_date = $subscription['current_period_end'];
-        $status = $subscription['status'];
+        echo "<pre>", print_r($subscription), "</pre>";
+        // $start_date = $subscription['current_period_start'];
+        // $end_date = $subscription['current_period_end'];
+        // $status = $subscription['status'];
         // $fecha = new DateTime();
         // $fecha->setTimestamp($subscription['start_date']);
         // echo $fecha->format('U = Y-m-d H:i:s') . "\n";
@@ -291,6 +300,19 @@ class Billing extends CI_Controller
     }
 
     public function cancelSubscription(){
+
+        //cancel subscription
+
+        //Get id subcription, furby nos hará el método
+
+
+        \Stripe\Stripe::setApiKey('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
+
+        $subscription = \Stripe\Subscription::retrieve(
+        'id_bilbi'
+        );
+        $subscription->delete();
+
         $this->load->model('Billing_model');
         $user = $this->Billing_model->getCurrentUser();
 
@@ -318,6 +340,7 @@ class Billing extends CI_Controller
         $model['contentPaymentInfo'] = $this->load->view('dashboard/userpaymentinfo', $model, true);
 
         $data['content'] = $this->load->view('dashboard/accountbilling', $model, true);
+
         $this->load->view('template', $data);
 
 
