@@ -93,7 +93,7 @@ foreach ($payment_plans as $plan) {
 	<div id="popup-grid" class="overlay">
 
 		<div class="popup">
-
+			<p id="message-top"></p>
 			<div class="container-1">
 				<div class="access-container p-6">
           <?php
@@ -101,7 +101,7 @@ foreach ($payment_plans as $plan) {
             'id' => "registerform",
             'onsubmit' => "return checkOk()"
         );
-        echo form_open('register', $foptions)?>
+        echo form_open('site/register', $foptions)?>
 						<form class="login-form validate-form">
 
 						<div class="input-icons access-input validate-input"
@@ -125,33 +125,6 @@ foreach ($payment_plans as $plan) {
 								placeholder="Password">
 						</div>
 
-						<!-- 						<div class="access-input validate-input" -->
-						<!-- 							data-validate="Username must have 8 characters"> -->
-						<!-- 							<input class="login-input form-control" type="text" id="username" -->
-						<!-- 								name="username" placeholder="Username"> <span -->
-						<!-- 								class="input-focus"></span> <span class="input-symbol"> <i -->
-						<!-- 								class="mdi mdi-account" aria-hidden="true"></i> -->
-						<!-- 							</span> -->
-						<!-- 						</div> -->
-
-						<!-- 						<div class="access-input validate-input" -->
-						<!-- 							data-validate="Valid email is required: ex@abc.xyz"> -->
-						<!-- 							<input class="login-input form-control" type="text" id="email" -->
-						<!-- 								name="email" placeholder="Email"> <span class="input-focus"></span> -->
-						<!-- 							<span class="input-symbol"> <i class="zmdi zmdi-email" -->
-						<!-- 								aria-hidden="true"></i> -->
-						<!-- 							</span> -->
-						<!-- 						</div> -->
-
-						<!-- 						<div class="access-input validate-input" -->
-						<!-- 							data-validate="Password is required"> -->
-						<!-- 							<input class="login-input form-control" type="password" id="pass" -->
-						<!-- 								name="pass" placeholder="Password"> <span class="input-focus"></span> -->
-						<!-- 							<span class="input-symbol"> <i class="zmdi zmdi-lock" -->
-						<!-- 								aria-hidden="true"></i> -->
-						<!-- 							</span> -->
-						<!-- 						</div> -->
-
 						<label class="custom-control custom-checkbox mt-4 mb-4"> <input
 							type="checkbox" id="agree" class="custom-control-input"> <span
 							class="custom-control-label">Agree the <a href="terms.html">terms
@@ -170,87 +143,86 @@ foreach ($payment_plans as $plan) {
 						<div class="">
 							<button type="submit" class="btn btn-primary-light btn-block">Register</button>
 						</div>
-						<div class="text-center pt-3">
-							<p class="mb-0">
-								Already have account?<a
-									href="<?php echo base_url() . 'login' ?>"
-									class="text-primary ml-1">Sign In</a>
-							</p>
-						</div>
+<!-- 						<div class="text-center pt-3"> -->
+<!-- 							<p class="mb-0"> -->
+<!-- 								Already have account?<a 
+									href="<?php// echo base_url() . 'login' ?>"-->
+<!-- 									class="text-primary ml-1">Sign In</a> -->
+<!-- 							</p> -->
+<!-- 						</div> -->
 
 						<?php echo form_close() ?>	
 				
 				
+				
+				
 				</div>
 			</div>
-			<!-- 			<p id="info-payment">Payment Information</p> -->
+<!-- 			<p id="info-payment">Payment Information</p> -->
 
-			<!-- 			<div class="card__container"> -->
-			<!-- 				<div class="card"> -->
+<!-- 			<div class="card__container"> -->
+<!-- 				<div class="card"> -->
 
-			<!-- 					<div class="row credit"> -->
-			<!-- 						<div class="left"> -->
-			<!-- 							<label for="cd">Enter your payment information.</label> -->
-			<!-- 						</div> -->
-			<!-- 						<div class="right"></div> -->
-			<!-- 					</div> -->
-			<!-- 					<div class="row cardholder"> -->
-			<!-- 						<div class="info"> -->
-			<!-- 							<label for="cardholdername">Name</label> <input -->
-			<!-- 								placeholder="e.g. Carmelo Milan" id="cardholdername" type="text" /> -->
-			<!-- 						</div> -->
-			<!-- 					</div> -->
-			<!-- 					<div class="row number"> -->
-			<!-- 						<div class="info"> -->
-			<!-- 							<label for="cardnumber">Card number</label> <input -->
-			<!-- 								id="cardnumber" type="text" pattern="[0-9]{16,19}" -->
-			<!-- 								maxlength="19" placeholder="6969-6969-6969-6969" /> -->
-			<!-- 						</div> -->
-			<!-- 					</div> -->
-			<!-- 					<div class="row details"> -->
-			<!-- 						<div class="left"> -->
-			<!-- 							<label for="expiry-date">Expiry</label> <select id="expiry-date"> -->
-			<!-- 								<option>MM</option> -->
-			<!-- 								<option value="1">01</option> -->
-			<!-- 								<option value="2">02</option> -->
-			<!-- 								<option value="3">03</option> -->
-			<!-- 								<option value="4">04</option> -->
-			<!-- 								<option value="5">05</option> -->
-			<!-- 								<option value="6">06</option> -->
-			<!-- 								<option value="7">07</option> -->
-			<!-- 								<option value="8">08</option> -->
-			<!-- 								<option value="9">10</option> -->
-			<!-- 								<option value="11">11</option> -->
-			<!-- 								<option value="12">12</option> -->
-			<!-- 							</select> <span>/</span> <select id="expiry-date"> -->
-			<!-- 								<option>YYYY</option> -->
-			<!-- 								<option value="2020">2020</option> -->
-			<!-- 								<option value="2021">2021</option> -->
-			<!-- 								<option value="2022">2022</option> -->
-			<!-- 								<option value="2023">2023</option> -->
-			<!-- 								<option value="2024">2024</option> -->
-			<!-- 								<option value="2025">2025</option> -->
-			<!-- 								<option value="2026">2026</option> -->
-			<!-- 								<option value="2027">2027</option> -->
-			<!-- 								<option value="2028">2028</option> -->
-			<!-- 								<option value="2029">2029</option> -->
-			<!-- 								<option value="2030">2030</option> -->
-			<!-- 							</select> -->
-			<!-- 						</div> -->
-			<!-- 						<div class="right"> -->
-			<!-- 							<label for="cvv">CVC/CVV</label> <input type="text" maxlength="4" -->
-			<!-- 								placeholder="123" /> <span data-balloon-length="medium" -->
-			<!-- 								data-balloon="The 3 or 4-digit number on the back of your card." -->
-			<!-- 								data-balloon-pos="up">i</span> -->
-			<!-- 						</div> -->
-			<!-- 					</div> -->
-			<!-- 				</div> -->
-			<!-- 			</div> -->
+<!-- 					<div class="row credit"> -->
+<!-- 						<div class="left"> -->
+<!-- 							<label for="cd">Enter your payment information.</label> -->
+<!-- 						</div> -->
+<!-- 						<div class="right"></div> -->
+<!-- 					</div> -->
+<!-- 					<div class="row cardholder"> -->
+<!-- 						<div class="info"> -->
+<!-- 							<label for="cardholdername">Name</label> <input -->
+<!-- 								placeholder="e.g. Carmelo Milan" id="cardholdername" type="text" /> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="row number"> -->
+<!-- 						<div class="info"> -->
+<!-- 							<label for="cardnumber">Card number</label> <input -->
+<!-- 								id="cardnumber" type="text" pattern="[0-9]{16,19}" -->
+<!-- 								maxlength="19" placeholder="6969-6969-6969-6969" /> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="row details"> -->
+<!-- 						<div class="left"> -->
+<!-- 							<label for="expiry-date">Expiry</label> <select id="expiry-date"> -->
+<!-- 								<option>MM</option> -->
+<!-- 								<option value="1">01</option> -->
+<!-- 								<option value="2">02</option> -->
+<!-- 								<option value="3">03</option> -->
+<!-- 								<option value="4">04</option> -->
+<!-- 								<option value="5">05</option> -->
+<!-- 								<option value="6">06</option> -->
+<!-- 								<option value="7">07</option> -->
+<!-- 								<option value="8">08</option> -->
+<!-- 								<option value="9">10</option> -->
+<!-- 								<option value="11">11</option> -->
+<!-- 								<option value="12">12</option> -->
+<!-- 							</select> <span>/</span> <select id="expiry-date"> -->
+<!-- 								<option>YYYY</option> -->
+<!-- 								<option value="2020">2020</option> -->
+<!-- 								<option value="2021">2021</option> -->
+<!-- 								<option value="2022">2022</option> -->
+<!-- 								<option value="2023">2023</option> -->
+<!-- 								<option value="2024">2024</option> -->
+<!-- 								<option value="2025">2025</option> -->
+<!-- 								<option value="2026">2026</option> -->
+<!-- 								<option value="2027">2027</option> -->
+<!-- 								<option value="2028">2028</option> -->
+<!-- 								<option value="2029">2029</option> -->
+<!-- 								<option value="2030">2030</option> -->
+<!-- 							</select> -->
+<!-- 						</div> -->
+<!-- 						<div class="right"> -->
+<!-- 							<label for="cvv">CVC/CVV</label> <input type="text" maxlength="4" -->
+<!-- 								placeholder="123" /> <span data-balloon-length="medium" -->
+<!-- 								data-balloon="The 3 or 4-digit number on the back of your card." -->
+<!-- 								data-balloon-pos="up">i</span> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 
-			<p id="message-top"></p>
-			<p id="message-down"></p>
 			<button id="btnClose" class="cancel">Cancel</button>
-			<button id="btnRegister" class="confirm">Start your free trial!</button>
 			<div class="content"></div>
 		</div>
 	</div>

@@ -143,6 +143,8 @@ class Billing extends CI_Controller
         $data['content'] = $this->load->view('dashboard/confirmationPlan', $model, true);
         $this->load->view('template', $data);
     }
+    
+    public function genereate
 
     public function createCharge()
     {
@@ -197,7 +199,10 @@ class Billing extends CI_Controller
         // ]);
 
         echo "<pre>", print_r($customer), "</pre>";
-
+        
+        $user = $this->Billing_model->getCurrentUser();
+        $id_stripe = 5000;
+        $this->Billing_model->insertIdStripe($user, $id_stripe);
     }
 
     public function createChargeWithObject()
