@@ -236,5 +236,25 @@ class Billing_model extends CI_Model
       $this->db->update('record_user_plan', $toupdate);
 
     }
+    
+    public function updateIdStripe($user, $id_stripe){
+        $toupdate = array(            
+            'id_stripe'=>$id_stripe
+        );
+        $this->db->where('id_user', $user);
+        $this->db->where('status', 'a');
+        $this->db->update('record_user_plan', $toupdate);
+        
+    }
+    
+    public function updateIdSubscription($user, $id_subscription){
+        $toupdate = array(
+            'id_subscription'=>$id_subscription
+        );
+        $this->db->where('id_user', $user);
+        $this->db->where('status', 'a');
+        $this->db->update('record_user_plan', $toupdate);
+        
+    }
 
 }
