@@ -5,45 +5,45 @@ require 'vendor/autoload.php';
 
 class Billing extends CI_Controller
 //Pedirle a Furby que nos regrese el usuario de stripe
-//Igual id suscripciÃ³n
+//Igual id suscripción
 
 {
-
+    
     public function index()
     {
-
+        
     }
-
+    
     public function accountBilling()
     {
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         $user = $this->Billing_model->getCurrentUser();
         $model['current_payment_plan'] = $this->Billing_model->getUserPlan($user);
-
-
+        
+        
         if($model['current_payment_plan'] == NULL){
-          $model['current_payment_plan'] = 'empty';
+            $model['current_payment_plan'] = 'empty';
         }
         //$current_plan = $this->Billing_model->getUserIDPlan($user)[0]['id'];
         //$model['current_payment_ID_plan'] = $this->Billing_model->getUserIDPlan($current_plan);
         $model['payment_plans'] = $this->Billing_model->getPlans();
-
+        
         $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
-
+        
         $model['last_payment_user'] = $this->Billing_model->lastPayByUser($user);
-
+        
         $model['ptitle'] = 'Account Billing';
         $model['ptitlePlans'] = 'Membership Plans';
         $model['ptitlePayment'] = 'Payment';
         $model['contentPlans'] = $this->load->view('dashboard/userPlans', $model, true);
         $model['contentPaymentInfo'] = $this->load->view('dashboard/userpaymentinfo', $model, true);
-
+        
         $data['content'] = $this->load->view('dashboard/accountbilling', $model, true);
         $this->load->view('template', $data);
     }
-
+    
     public function showPlans()
     {
         $this->load->model('Billing_model');
@@ -53,7 +53,7 @@ class Billing extends CI_Controller
         $data['content'] = $this->load->view('dashboard/plans', $model, true);
         $this->load->view('dashboard/plans', $data);
     }
-
+    
     public function addPaymentMethod()
     {
         $this->load->model('Billing_model');
@@ -62,7 +62,7 @@ class Billing extends CI_Controller
         $data['content'] = $this->load->view('dashboard/paymentForm', $model, true);
         $this->load->view('dashboard/paymentForm', $data);
     }
-
+    
     public function paymentMethod()
     {
         $this->load->model('Billing_model');
@@ -73,46 +73,46 @@ class Billing extends CI_Controller
         $data['content'] = $this->load->view('dashboard/userPaymentMethod', $model, true);
         $this->load->view('template', $data);
     }
-
+    
     public function confirmMonthlyPlanChange()
     {
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
-
+        
         $type = "monthly";
-
+        
         $user = $this->Billing_model->getCurrentUser();
-
+        
         $id_plan = $this->input->get('id_plan');
         $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
-
+        
         $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
         $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
-
+        
         $pay_freq = 'm';
         $this->Billing_model->insertRecordUserPlan($user, $id_plan, $pay_freq);
-
+        
         $model['type'] = 'Monthly';
         $model['ptitle'] = 'Membership Plan Updated';
         $data['content'] = $this->load->view('dashboard/confirmationPlan', $model, true);
         $this->load->view('template', $data);
     }
-
+    
     public function confirmAnnualPlanChange()
     {
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         $user = $this->Billing_model->getCurrentUser();
-
+        
         $id_plan = $this->input->get('id_plan');
         $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
-
+        
         $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
         $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
-
+        
         $pay_freq = 'a';
         $this->Billing_model->insertRecordUserPlan($user, $id_plan, $pay_freq);
-
+        
         $model['type'] = 'Annual';
         $model['ptitle'] = 'Membership Plan Updated';
         $data['content'] = $this->load->view('dashboard/confirmationPlan', $model, true);
@@ -129,39 +129,39 @@ class Billing extends CI_Controller
         $data['content'] = $this->load->view('dashboard/createCharge', $model, true);
         $this->load->view('template', $data);
     }
-
+    
     public function createStripeUser()
     {
-
+        
         $this->load->model('Billing_model');
         $email = $this->Billing_model->getCurrentEmail();
-
+        
         \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
-
+        
         
         //Creacion usuario Stripe
         $token = $this->input->post('stripeToken');
-
+        
         $customer = \Stripe\Customer::create([
             'source' => $token,
             'email' => $email,
         ]);
-
-
-
-
+        
+        
+        
+        
         //Guardar id stripe en BD
         
         $user = $this->Billing_model->getCurrentUser();
         $id_stripe = $customer['id'];
         $this->Billing_model->updateIdStripe($user, $id_stripe);
-
-        //Presentar template 
+        
+        //Presentar template
         
         // $id_subscription = "";
         // $this->Billing_model->updateIdSubscription($user, $id_subscription);
     }
-
+    
     public function createChargeWithObject()
     {
         // $this->load->view('dashboard/createChargeWithObj');
@@ -173,8 +173,8 @@ class Billing extends CI_Controller
         $data['content'] = $this->load->view('dashboard/createChargeWithObj', $model, true);
         $this->load->view('template', $data);
     }
-
-
+    
+    
     public function chargeWithObject()
     {
         
@@ -184,10 +184,10 @@ class Billing extends CI_Controller
             'exp_month' => $this->input->post('mm'),
             'exp_year' => $this->input->post('aa')
         );
-
-
+        
+        
         \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
-
+        
         $customer = \Stripe\Customer::create([
             'email' => 'paying.user@example.com',
             ['source' => [
@@ -199,68 +199,50 @@ class Billing extends CI_Controller
             ]]
             //'payment_method' => $intent->'{{PAYMENT_METHOD_ID}}'
         ]);
-
+        
         echo "<pre>", print_r($customer), "</pre>";
         //var_dump($customer);
-
-
+        
+        
         //exit();
-
+        
         // \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
-
+        
         // $customer_id = 'cus_H8pYi3j5cT50351';
-
+        
         // $charge = \Stripe\Charge::create([
         //     'amount' => 1500, // $15.00 this time
         //     'currency' => 'usd',
         //     'customer' => $customer_id, // Previously stored, then retrieved
         // ]);
-
+        
         // echo "<pre>", print_r($charge), "</pre>";
-
+        
     }
-
-
+    
+    
     public function createSubscription()
     {
-<<<<<<< HEAD
-        \Stripe\Stripe::setApiKey("sk_test_BsoCZKYV6SU9mgPyuplXcNyt00E5avcbQ4");
-
-        $id_subscription = \Stripe\Subscription::create([
-            'customer' => 'cus_HMikVQMDXaSWGS', //Pedir id stripe para crear subscripciÃ³n
-            'items' => [
-              [
-                'plan' => 'prod_HMhuJWsJORvZ3v',
-=======
-
+        
         $this->load->model('Billing_model');
         //id_stripe
         $stripe_id = $this->Billing_model->getStripeId();
         \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
-
+        
         $subscription = \Stripe\Subscription::create([
-            'customer' => $stripe_id, //Pedir id stripe para crear subscripciÃ³n
+            'customer' => $stripe_id, //Pedir id stripe para crear subscripción
             'items' => [
-              [
-                'plan' => 'plan_H9EyoXgkZhOa5b',  //Id de nuestro plan
->>>>>>> 2350c690f0d401c474f5725c3fc54925d117b211
-                'quantity' => 1,
-              ],
+                [
+                    'plan' => 'plan_H9EyoXgkZhOa5b',  //Id de nuestro plan
+                    'quantity' => 1,
+                ],
             ],
         ]);
-<<<<<<< HEAD
         
-        $user = $this->input->get('id_user');
-        $this->Billing_model->updateIdSubscription($user, $id_subscription);
-        redirect(base_url() . 'site/checkmail');
-        //echo "<pre>", print_r($subscription), "</pre>";
-=======
-
         $user = $this->Billing_model->getCurrentUser();
         $id_subscription = $subscription['id'];
         $this->Billing_model->updateIdSubscription($user, $id_subscription);
         
->>>>>>> 2350c690f0d401c474f5725c3fc54925d117b211
         // $start_date = $subscription['current_period_start'];
         // $end_date = $subscription['current_period_end'];
         // $status = $subscription['status'];
@@ -268,28 +250,28 @@ class Billing extends CI_Controller
         // $fecha->setTimestamp($subscription['start_date']);
         // echo $fecha->format('U = Y-m-d H:i:s') . "\n";
         //echo "<pre>", print_r($start_date, $end_date, $status), "</pre>";
-
+        
     }
-
+    
     public function cancelSubscription(){
-
+        
         //cancel subscription
-
-        //Get id subcription, furby nos harÃ¡ el mÃ©todo
+        
+        //Get id subcription, furby nos hará el método
         \Stripe\Stripe::setApiKey('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
         
         $subscription = \Stripe\Subscription::retrieve(
-        'id_bilbi'
-        );
+            'id_bilbi'
+            );
         $subscription->delete();
-
+        
         $this->load->model('Billing_model');
         $user = $this->Billing_model->getCurrentUser();
-
+        
         $this->Billing_model->updatePlanToCancel($user);
         //Todo se copio de la funcion accoutnBilling
         redirect(base_url() . 'billing/accountBilling');
-
+        
     }
-
+    
 }
