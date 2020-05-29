@@ -5,7 +5,7 @@ require 'vendor/autoload.php';
 
 class Billing extends CI_Controller
 //Pedirle a Furby que nos regrese el usuario de stripe
-//Igual id suscripción
+//Igual id suscripciï¿½n
 
 {
     
@@ -230,7 +230,7 @@ class Billing extends CI_Controller
         \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
         
         $subscription = \Stripe\Subscription::create([
-            'customer' => $stripe_id, //Pedir id stripe para crear subscripción
+            'customer' => $stripe_id, //Pedir id stripe para crear subscripciï¿½n
             'items' => [
                 [
                     'plan' => 'plan_H9EyoXgkZhOa5b',  //Id de nuestro plan
@@ -257,7 +257,7 @@ class Billing extends CI_Controller
         
         //cancel subscription
         
-        //Get id subcription, furby nos hará el método
+        //Get id subcription, furby nos harï¿½ el mï¿½todo
         \Stripe\Stripe::setApiKey('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
         
         $subscription = \Stripe\Subscription::retrieve(
@@ -273,5 +273,13 @@ class Billing extends CI_Controller
         redirect(base_url() . 'billing/accountBilling');
         
     }
+
+    public function administration() {
+
+        $this->load->model('Billing_model');
+        $model['ptitle'] = 'Administration';
+        $data['content'] = $this->load->view('dashboard/administration', $model, true);
+        $this->load->view('template', $data);
+      }
     
 }

@@ -83,6 +83,8 @@ class Clouds extends CI_Controller {
     $this->load->view('template', $data);
   }
 
+  
+
   public function getresourcedetails() {
     $id = $this->input->get('id');
     $this->load->model('resource_model');
