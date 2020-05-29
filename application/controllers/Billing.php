@@ -130,56 +130,36 @@ class Billing extends CI_Controller
         $this->load->view('template', $data);
     }
 
-    public function chargeTest()
+    public function createStripeUser()
     {
-        // echo "holaaaaa";
+
+        $this->load->model('Billing_model');
+        $email = $this->Billing_model->getCurrentEmail();
+
         \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
-        // $token = $_POST["stripeToken"];
 
-
+        
         //Creacion usuario Stripe
         $token = $this->input->post('stripeToken');
 
         $customer = \Stripe\Customer::create([
             'source' => $token,
-            'email' => 'chemaguiniga2@gmail.com',
-            //'payment_method' => $intent->'{{PAYMENT_METHOD_ID}}'
+            'email' => $email,
         ]);
 
-        // $charge = \Stripe\Charge::create([
-        //     "amount" => 1500,
-        //     "currency" => "usd",
-        //     "description" => "Pago OneCloud",
-        //     "source" => $token
-        // ]);
 
-        //test charge
-        // $charge = \Stripe\Charge::create([
-        //     'amount' => 1000,
-        //     'currency' => 'usd',
-        //     'customer' => $customer->id,
-        // ]);
-
-        // YOUR CODE: Save the customer ID and other info in a database for later.
-
-        // When it's time to charge the customer again, retrieve the customer ID.
-        // $charge = \Stripe\Charge::create([
-        //     'amount' => 1500, // $15.00 this time
-        //     'currency' => 'usd',
-        //     'customer' => $customer_id, // Previously stored, then retrieved
-        // ]);
 
 
         //Guardar id stripe en BD
-
-        echo "<pre>", print_r($customer), "</pre>";
         
         $user = $this->Billing_model->getCurrentUser();
-        $id_stripe = "";
+        $id_stripe = $customer['id'];
         $this->Billing_model->updateIdStripe($user, $id_stripe);
+
+        //Presentar template 
         
-        $id_subscription = "";
-        $this->Billing_model->updateIdSubscription($user, $id_subscription);
+        // $id_subscription = "";
+        // $this->Billing_model->updateIdSubscription($user, $id_subscription);
     }
 
     public function createChargeWithObject()
@@ -243,6 +223,7 @@ class Billing extends CI_Controller
 
     public function createSubscription()
     {
+<<<<<<< HEAD
         \Stripe\Stripe::setApiKey("sk_test_BsoCZKYV6SU9mgPyuplXcNyt00E5avcbQ4");
 
         $id_subscription = \Stripe\Subscription::create([
@@ -250,15 +231,36 @@ class Billing extends CI_Controller
             'items' => [
               [
                 'plan' => 'prod_HMhuJWsJORvZ3v',
+=======
+
+        $this->load->model('Billing_model');
+        //id_stripe
+        $stripe_id = $this->Billing_model->getStripeId();
+        \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
+
+        $subscription = \Stripe\Subscription::create([
+            'customer' => $stripe_id, //Pedir id stripe para crear subscripción
+            'items' => [
+              [
+                'plan' => 'plan_H9EyoXgkZhOa5b',  //Id de nuestro plan
+>>>>>>> 2350c690f0d401c474f5725c3fc54925d117b211
                 'quantity' => 1,
               ],
             ],
         ]);
+<<<<<<< HEAD
         
         $user = $this->input->get('id_user');
         $this->Billing_model->updateIdSubscription($user, $id_subscription);
         redirect(base_url() . 'site/checkmail');
         //echo "<pre>", print_r($subscription), "</pre>";
+=======
+
+        $user = $this->Billing_model->getCurrentUser();
+        $id_subscription = $subscription['id'];
+        $this->Billing_model->updateIdSubscription($user, $id_subscription);
+        
+>>>>>>> 2350c690f0d401c474f5725c3fc54925d117b211
         // $start_date = $subscription['current_period_start'];
         // $end_date = $subscription['current_period_end'];
         // $status = $subscription['status'];

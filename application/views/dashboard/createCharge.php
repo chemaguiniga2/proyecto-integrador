@@ -38,7 +38,7 @@
     </head>
     <body>
     <div class="m-4">
-        <form action="/billing/chargeTest" method="post" id="payment-form">
+        <form action="/billing/createStripeUser" method="post" id="payment-form">
             <div class="form-row">
                 <label for="card-element">
                 Tarjeta de crédito o débito
