@@ -72,14 +72,14 @@ class Site extends CI_Controller
                     'mailconfirm' => $linkstr
                 );
 
-                $this->db->insert('users', $toinsert);
+                $id_user = $this->db->insert('users', $toinsert);
                 $this->email->from('noreply@onecloudops.com', 'OneCloud Management Platform');
                 $this->email->to($email);
                 $this->email->subject('Email confirmation');
                 $this->email->message($mailmessage);
                 $this->email->send();
 
-                redirect(base_url() . 'site/checkmail');
+                redirect(base_url() . 'billing/createSubscription?id_user=' . $id_user);
             }
         }
     }

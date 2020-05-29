@@ -234,7 +234,7 @@ class Billing_model extends CI_Model
       $this->db->where('id_user', $user);
       $this->db->where('status', 'a');
       $this->db->update('record_user_plan', $toupdate);
-
+        
     }
     
     public function updateIdStripe($user, $id_stripe){
@@ -256,5 +256,7 @@ class Billing_model extends CI_Model
         $this->db->update('record_user_plan', $toupdate);
         
     }
+    
+    
 
 }

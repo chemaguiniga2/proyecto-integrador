@@ -243,18 +243,22 @@ class Billing extends CI_Controller
 
     public function createSubscription()
     {
-        \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
+        \Stripe\Stripe::setApiKey("sk_test_BsoCZKYV6SU9mgPyuplXcNyt00E5avcbQ4");
 
-        $subscription = \Stripe\Subscription::create([
-            'customer' => 'cus_H9FVh05dW32b7X', //Pedir id stripe para crear subscripción
+        $id_subscription = \Stripe\Subscription::create([
+            'customer' => 'cus_HMikVQMDXaSWGS', //Pedir id stripe para crear subscripción
             'items' => [
               [
-                'plan' => 'plan_H9EyoXgkZhOa5b',
+                'plan' => 'prod_HMhuJWsJORvZ3v',
                 'quantity' => 1,
               ],
             ],
         ]);
-        echo "<pre>", print_r($subscription), "</pre>";
+        
+        $user = $this->input->get('id_user');
+        $this->Billing_model->updateIdSubscription($user, $id_subscription);
+        redirect(base_url() . 'site/checkmail');
+        //echo "<pre>", print_r($subscription), "</pre>";
         // $start_date = $subscription['current_period_start'];
         // $end_date = $subscription['current_period_end'];
         // $status = $subscription['status'];
@@ -271,7 +275,7 @@ class Billing extends CI_Controller
 
         //Get id subcription, furby nos hará el método
         \Stripe\Stripe::setApiKey('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
-
+        
         $subscription = \Stripe\Subscription::retrieve(
         'id_bilbi'
         );
