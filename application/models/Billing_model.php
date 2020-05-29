@@ -78,6 +78,18 @@ class Billing_model extends CI_Model
         return $id;
     }
 
+    public function getCurrentEmail(){
+        $user = $this->db->select('*')->from('users')->where('id', $this->session->userdata('id'))->get()->row();
+        $email = $user->email;
+        return $email;
+    }
+
+    public function getStripeId(){
+        $user = $this->db->select('*')->from('users')->where('id', $this->session->userdata('id'))->get()->row();
+        $id_stripe = $user->id_stripe;
+        return $id_stripe;
+    }
+
     public function getFeatureCurrentPlan($plan){
 
         $response = array();
