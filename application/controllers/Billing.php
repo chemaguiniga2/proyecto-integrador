@@ -305,5 +305,13 @@ class Billing extends CI_Controller
         redirect(base_url() . 'billing/accountBilling');
         
     }
+
+    public function administration() {
+
+        $this->load->model('Billing_model');
+        $model['ptitle'] = 'Administration';
+        $data['content'] = $this->load->view('dashboard/administration', $model, true);
+        $this->load->view('template', $data);
+      }
     
 }
