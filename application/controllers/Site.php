@@ -64,7 +64,9 @@ class Site extends CI_Controller
                 $mailmessage .= '<p>Welcome to the OneCloud Management Platform. Please verify your account to continue.</p>';
                 $mailmessage .= '<h2>To verify your account, click ' . $recoverylink . '</h2>';
                 $mailmessage .= '<p>User guide download.</p><br><img src="https://uploads-ssl.webflow.com/5b8ebb9cd1ecf52711f5a560/5d6583ea1cb0789083bdde51_CaaS%20logo-p-500.png"></body></html>';
-
+                echo $username;
+                echo $password;
+                echo $email;
                 $toinsert = array(
                     'username' => $username,
                     'password' => $password,
@@ -72,14 +74,17 @@ class Site extends CI_Controller
                     'mailconfirm' => $linkstr
                 );
 
-                $id_user = $this->db->insert('users', $toinsert);
+                $this->db->insert('users', $toinsert);
+                $id_user = $this->db->insert_id();
                 $this->email->from('noreply@onecloudops.com', 'OneCloud Management Platform');
                 $this->email->to($email);
                 $this->email->subject('Email confirmation');
                 $this->email->message($mailmessage);
                 $this->email->send();
-
+    
                 redirect(base_url() . 'billing/createSubscription?id_user=' . $id_user);
+                //redirect(base_url() . 'billing/checkmail);
+                
             }
         }
     }

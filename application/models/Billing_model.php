@@ -83,6 +83,21 @@ class Billing_model extends CI_Model
         $email = $user->email;
         return $email;
     }
+    
+    public function getUserEmail($id_user){
+        
+        $response = array();
+        
+        $query = $this->db->select('email')
+        ->from('users')
+        ->where('id', $id_user)
+        ->get()
+        ->row();
+        
+        $email = $query->email;
+        return $email;
+        
+    }
 
     public function getStripeId(){
         $user = $this->db->select('*')->from('users')->where('id', $this->session->userdata('id'))->get()->row();
@@ -266,6 +281,15 @@ class Billing_model extends CI_Model
         $this->db->where('id_user', $user);
         $this->db->where('status', 'a');
         $this->db->update('record_user_plan', $toupdate);
+        
+    }   
+    
+    public function updateUserIdCusStripe($user, $id_customer){
+        $toupdate = array(
+            'id_customer_stripe'=>$id_customer
+        );
+        $this->db->where('id', $user);
+        $this->db->update('users', $toupdate);
         
     }
     

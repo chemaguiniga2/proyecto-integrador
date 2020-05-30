@@ -225,23 +225,55 @@ class Billing extends CI_Controller
     {
         
         $this->load->model('Billing_model');
-        //id_stripe
-        $stripe_id = $this->Billing_model->getStripeId();
-        \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
+        $id_user = $this->input->get('id_user');
         
-        $subscription = \Stripe\Subscription::create([
-            'customer' => $stripe_id, //Pedir id stripe para crear subscripción
+        //API KEY
+        \Stripe\Stripe::setApiKey("sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb");
+        
+        //$token  = $_POST['stripeToken'];
+        $email = $this->Billing_model->getUserEmail($id_user);
+        
+        $number = '4242424242424242';
+        $exp_month = '11';
+        $exp_year = '20';
+        $cvc = '199';
+        
+        $data = array(
+            'card_number' => '4242424242424242',
+            'cvv' => '199',
+            'exp_month' => '11',
+            'exp_year' => '20'
+        );
+        
+        $token = \Stripe\Token::create(array(
+            "card" => array(
+                "number" => "4242424242424242",
+                "exp_month" => 1,
+                "exp_year" => 2021,
+                "cvc" => "314"
+            )
+        ));
+        
+        $customer = \Stripe\Customer::create([
+            'email' => $email,
+            'source'  => $token,
+        ]);        
+        $id_customer = $customer['id'];
+        $this->Billing_model->updateUserIdCusStripe($id_user, $id_customer);
+        
+        $id_subscription = \Stripe\Subscription::create([
+            'customer' => $customer['id'], //Pedir id stripe para crear subscripción
+            
             'items' => [
                 [
-                    'plan' => 'plan_H9EyoXgkZhOa5b',  //Id de nuestro plan
-                    'quantity' => 1,
+                    'plan' => 'plan_H9miMgrIBzzJlV'
                 ],
             ],
         ]);
-        
-        $user = $this->Billing_model->getCurrentUser();
         $id_subscription = $subscription['id'];
-        $this->Billing_model->updateIdSubscription($user, $id_subscription);
+        $this->Billing_model->updateIdSubscription($id_user, $id_subscription);
+        
+        redirect(base_url() . 'billing/checkmail');
         
         // $start_date = $subscription['current_period_start'];
         // $end_date = $subscription['current_period_end'];
