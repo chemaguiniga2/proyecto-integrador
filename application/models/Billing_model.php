@@ -292,6 +292,97 @@ class Billing_model extends CI_Model
         $this->db->update('users', $toupdate);
         
     }
+
+    public function listUsers(){    
+        $response = array();        
+        
+        $query = $this->db->select('*')
+        ->from('users')
+        ->get();        
+        $response = $query->result_array();
+        //$response['num']= $query->num_rows() ; 
+        return $response; 
+    }
+
+    public function listUsersInTrial(){
+        $response = array();        
+        
+        $query = $this->db->select('*')
+        ->from('users u')
+        ->join('record_user_plan r', 'r.id_user = u.id')
+        ->where('r.status', 't')
+        ->get();        
+        $response = $query->result_array();
+        //$response['num']= $query->num_rows() ; 
+        return $response; 
+    }
+
+    public function listUsersInPlan(){
+        $response = array();        
+        
+        $query = $this->db->select('u.*')
+        ->from('users u')
+        ->join('record_user_plan r', 'r.id_user = u.id')
+        ->join('plan p', 'r.id_plan = p.id')
+        ->where('r.status', 'a')
+        ->get();        
+        $response = $query->result_array();
+        
+        return $response;   
+    }
+
+    public function listIdleUsers(){
+        $response = array();        
+        
+        $query = $this->db->select('*')
+        ->from('users u')
+        ->join('record_user_plan r', 'r.id_user = u.id')
+        ->where('r.status', 'd')
+        ->get();        
+        $response = $query->result_array();
+        //$response['num']= $query->num_rows() ; 
+        return $response; 
+    }
+
+    // Ganancias por plan al mes
+    public function profitPerPlan(){
+        $response = array();        
+        
+        $query = $this->db->select('p.name, SUM(p.monthly_price) as profitPlanMonthly')
+        ->from('plan p')
+        ->join('record_user_plan r', 'r.id_plan = p.id')
+        ->where('r.status', 'a')
+        ->group_by('p.id')
+        ->get();        
+        $response = $query->result_array();
+        
+        return $response;  
+    }
+
+    // facturación mensual. Si se decidió pagar al año se incluye aquí??
+    public function monthlyBilling(){
+        $response = array();        
+        
+        $query = $this->db->select('SUM(p.monthly_price) as profitPlanMonthly')
+        ->from('plan p')
+        ->join('record_user_plan r', 'r.id_plan = p.id')
+        ->where('r.status', 'a')
+        ->get();        
+        $response = $query->result_array();
+        
+        return $response; 
+    }
+
+    public function insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_clouds){
+        $toinsert = array(
+            'name' => $name,
+            'monthly_price' => $monthly_price,
+            'annual_price' => $annual_price,
+            'allowed_users' => $allowed_users,
+            'allowed_clouds' => $allowed_clouds
+        );
+        $this->db->insert('plan', $toinsert);
+    }
     
     
 
