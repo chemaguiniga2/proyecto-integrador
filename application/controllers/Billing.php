@@ -136,25 +136,38 @@ class Billing extends CI_Controller
         $this->load->model('Billing_model');
         $email = $this->Billing_model->getCurrentEmail();
         
-        \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
-        
-        
-        //Creacion usuario Stripe
-        $token = $this->input->post('stripeToken');
-        
-        $customer = \Stripe\Customer::create([
-            'source' => $token,
-            'email' => $email,
-        ]);
-        
-        
-        
-        
-        //Guardar id stripe en BD
-        
-        $user = $this->Billing_model->getCurrentUser();
-        $id_stripe = $customer['id'];
-        $this->Billing_model->updateIdStripe($user, $id_stripe);
+
+        try {
+
+            \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
+            
+            
+            //Creacion usuario Stripe
+            $token = $this->input->post('stripeToken');
+            
+    
+            $customer = \Stripe\Customer::create([
+                'source' => $token,
+                'email' => $email,
+            ]);
+            
+            
+            
+            
+            //Guardar id stripe en BD
+            
+            $user = $this->Billing_model->getCurrentUser();
+            $id_stripe = $customer['id'];
+            $this->Billing_model->updateIdStripe($user, $id_stripe);
+            
+            //$this->chargeWithObject($id_stripe);
+        } catch (Exception $e) {
+
+            //echo "<pre>", print_r($e->getMessage()), "</pre>";
+            redirect(base_url() . 'billing/paymentMethod');
+        }
+
+        redirect(base_url() . 'billing/accountBilling');
         
         //Presentar template
         
@@ -175,48 +188,70 @@ class Billing extends CI_Controller
     }
     
     
-    public function chargeWithObject()
+    public function chargeWithObject($stripe_id)
     {
         
-        $data = array(
-            'card_number' => $this->input->post('card_number'),
-            'cvv' => $this->input->post('cvv'),
-            'exp_month' => $this->input->post('mm'),
-            'exp_year' => $this->input->post('aa')
-        );
+        // $data = array(
+        //     'card_number' => $this->input->post('card_number'),
+        //     'cvv' => $this->input->post('cvv'),
+        //     'exp_month' => $this->input->post('mm'),
+        //     'exp_year' => $this->input->post('aa')
+        // );
         
         
-        \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
+        //\Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
         
-        $customer = \Stripe\Customer::create([
-            'email' => 'paying.user@example.com',
-            ['source' => [
-                'object' => 'card',
-                'number' => $data['card_number'],
-                'exp_month' => $data['exp_month'],
-                'exp_year' => $data['exp_year'],
-                'cvc' => $data['cvv']
-            ]]
-            //'payment_method' => $intent->'{{PAYMENT_METHOD_ID}}'
-        ]);
+        // $customer = \Stripe\Customer::create([
+        //     'email' => 'paying.user@example.com',
+        //     ['source' => [
+        //         'object' => 'card',
+        //         'number' => $data['card_number'],
+        //         'exp_month' => $data['exp_month'],
+        //         'exp_year' => $data['exp_year'],
+        //         'cvc' => $data['cvv']
+        //     ]]
+        //     //'payment_method' => $intent->'{{PAYMENT_METHOD_ID}}'
+        // ]);
         
-        echo "<pre>", print_r($customer), "</pre>";
+        // echo "<pre>", print_r($customer), "</pre>";
         //var_dump($customer);
         
         
         //exit();
+        try {
+            \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
+            
+            $customer_id = $stripe_id;
+            
+            $charge = \Stripe\Charge::create([
+                'amount' => 1000, // $15.00 this time
+                'currency' => 'usd',
+                'customer' => $customer_id, // Previously stored, then retrieved
+            ]);
+        } catch (Exception $e) {
+
+            echo "<pre>", print_r($e->getMessage()), "</pre>";
+            redirect(base_url() . 'billing/paymentMethod');
+        }
+
+        //echo "<pre>", print_r($charge['outcome']['type']), "</pre>";
+        echo "<pre>", print_r($charge), "</pre>";
+
+        //Cachar exepcion de error cuando fondos insuficientes
+
+
+
+
+        //authorized1 es el bueno!!
+
+         //If success
+        //  redirect(base_url() . 'billing/accountBilling');
+        //  //If not success
+        //  redirect(base_url() . 'billing/paymentMethod');
+         
+
         
-        // \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
-        
-        // $customer_id = 'cus_H8pYi3j5cT50351';
-        
-        // $charge = \Stripe\Charge::create([
-        //     'amount' => 1500, // $15.00 this time
-        //     'currency' => 'usd',
-        //     'customer' => $customer_id, // Previously stored, then retrieved
-        // ]);
-        
-        // echo "<pre>", print_r($charge), "</pre>";
+        //echo "<pre>", print_r($charge), "</pre>";
         
     }
     
@@ -227,51 +262,57 @@ class Billing extends CI_Controller
         $this->load->model('Billing_model');
         $id_user = $this->input->get('id_user');
         
-        //API KEY
-        \Stripe\Stripe::setApiKey("sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb");
-        
-        //$token  = $_POST['stripeToken'];
-        $email = $this->Billing_model->getUserEmail($id_user);
-        
-        $number = '4242424242424242';
-        $exp_month = '11';
-        $exp_year = '20';
-        $cvc = '199';
-        
-        $data = array(
-            'card_number' => '4242424242424242',
-            'cvv' => '199',
-            'exp_month' => '11',
-            'exp_year' => '20'
-        );
-        
-        $token = \Stripe\Token::create(array(
-            "card" => array(
-                "number" => "4242424242424242",
-                "exp_month" => 1,
-                "exp_year" => 2021,
-                "cvc" => "314"
-            )
-        ));
-        
-        $customer = \Stripe\Customer::create([
-            'email' => $email,
-            'source'  => $token,
-        ]);        
-        $id_customer = $customer['id'];
-        $this->Billing_model->updateUserIdCusStripe($id_user, $id_customer);
-        
-        $id_subscription = \Stripe\Subscription::create([
-            'customer' => $customer['id'], //Pedir id stripe para crear subscripci�n
+
+        try {
+
+            //API KEY
+            \Stripe\Stripe::setApiKey("sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb");
             
-            'items' => [
-                [
-                    'plan' => 'plan_H9miMgrIBzzJlV'
+            //$token  = $_POST['stripeToken'];
+            $email = $this->Billing_model->getUserEmail($id_user);
+            
+            $number = '4242424242424242';
+            $exp_month = '11';
+            $exp_year = '20';
+            $cvc = '199';
+            
+            $data = array(
+                'card_number' => '4242424242424242',
+                'cvv' => '199',
+                'exp_month' => '11',
+                'exp_year' => '20'
+            );
+            
+            $token = \Stripe\Token::create(array(
+                "card" => array(
+                    "number" => "4242424242424242",
+                    "exp_month" => 1,
+                    "exp_year" => 2021,
+                    "cvc" => "314"
+                )
+            ));
+            
+            $customer = \Stripe\Customer::create([
+                'email' => $email,
+                'source'  => $token,
+            ]);        
+            $id_customer = $customer['id'];
+            $this->Billing_model->updateUserIdCusStripe($id_user, $id_customer);
+            
+            $id_subscription = \Stripe\Subscription::create([
+                'customer' => $customer['id'], //Pedir id stripe para crear subscripci�n
+                
+                'items' => [
+                    [
+                        'plan' => 'plan_H9miMgrIBzzJlV'
+                    ],
                 ],
-            ],
-        ]);
-        $id_subscription = $subscription['id'];
-        $this->Billing_model->updateIdSubscription($id_user, $id_subscription);
+            ]);
+            $id_subscription = $subscription['id'];
+            $this->Billing_model->updateIdSubscription($id_user, $id_subscription);
+        } catch (Exception $e) {
+            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+        }
         
         redirect(base_url() . 'billing/checkmail');
         
