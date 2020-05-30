@@ -5,7 +5,7 @@ require 'vendor/autoload.php';
 
 class Billing extends CI_Controller
 //Pedirle a Furby que nos regrese el usuario de stripe
-//Igual id suscripción
+//Igual id suscripciï¿½n
 
 {
     
@@ -262,7 +262,7 @@ class Billing extends CI_Controller
         $this->Billing_model->updateUserIdCusStripe($id_user, $id_customer);
         
         $id_subscription = \Stripe\Subscription::create([
-            'customer' => $customer['id'], //Pedir id stripe para crear subscripción
+            'customer' => $customer['id'], //Pedir id stripe para crear subscripciï¿½n
             
             'items' => [
                 [
@@ -289,7 +289,7 @@ class Billing extends CI_Controller
         
         //cancel subscription
         
-        //Get id subcription, furby nos hará el método
+        //Get id subcription, furby nos harï¿½ el mï¿½todo
         \Stripe\Stripe::setApiKey('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
         
         $subscription = \Stripe\Subscription::retrieve(
@@ -313,5 +313,102 @@ class Billing extends CI_Controller
         $data['content'] = $this->load->view('dashboard/administration', $model, true);
         $this->load->view('template', $data);
       }
+
+      public function pdfReportListUsers(){
+        $this->load->model('Billing_model');
+        $mpdf = new \Mpdf\Mpdf();
+        $query = $this->Billing_model->listUsers();
+        $cant = sizeof($query);
+        $mpdf->WriteHTML("Amount of users: " . $cant);
+        $mpdf->WriteHTML("List of users");
+        foreach ($query as $l){
+            $mpdf->WriteHTML($l['username']);
+        }
+        
+        $mpdf->Output(); 
+    }
+
+    public function pdfReportListUsersInTrial(){
+        $this->load->model('Billing_model');
+        $mpdf = new \Mpdf\Mpdf();
+        $query = $this->Billing_model->listUsersInTrial();
+        $cant = sizeof($query);
+        $mpdf->WriteHTML("Amount of users in trial: " . $cant);
+        $mpdf->WriteHTML("List of users in trial");
+        foreach ($query as $l){
+            $mpdf->WriteHTML($l['username']);
+        }
+        
+        $mpdf->Output(); 
+    }
+
+    public function pdfReportListUsersInPlan(){
+        $this->load->model('Billing_model');
+        $mpdf = new \Mpdf\Mpdf();
+        $query = $this->Billing_model->listUsersInPlan();
+        $cant = sizeof($query);
+        $mpdf->WriteHTML("Amount of users in plan: " . $cant);
+        $mpdf->WriteHTML("List of users in plan");
+        foreach ($query as $l){
+            $mpdf->WriteHTML($l['username']);
+        }
+        
+        $mpdf->Output(); 
+    }
+
+    public function pdfReportListIdleUsers(){
+
+        $this->load->model('Billing_model');
+        $mpdf = new \Mpdf\Mpdf();
+        $query = $this->Billing_model->listIdleUsers();
+        $cant = sizeof($query);
+        $mpdf->WriteHTML("Amount of idle users: " . $cant);
+        $mpdf->WriteHTML("List of idle users");
+        foreach ($query as $l){
+            $mpdf->WriteHTML($l['username']);
+        }        
+        $mpdf->Output(); 
+    }
+
+    public function pdfReportProfitPerPlan(){
+
+        $this->load->model('Billing_model');
+        $mpdf = new \Mpdf\Mpdf();
+        $query = $this->Billing_model->profitPerPlan();
+        $mpdf->WriteHTML("Profit per plan");
+        $mpdf->WriteHTML("     ");
+        foreach ($query as $l){
+            //array_push($html, $l['username'])  ;
+            $line = $l['name'] . '  ' .$l['profitPlanMonthly'];
+            $mpdf->WriteHTML($line);
+        }        
+        //$mpdf->WriteHTML($html);
+        $mpdf->Output(); // opens in browser
+    }
+
+    public function pdfReportMonthlyBilling(){
+        
+        $this->load->model('Billing_model');
+        $query = $this->Billing_model->monthlyBilling();
+        $mpdf = new \Mpdf\Mpdf();        
+        $mpdf->WriteHTML("     ");
+        foreach ($query as $l){
+            //array_push($html, $l['username'])  ;
+            $line = "Monthy billing" . ':' .$l['profitPlanMonthly'];
+            $mpdf->WriteHTML($line);
+        }        
+        //$mpdf->WriteHTML($html);
+        $mpdf->Output(); // opens in browser
+    }
+
+    public function pdfReportProfitPerPlan2(){
+        $this->load->model('Billing_model');
+        $text = $this->input->get('text');
+        print_r($text);
+        //$mpdf->WriteHTML($html);
+        $text->Output(); // opens in browser
+
+        /*href="<?php echo base_url() . 'billing/pdfReportProfitPerPlan'?>">Prueba</a>*/
+    }
     
 }
