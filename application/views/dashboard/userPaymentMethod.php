@@ -36,7 +36,7 @@
 <script src="https://js.stripe.com/v3/"></script>
 <div class="wrapper">
   <div class="payment-box">
-    <form class="form" action="/billing/createStripeUser" method="post" id="payment-form">
+    <form class="form" action="createStripeUser" method="post" id="payment-form">
       <div class="card space icon-relative">
         <label class="label">Card holder:</label>
         <input type="text" class="input" placeholder="OneCloud Ops">
