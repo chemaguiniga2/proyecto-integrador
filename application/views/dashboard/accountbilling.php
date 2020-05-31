@@ -39,5 +39,14 @@
 		<!-- PAGE-HEADER END -->
             <?php echo $contentPaymentInfo ?>
 	</div>
+	
+	<div class="side-app">
+		<!-- PAGE-HEADER -->
+		<div class="page-division">
+			<h1><?php echo $ptitleOptions ?></h1>
+		</div>
+		<!-- PAGE-HEADER END -->
+            <?php echo $contentOptions ?>
+	</div>
 </body>
 </html>

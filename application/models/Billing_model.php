@@ -38,7 +38,7 @@ class Billing_model extends CI_Model
     }
 
 
-    public function getUserPlan($user){
+    public function getUserPlanFromStatus($user, $status){
 
         $response = array();
 
@@ -46,7 +46,7 @@ class Billing_model extends CI_Model
         ->from('plan')
         ->join('record_user_plan', 'record_user_plan.id_plan = plan.id')
         ->where('id_user', $user)
-        ->where('status', 'a')
+        ->where('status', $status)
         ->get();
 
         $response = $query->result_array();
@@ -401,11 +401,9 @@ class Billing_model extends CI_Model
     
     public function updatePlanToTrial($user, $id_plan){
         $toupdate = array(
-            'status'=>'t',
-            'end_date'=>date('Y-m-d')
+            'status'=>'t'
         );
         $this->db->where('id_user', $user);
-        $this->db->where('status', 'a');
         $this->db->update('record_user_plan', $toupdate);
     }
     

@@ -1,6 +1,17 @@
 <!DOCTYPE HTML>
 
 
+<!-- Vista userPlans
+     Contenido para la vista de accountBilling. Muestra los planes de OneCloud con el plan del usuario seleccionado de la siguiente forma:
+        Plan seleccionado activo: color verde.
+        Plan seleccionado trial: color morado.
+        Otras opciones de planes para cambiar: color azul.
+    Acciones de la vista:
+        button-change: habilita un popup (popup-grid) para confirmar el cambio de plan
+        btnClose: cierra el Popup
+        btConfirm: confirma el cambio del plan de pago. Redirige a c/bi/confirmPlanChange con el id del plan como parametro
+        
+     -->
 
 <html>
 <head>
@@ -39,9 +50,34 @@ $id_plan_selected = 0;
 
 foreach ($payment_plans as $plan) {
 
-    if ($current_payment_plan != 'empty' && $plan['id'] == $current_payment_plan[0]['id_plan']) {
+    if ($current_payment_plan_trial && $plan['id'] == $current_payment_plan_trial[0]['id_plan']) {
         ?>
-					<div class="price-grid">
+				<div class="price-grid">
+					<div class="price-block-selected agile">
+						<div class="price-gd-top-selected">
+							<h4><?php echo $plan['name'] ?></h4>
+							<h3>$<?php echo $plan['monthly_price'] ?>/ month </h3>
+							<h5>$<?php echo $plan['annual_price'] ?>/ year</h5>
+						</div>
+						<div class="price-gd-bottom">
+							<div class="price-list">
+								<ul>
+        									<?php foreach ($feature_current_plan as $f){?>
+        										<?php if($f['id'] == $plan['id']){ ?>
+        												<li class="mdi mdi-check-circle">  <?php echo $f['name'] ?></li>
+									<br>
+        										<?php } ?>
+        									<?php } ?>
+        								</ul>
+							</div>
+						</div>
+						<div class="price-selet-selected">
+							<a class="popup-with-zoom-anim">Current Trial Period</a>
+						</div>
+					</div>
+				</div>
+		    <?php }else if($current_payment_plan && $plan['id'] == $current_payment_plan[0]['id_plan']){?>
+				<div class="price-grid">
 					<div class="price-block-selected agile">
 						<div class="price-gd-top-selected">
 							<h4><?php echo $plan['name'] ?></h4>
@@ -98,7 +134,6 @@ foreach ($payment_plans as $plan) {
 }
 ?>
 			</div>
-			<button class="button-change" id="btnCancel"> Cancel </button>
 		</div>
 	</div>
 
