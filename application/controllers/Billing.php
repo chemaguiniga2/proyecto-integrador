@@ -70,7 +70,7 @@ class Billing extends CI_Controller
         $user = $this->Billing_model->getCurrentUser();
         $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
         $model['ptitle'] = 'Payment Method';
-        $data['content'] = $this->load->view('dashboard/userPaymentMethod', $model, true);
+        $data['content'] = $this->load->view('dashboard/userPaymentMethodStripe', $model, true);
         $this->load->view('template', $data);
     }
     
@@ -130,44 +130,81 @@ class Billing extends CI_Controller
         $this->load->view('template', $data);
     }
     
-    public function createStripeUser()
+    public function updatePaymentMethod()
     {
-        
+        $name = $this->input->post('name');
+        $number = $this->input->post('card');
+        $exp = preg_split("#/#",$this->input->post('expiry-data'));
+        $cvc = $this->input->post('cvc');
+
         $this->load->model('Billing_model');
-        $email = $this->Billing_model->getCurrentEmail();
         
+        
+        try { 
 
-        try {
-
-            \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
-            
-            
-            //Creacion usuario Stripe
-            $token = $this->input->post('stripeToken');
-            
-    
-            $customer = \Stripe\Customer::create([
-                'source' => $token,
-                'email' => $email,
+            $stripe = new \Stripe\StripeClient(
+                'sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q'
+            );
+            $new = $stripe->paymentMethods->create([
+                'type' => 'card',
+                'card' => [
+                    'number' => $number,
+                    'exp_month' => $exp[0],
+                    'exp_year' => $exp[1],
+                    'cvc' => $cvc,
+                ],
             ]);
-            
-            
-            
-            
-            //Guardar id stripe en BD
-            
-            $user = $this->Billing_model->getCurrentUser();
-            $id_stripe = $customer['id'];
-            $this->Billing_model->updateIdStripe($user, $id_stripe);
-            
-            //$this->chargeWithObject($id_stripe);
-        } catch (Exception $e) {
+            $attach = $stripe->paymentMethods->attach(
+                $new['id'],
+                ['customer' => 'cus_HNOPVHhAfmI3OW']
+            );
 
-            //echo "<pre>", print_r($e->getMessage()), "</pre>";
-            redirect(base_url() . 'billing/paymentMethod');
+            $upd = $stripe->paymentMethods->update(
+                $new['id']
+            );
+        } catch (Exception $e){
+
         }
 
+
         redirect(base_url() . 'billing/accountBilling');
+        
+
+        // $this->load->model('Billing_model');
+        // $email = $this->Billing_model->getCurrentEmail();
+        
+
+        // try {
+
+        //     \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
+            
+            
+        //     //Creacion usuario Stripe
+        //     $token = $this->input->post('stripeToken');
+            
+    
+        //     $customer = \Stripe\Customer::create([
+        //         'source' => $token,
+        //         'email' => $email,
+        //     ]);
+            
+            
+            
+            
+        //     //Guardar id stripe en BD
+            
+        //     $user = $this->Billing_model->getCurrentUser();
+        //     $id_stripe = $customer['id'];
+        //     $this->Billing_model->updateIdStripe($user, $id_stripe);
+            
+        //     //$this->chargeWithObject($id_stripe);
+        // } catch (Exception $e) {
+
+        //     //echo "<pre>", print_r($e->getMessage()), "</pre>";
+        //     redirect(base_url() . 'billing/paymentMethod');
+        // }
+
+        // redirect(base_url() . 'billing/accountBilling');
         
         //Presentar template
         
