@@ -98,6 +98,21 @@ class Billing_model extends CI_Model
         return $email;
         
     }
+    
+    public function getUserIdStripe($id_user){
+        
+        $response = array();
+        
+        $query = $this->db->select('id_customer_stripe')
+        ->from('users')
+        ->where('id', $id_user)
+        ->get()
+        ->row();
+        
+        $response = $query->id_customer_stripe;
+        return $response;
+        
+    }
 
     public function getStripeId(){
         $user = $this->db->select('*')->from('users')->where('id', $this->session->userdata('id'))->get()->row();

@@ -73,10 +73,10 @@ class Billing extends CI_Controller
 
     public function paymentMethodRegister()
     {        
-        //$user = $this->input->get('id_user');
-        $user = 30;
-        $this->load->model('Billing_model');
         $user = $this->input->get('id_user');
+        //$user = 30;
+        $this->load->model('Billing_model');
+        $model['id_user'] = $user;
         $model['ptitle'] = 'Payment Method';
         $data['content'] = $this->load->view('dashboard/userPaymentMethod', $model, true);
         $this->load->view('dashboard/userPaymentMethod', $data);
@@ -146,23 +146,17 @@ class Billing extends CI_Controller
 
         try {
 
-            \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
-            
+            \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");           
             
             //Creacion usuario Stripe
-            $token = $this->input->post('stripeToken');
-            
+            $token = $this->input->post('stripeToken');            
     
             $customer = \Stripe\Customer::create([
                 'source' => $token,
                 'email' => $email,
             ]);
             
-            
-            
-            
-            //Guardar id stripe en BD
-            
+            //Guardar id stripe en BD            
             $user = $this->Billing_model->getCurrentUser();
             $id_stripe = $customer['id'];
             $this->Billing_model->updateIdStripe($user, $id_stripe);
@@ -176,17 +170,10 @@ class Billing extends CI_Controller
 
         redirect(base_url() . 'billing/accountBilling');
         
-        redirect(base_url() . 'billing/registerSuccses?id_customer=' . $customer['id']);
+        //redirect(base_url() . 'billing/registerSuccses?id_customer=' . $customer['id']);
     }
     
-    public function registerSuccses(){        
-        $email = 'jarss96@hotmail.com';
-        $model['email'] = $email;
-        $model['customer'] = $this->input->get('id_customer');
-        $model['ptitle'] = 'Membership Plan';
-        $data['content'] = $this->load->view('dashboard/temp_view', $model, true);
-        $this->load->view('dashboard/temp_view', $data);
-    }
+
 
     public function createChargeWithObject()
     {
@@ -276,36 +263,26 @@ class Billing extends CI_Controller
     {
         
         $this->load->model('Billing_model');
+        //Cambiar, puede cambiar si se hace un registro simultaneo
+        //$id_user = $this->db->insert_id();
         $id_user = $this->input->get('id_user');
         
 		try {
         
 			// API KEY
-		    \Stripe\Stripe::setApiKey("sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb");
+		    \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
 
 		    // $token = $_POST['stripeToken'];
 		    $email = $this->Billing_model->getUserEmail($id_user);
+		    
+		    $token = $this->input->post('stripeToken');
 
-		    $data = array(
-		        'card_number' => '4242424242424242',
-		        'cvv' => '199',
-		        'exp_month' => '11',
-		        'exp_year' => '20'
-		    );
-
-		    $token = \Stripe\Token::create(array(
-		        "card" => array(
-		            "number" => "4242424242424242",
-		            "exp_month" => 1,
-		            "exp_year" => 2021,
-		            "cvc" => "314"
-		        )
-		    ));
-
+		    
 		    $customer = \Stripe\Customer::create([
+		        'source' => $token,
 		        'email' => $email,
-		        'source' => $token
 		    ]);
+		    
 		    $id_customer = $customer['id'];
 		    $this->Billing_model->updateUserIdCusStripe($id_user, $id_customer);
 
@@ -314,17 +291,19 @@ class Billing extends CI_Controller
 
 		        'items' => [
 		            [
-		                'plan' => 'plan_H9miMgrIBzzJlV'
+		                'plan' => 'plan_H9EyoXgkZhOa5b'
 		            ]
 		        ]
 		    ]);
 		    $id_subscription = $subscription['id'];
 		    $this->Billing_model->updateIdSubscription($id_user, $id_subscription);
+		    //redirect(base_url() . 'billing/registerSuccses?id_customer=' . $customer['id']);
+		    redirect(base_url() . 'billing/registerSuccses?id_user=' . $id_user);
 		} catch (Exception $e) {
             echo 'Excepción capturada: ',  $e->getMessage(), "\n";
         }
         
-        redirect(base_url() . 'billing/checkmail');
+        //redirect(base_url() . 'billing/checkmail');
 
         // $start_date = $subscription['current_period_start'];
         // $end_date = $subscription['current_period_end'];
@@ -333,6 +312,17 @@ class Billing extends CI_Controller
         // $fecha->setTimestamp($subscription['start_date']);
         // echo $fecha->format('U = Y-m-d H:i:s') . "\n";
         // echo "<pre>", print_r($start_date, $end_date, $status), "</pre>";
+    }
+    
+    public function registerSuccses(){
+        $this->load->model('Billing_model');
+        $id_user = $this->input->get('id_user');        
+        $email = $this->Billing_model->getUserEmail($id_user);
+        $model['email'] = $email;
+        $model['customer'] = $this->Billing_model->getUserIdStripe($id_user);
+        $model['ptitle'] = 'Membership Plan';
+        $data['content'] = $this->load->view('dashboard/temp_view', $model, true);
+        $this->load->view('dashboard/temp_view', $data);
     }
 
     public function cancelSubscription()

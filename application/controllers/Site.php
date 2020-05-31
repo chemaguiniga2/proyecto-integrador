@@ -84,7 +84,7 @@ class Site extends CI_Controller
     
                 //redirect(base_url() . 'billing/createSubscription?id_user=' . $id_user);
                 //redirect(base_url() . 'billing/checkmail);
-                redirect(base_url() . 'billing/createSubscription?id_user=' . $id_user);
+                redirect(base_url() . 'billing/paymentMethodRegister?id_user=' . $id_user);
                 
             }
         }
