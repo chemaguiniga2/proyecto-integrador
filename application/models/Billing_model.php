@@ -2,7 +2,8 @@
 
 class Billing_model extends CI_Model
 {
-
+    
+/************************************     Consultas   **************************************** */
     public function getPaymentPlans() {
         $query = 'SELECT * FROM `plan`';
         return $this->db->query($query)->result();
@@ -20,7 +21,6 @@ class Billing_model extends CI_Model
         return $response;
 
     }
-
 
     //Regresa todos los planes, tiene que discriminar el plan al aque est� asociado el usuario
     public function getPlansAvailable($username, $current_plan){
@@ -194,7 +194,100 @@ class Billing_model extends CI_Model
 
         return $response;
     }
+    
+    public function getActualRecordUserPlan($user, $id_plan){
+        $record_u_p = $this->db->select('id')->from('record_user_plan')->where('id_user', $user)->where('id_plan', $id_plan)->where('status', 'a')->get()->row();
+        $id = $record_u_p->id;
+        return $id;
+        
+    }
+    
+    public function listUsers(){
+        $response = array();
+        
+        $query = $this->db->select('*')
+        ->from('users')
+        ->get();
+        $response = $query->result_array();
+        //$response['num']= $query->num_rows() ;
+        return $response;
+    }
+    
+    
+    
+    public function listUsersInTrial(){
+        $response = array();
+        
+        $query = $this->db->select('*')
+        ->from('users u')
+        ->join('record_user_plan r', 'r.id_user = u.id')
+        ->where('r.status', 't')
+        ->get();
+        $response = $query->result_array();
+        //$response['num']= $query->num_rows() ;
+        return $response;
+    }
+    
+    public function listUsersInPlan(){
+        $response = array();
+        
+        $query = $this->db->select('u.*')
+        ->from('users u')
+        ->join('record_user_plan r', 'r.id_user = u.id')
+        ->join('plan p', 'r.id_plan = p.id')
+        ->where('r.status', 'a')
+        ->get();
+        $response = $query->result_array();
+        
+        return $response;
+    }
+    
+    public function listIdleUsers(){
+        $response = array();
+        
+        $query = $this->db->select('*')
+        ->from('users u')
+        ->join('record_user_plan r', 'r.id_user = u.id')
+        ->where('r.status', 'd')
+        ->get();
+        $response = $query->result_array();
+        //$response['num']= $query->num_rows() ;
+        return $response;
+    }
+    
+    // Ganancias por plan al mes
+    public function profitPerPlan(){
+        $response = array();
+        
+        $query = $this->db->select('p.name, SUM(p.monthly_price) as profitPlanMonthly')
+        ->from('plan p')
+        ->join('record_user_plan r', 'r.id_plan = p.id')
+        ->where('r.status', 'a')
+        ->group_by('p.id')
+        ->get();
+        $response = $query->result_array();
+        
+        return $response;
+    }
+    
+    // facturación mensual. Si se decidió pagar al año se incluye aquí??
+    public function monthlyBilling(){
+        $response = array();
+        
+        $query = $this->db->select('SUM(p.monthly_price) as profitPlanMonthly')
+        ->from('plan p')
+        ->join('record_user_plan r', 'r.id_plan = p.id')
+        ->where('r.status', 'a')
+        ->get();
+        $response = $query->result_array();
+        
+        return $response;
+    }
+    
+    
 
+ /************************************     Inserts   **************************************** */
+    
     public function insertUserPlan($user, $plan){
 
         $toinsert = array(
@@ -227,22 +320,8 @@ class Billing_model extends CI_Model
 
     }
 
-    public function updatePlanToInactive($user){
-        $toupdate = array(
-            'status'=>'i',
-            'end_date'=>date('Y-m-d')
-          );
-        $this->db->where('id_user', $user);
-        $this->db->where('status', 'a');
-        $this->db->update('record_user_plan', $toupdate);
-    }
 
-    public function getActualRecordUserPlan($user, $id_plan){
-        $record_u_p = $this->db->select('id')->from('record_user_plan')->where('id_user', $user)->where('id_plan', $id_plan)->where('status', 'a')->get()->row();
-        $id = $record_u_p->id;
-        return $id;
 
-    }
 
     public function insertPaymentUserPlan($id_record_user_plan){
         $toinsertPayUserPlan = array(
@@ -267,6 +346,30 @@ class Billing_model extends CI_Model
         return $response;
 
     }
+    
+    public function insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_clouds){
+        $toinsert = array(
+            'name' => $name,
+            'monthly_price' => $monthly_price,
+            'annual_price' => $annual_price,
+            'allowed_users' => $allowed_users,
+            'allowed_clouds' => $allowed_clouds
+        );
+        $this->db->insert('plan', $toinsert);
+    }
+    
+/************************************     Updates   **************************************** */
+    
+    public function updatePlanToInactive($user){
+        $toupdate = array(
+            'status'=>'i',
+            'end_date'=>date('Y-m-d')
+        );
+        $this->db->where('id_user', $user);
+        $this->db->where('status', 'a');
+        $this->db->update('record_user_plan', $toupdate);
+    }
+    
 
     public function updatePlanToCancel($user){
       $toupdate = array(
@@ -308,96 +411,7 @@ class Billing_model extends CI_Model
         
     }
 
-    public function listUsers(){    
-        $response = array();        
-        
-        $query = $this->db->select('*')
-        ->from('users')
-        ->get();        
-        $response = $query->result_array();
-        //$response['num']= $query->num_rows() ; 
-        return $response; 
-    }
 
-    public function listUsersInTrial(){
-        $response = array();        
-        
-        $query = $this->db->select('*')
-        ->from('users u')
-        ->join('record_user_plan r', 'r.id_user = u.id')
-        ->where('r.status', 't')
-        ->get();        
-        $response = $query->result_array();
-        //$response['num']= $query->num_rows() ; 
-        return $response; 
-    }
-
-    public function listUsersInPlan(){
-        $response = array();        
-        
-        $query = $this->db->select('u.*')
-        ->from('users u')
-        ->join('record_user_plan r', 'r.id_user = u.id')
-        ->join('plan p', 'r.id_plan = p.id')
-        ->where('r.status', 'a')
-        ->get();        
-        $response = $query->result_array();
-        
-        return $response;   
-    }
-
-    public function listIdleUsers(){
-        $response = array();        
-        
-        $query = $this->db->select('*')
-        ->from('users u')
-        ->join('record_user_plan r', 'r.id_user = u.id')
-        ->where('r.status', 'd')
-        ->get();        
-        $response = $query->result_array();
-        //$response['num']= $query->num_rows() ; 
-        return $response; 
-    }
-
-    // Ganancias por plan al mes
-    public function profitPerPlan(){
-        $response = array();        
-        
-        $query = $this->db->select('p.name, SUM(p.monthly_price) as profitPlanMonthly')
-        ->from('plan p')
-        ->join('record_user_plan r', 'r.id_plan = p.id')
-        ->where('r.status', 'a')
-        ->group_by('p.id')
-        ->get();        
-        $response = $query->result_array();
-        
-        return $response;  
-    }
-
-    // facturación mensual. Si se decidió pagar al año se incluye aquí??
-    public function monthlyBilling(){
-        $response = array();        
-        
-        $query = $this->db->select('SUM(p.monthly_price) as profitPlanMonthly')
-        ->from('plan p')
-        ->join('record_user_plan r', 'r.id_plan = p.id')
-        ->where('r.status', 'a')
-        ->get();        
-        $response = $query->result_array();
-        
-        return $response; 
-    }
-
-    public function insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_clouds){
-        $toinsert = array(
-            'name' => $name,
-            'monthly_price' => $monthly_price,
-            'annual_price' => $annual_price,
-            'allowed_users' => $allowed_users,
-            'allowed_clouds' => $allowed_clouds
-        );
-        $this->db->insert('plan', $toinsert);
-    }
     
     
 

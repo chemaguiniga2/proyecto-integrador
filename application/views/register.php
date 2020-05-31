@@ -5,6 +5,15 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 
+<!-- Function 
+
+    Vista que muestra las opciones de planes referentes a OneCloud, al seleccionar a parece un popu para regstrre en la plataforma
+    Se activa a partir de site/login
+    Redirige a c/s/register
+
+
+-->
+
 <!-- TITLE -->
 <title>Membership Plans</title>
 
@@ -103,6 +112,12 @@ foreach ($payment_plans as $plan) {
         );
         echo form_open('site/register', $foptions)?>
 						<form class="login-form validate-form">
+						
+						<div id="plan-id-division" class="input-icons access-input validate-input">
+							<i class="mdi mdi-account icon" aria-hidden="true"></i> <input
+								class="input-field" type="text" id="idPlanSelected" name="idPlanSelected"
+								disabled="disabled">
+						</div>
 
 						<div class="input-icons access-input validate-input"
 							data-validate="Username must have 8 characters">
@@ -278,11 +293,17 @@ foreach ($payment_plans as $plan) {
 		
 		document.getElementById("popup-grid").style.visibility = "visible";
 		document.getElementById("popup-grid").style.opacity = "1";
+		
+		document.getElementById("idPlanSelected").disabled = true;
+		document.getElementById("idPlanSelected").value = id;
+		document.getElementById("plan-id-division").style.display = "none";
+		
 		document.getElementById("message-top").innerHTML = 'You choose ' + name + '.';
 		document.getElementById("message-down").innerHTML = 'Confirm the payment period and will start on next bill date.';
+		
 		document.getElementById("btnConfirmAnnual").setAttribute("plan", id);
-		document.getElementById("btnConfirmMonthly").setAttribute("plan", id);				
-		  
+		document.getElementById("btnConfirmMonthly").setAttribute("plan", id);		
+		
 	}
 
 

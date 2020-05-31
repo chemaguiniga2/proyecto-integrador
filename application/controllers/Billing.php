@@ -317,10 +317,9 @@ class Billing extends CI_Controller
 		    \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
 
 		    // $token = $_POST['stripeToken'];
-		    $email = $this->Billing_model->getUserEmail($id_user);
-		    
 		    $token = $this->input->post('stripeToken');
-
+		    $email = $this->Billing_model->getUserEmail($id_user);	
+		    $id_plan = $this->Billing_model->getUserEmail($id_user);		    
 		    
 		    $customer = \Stripe\Customer::create([
 		        'source' => $token,

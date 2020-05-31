@@ -43,7 +43,8 @@ class Site extends CI_Controller
             $username = $this->input->post('username');
             $password = password_hash($this->input->post('pass'), PASSWORD_DEFAULT);
             $email = $this->input->post('email');
-
+            $id_plan = $this->input->post('idPlanSelected');
+            
             $user = $this->db->select('*')
                 ->from('users')
                 ->where('username', $username)
@@ -81,6 +82,9 @@ class Site extends CI_Controller
                 $this->email->subject('Email confirmation');
                 $this->email->message($mailmessage);
                 $this->email->send();
+                
+                
+                $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, 'm');
     
                 //redirect(base_url() . 'billing/createSubscription?id_user=' . $id_user);
                 //redirect(base_url() . 'billing/checkmail);
