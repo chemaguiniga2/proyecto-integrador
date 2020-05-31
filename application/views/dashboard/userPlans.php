@@ -1,4 +1,7 @@
 <!DOCTYPE HTML>
+
+
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -6,20 +9,11 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <!-- TITLE -->
-<title>Membership Plans</title>
+<title>User's Membership plan</title>
 
 <!-- DASHBOARD CSS -->
 <link href="../assets/css/billing.css" rel="stylesheet" type="text/css"
 	media="all" />
-
-
-
-<!-- extrasssss -->
-
-
-
-
-<!-- extrasssss -->
 
 <link href="https://fonts.googleapis.com/css?family=Monda"
 	rel="stylesheet">
@@ -72,7 +66,7 @@ foreach ($payment_plans as $plan) {
 					</div>
 				</div>
 		    <?php }else{?>
-        				<div class="price-grid">
+				<div class="price-grid">
 					<div class="price-block agile">
 						<div class="price-gd-top">
 							<h4><?php echo $plan['name'] ?></h4>
@@ -95,13 +89,12 @@ foreach ($payment_plans as $plan) {
 							<button class="button-change"
 								onclick="changeConfirmation(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Change</button>
 
-
 						</div>
 					</div>
 				</div>
 
 			<?php
-    }
+        }
 }
 ?>
 			</div>
@@ -125,11 +118,7 @@ foreach ($payment_plans as $plan) {
 	<script>
 
 	function changeConfirmation(id,name,monthly,annnual) {
-
-// 		  var division = document.getElementsByClassName("example");
-// // 		  division[0].innerHTML = id;
-// 		  document.getElementsByClassName("overlay")[0].style.visibility = "visible";
-// 		  document.getElementsByClassName("overlay")[0].style.opacity = "1";
+		
 		document.getElementById("popup-grid").style.visibility = "visible";
 		document.getElementById("popup-grid").style.opacity = "1";
 		document.getElementById("message-top").innerHTML = 'Your membership will change to ' + name + '.';
@@ -137,40 +126,27 @@ foreach ($payment_plans as $plan) {
 		document.getElementById("btnConfirmAnnual").setAttribute("plan", id);
 		document.getElementById("btnConfirmMonthly").setAttribute("plan", id);
 
-
-
 	}
 
 	document.getElementById("btnClose").onclick = function() {
-
 		  document.getElementById("popup-grid").style.visibility = "hidden";
 		  document.getElementById("popup-grid").style.opacity = "0";
-
 	}
 
 	document.getElementById("btnConfirmAnnual").onclick = function() {
-
 		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
 		location.href='<?php echo base_url() . 'billing/confirmAnnualPlanChange?id_plan='?>' + plan;
 	}
 
 	document.getElementById("btnConfirmMonthly").onclick = function() {
-
 		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
 		location.href='<?php echo base_url() . 'billing/confirmMonthlyPlanChange?id_plan='?>' + plan;
 	}
 
 	document.getElementById("btnCancel").onclick = function() {
 		location.href='<?php echo base_url() . 'billing/cancelSubscription'?>';
-
-		//document.getElementById("btnCancel").style.background = "red";
 	}
-
-
-// function myFunction(id) {
-//   document.getElementsByClassName("overlay").style.visibility = "visible";
-//   document.getElementsByClassName("overlay").style.opacity = 1;
-// }
+	
 </script>
 
 </body>

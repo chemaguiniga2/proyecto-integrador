@@ -202,6 +202,34 @@ class Billing_model extends CI_Model
         
     }
     
+    public function getIdPlanFromRecordUserPlan($id_user){
+        
+        $query = $this->db->select('id_plan')
+        ->from('record_user_plan')
+        ->where('id_user', $id_user)
+        ->get()
+        ->row();
+        
+        $id = $query->id_plan;
+        
+        return $id;
+        
+    }
+    
+    public function getIdPlanStripe($id_plan){
+        
+        $query = $this->db->select('id_plan_stripe')
+        ->from('plan')
+        ->where('id', $id_plan)
+        ->get()
+        ->row();
+        
+        $id = $query->id_plan_stripe;
+        
+        return $id;
+        
+    }
+    
     public function listUsers(){
         $response = array();
         

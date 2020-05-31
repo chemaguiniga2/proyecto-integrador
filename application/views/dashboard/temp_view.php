@@ -2,20 +2,16 @@
 <html>
 <body>
 
-<h2>An Unordered HTML List</h2>
+<h2>Successful Registration</h2>
 
 <ul>
   <li><?php echo $email ?></li>
   <li><?php echo $customer ?></li>
-</ul>  
+</ul>
 
-<h2>An Ordered HTML List</h2>
+<a class="side-menu__item" href="<?php echo base_url() . 'site/login' ?>">Back to Login</a>
 
-<ol>
-  <li>Coffee</li>
-  <li>Tea</li>
-  <li>Milk</li>
-</ol> 
+
 
 </body>
 </html>
