@@ -5,7 +5,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<!-- Function 
+<!-- Función 
 
     Vista que muestra las opciones de planes referentes a OneCloud, al seleccionar a parece un popu para regstrre en la plataforma
     Se activa a partir de site/login
@@ -116,7 +116,7 @@ foreach ($payment_plans as $plan) {
 						<div id="plan-id-division" class="input-icons access-input validate-input">
 							<i class="mdi mdi-account icon" aria-hidden="true"></i> <input
 								class="input-field" type="text" id="idPlanSelected" name="idPlanSelected"
-								disabled="disabled">
+								>
 						</div>
 
 						<div class="input-icons access-input validate-input"
@@ -139,34 +139,7 @@ foreach ($payment_plans as $plan) {
 								class="input-field" type="password" id="pass" name="pass"
 								placeholder="Password">
 						</div>
-
-						<!-- 						<div class="access-input validate-input" -->
-						<!-- 							data-validate="Username must have 8 characters"> -->
-						<!-- 							<input class="login-input form-control" type="text" id="username" -->
-						<!-- 								name="username" placeholder="Username"> <span -->
-						<!-- 								class="input-focus"></span> <span class="input-symbol"> <i -->
-						<!-- 								class="mdi mdi-account" aria-hidden="true"></i> -->
-						<!-- 							</span> -->
-						<!-- 						</div> -->
-
-						<!-- 						<div class="access-input validate-input" -->
-						<!-- 							data-validate="Valid email is required: ex@abc.xyz"> -->
-						<!-- 							<input class="login-input form-control" type="text" id="email" -->
-						<!-- 								name="email" placeholder="Email"> <span class="input-focus"></span> -->
-						<!-- 							<span class="input-symbol"> <i class="zmdi zmdi-email" -->
-						<!-- 								aria-hidden="true"></i> -->
-						<!-- 							</span> -->
-						<!-- 						</div> -->
-
-						<!-- 						<div class="access-input validate-input" -->
-						<!-- 							data-validate="Password is required"> -->
-						<!-- 							<input class="login-input form-control" type="password" id="pass" -->
-						<!-- 								name="pass" placeholder="Password"> <span class="input-focus"></span> -->
-						<!-- 							<span class="input-symbol"> <i class="zmdi zmdi-lock" -->
-						<!-- 								aria-hidden="true"></i> -->
-						<!-- 							</span> -->
-						<!-- 						</div> -->
-
+						
 						<label class="custom-control custom-checkbox mt-4 mb-4"> <input
 							type="checkbox" id="agree" class="custom-control-input"> <span
 							class="custom-control-label">Agree the <a href="terms.html">terms
@@ -198,70 +171,6 @@ foreach ($payment_plans as $plan) {
 				
 				</div>
 			</div>
-			<!-- 			<p id="info-payment">Payment Information</p> -->
-
-			<!-- 			<div class="card__container"> -->
-			<!-- 				<div class="card"> -->
-
-			<!-- 					<div class="row credit"> -->
-			<!-- 						<div class="left"> -->
-			<!-- 							<label for="cd">Enter your payment information.</label> -->
-			<!-- 						</div> -->
-			<!-- 						<div class="right"></div> -->
-			<!-- 					</div> -->
-			<!-- 					<div class="row cardholder"> -->
-			<!-- 						<div class="info"> -->
-			<!-- 							<label for="cardholdername">Name</label> <input -->
-			<!-- 								placeholder="e.g. Carmelo Milan" id="cardholdername" type="text" /> -->
-			<!-- 						</div> -->
-			<!-- 					</div> -->
-			<!-- 					<div class="row number"> -->
-			<!-- 						<div class="info"> -->
-			<!-- 							<label for="cardnumber">Card number</label> <input -->
-			<!-- 								id="cardnumber" type="text" pattern="[0-9]{16,19}" -->
-			<!-- 								maxlength="19" placeholder="6969-6969-6969-6969" /> -->
-			<!-- 						</div> -->
-			<!-- 					</div> -->
-			<!-- 					<div class="row details"> -->
-			<!-- 						<div class="left"> -->
-			<!-- 							<label for="expiry-date">Expiry</label> <select id="expiry-date"> -->
-			<!-- 								<option>MM</option> -->
-			<!-- 								<option value="1">01</option> -->
-			<!-- 								<option value="2">02</option> -->
-			<!-- 								<option value="3">03</option> -->
-			<!-- 								<option value="4">04</option> -->
-			<!-- 								<option value="5">05</option> -->
-			<!-- 								<option value="6">06</option> -->
-			<!-- 								<option value="7">07</option> -->
-			<!-- 								<option value="8">08</option> -->
-			<!-- 								<option value="9">10</option> -->
-			<!-- 								<option value="11">11</option> -->
-			<!-- 								<option value="12">12</option> -->
-			<!-- 							</select> <span>/</span> <select id="expiry-date"> -->
-			<!-- 								<option>YYYY</option> -->
-			<!-- 								<option value="2020">2020</option> -->
-			<!-- 								<option value="2021">2021</option> -->
-			<!-- 								<option value="2022">2022</option> -->
-			<!-- 								<option value="2023">2023</option> -->
-			<!-- 								<option value="2024">2024</option> -->
-			<!-- 								<option value="2025">2025</option> -->
-			<!-- 								<option value="2026">2026</option> -->
-			<!-- 								<option value="2027">2027</option> -->
-			<!-- 								<option value="2028">2028</option> -->
-			<!-- 								<option value="2029">2029</option> -->
-			<!-- 								<option value="2030">2030</option> -->
-			<!-- 							</select> -->
-			<!-- 						</div> -->
-			<!-- 						<div class="right"> -->
-			<!-- 							<label for="cvv">CVC/CVV</label> <input type="text" maxlength="4" -->
-			<!-- 								placeholder="123" /> <span data-balloon-length="medium" -->
-			<!-- 								data-balloon="The 3 or 4-digit number on the back of your card." -->
-			<!-- 								data-balloon-pos="up">i</span> -->
-			<!-- 						</div> -->
-			<!-- 					</div> -->
-			<!-- 				</div> -->
-			<!-- 			</div> -->
-
 			<p id="message-top"></p>
 			<p id="message-down"></p>
 			<button id="btnClose" class="cancel">Cancel</button>
@@ -294,9 +203,9 @@ foreach ($payment_plans as $plan) {
 		document.getElementById("popup-grid").style.visibility = "visible";
 		document.getElementById("popup-grid").style.opacity = "1";
 		
-		document.getElementById("idPlanSelected").disabled = true;
-		document.getElementById("idPlanSelected").value = id;
-		document.getElementById("plan-id-division").style.display = "none";
+ 		document.getElementById("idPlanSelected").value = id;
+//		document.getElementById("idPlanSelected").type = hidden;
+ 		document.getElementById("plan-id-division").style.display = "none";
 		
 		document.getElementById("message-top").innerHTML = 'You choose ' + name + '.';
 		document.getElementById("message-down").innerHTML = 'Confirm the payment period and will start on next bill date.';

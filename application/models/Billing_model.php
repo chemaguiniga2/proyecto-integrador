@@ -298,6 +298,20 @@ class Billing_model extends CI_Model
         $this->db->insert('record_user_plan', $toinsert);
 
     }
+    
+    public function insertFirstRecordUserPlan($user, $plan, $pay_freq){
+        
+        $toinsert = array(
+            'id_user' => $user,
+            'id_plan' => $plan,
+            'start_date' => date('Y-m-d'),
+            'status' => 'i',
+            'payment_frequency' => $pay_freq
+        );
+        
+        $this->db->insert('record_user_plan', $toinsert);
+        
+    }
 
     public function insertRecordUserPlan($user, $id_plan, $pay_freq){
         // update previous status record_user_plan
@@ -319,9 +333,6 @@ class Billing_model extends CI_Model
         $this->Billing_model->insertPaymentUserPlan($idRecordUserPlan);
 
     }
-
-
-
 
     public function insertPaymentUserPlan($id_record_user_plan){
         $toinsertPayUserPlan = array(
@@ -359,6 +370,16 @@ class Billing_model extends CI_Model
     }
     
 /************************************     Updates   **************************************** */
+    
+    public function updatePlanToTrial($user, $id_plan){
+        $toupdate = array(
+            'status'=>'t',
+            'end_date'=>date('Y-m-d')
+        );
+        $this->db->where('id_user', $user);
+        $this->db->where('status', 'a');
+        $this->db->update('record_user_plan', $toupdate);
+    }
     
     public function updatePlanToInactive($user){
         $toupdate = array(

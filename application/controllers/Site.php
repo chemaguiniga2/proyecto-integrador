@@ -28,14 +28,18 @@ class Site extends CI_Controller
         redirect(base_url());
     }
 
+  /*
+   * Función crear nuevo usuario (sin id_customer_plan) y record_user_plan (con status t de trial) en la bd
+   * Se activa a partir de v/d/register.php
+   * Redirige a c/bi/paymentRegisterMethod con el id del usuario de parametro
+   * 
+   * */
     public function register()
     {
         $this->load->model('Billing_model');
         $model['payment_plans'] = $this->Billing_model->getPlans();
         $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
-        //$model['ptitle'] = 'Membership Plan';
-        //$data['content'] = $this->load->view('dashboard/plans', $model, true);
-        //$this->load->view('dashboard/plans', $data);
+        
         if (($this->input->post('username') == NULL) || ($this->input->post('pass') == NULL) || ($this->input->post('email')) == NULL) {
             
             $this->load->view('register', $model);
@@ -53,7 +57,6 @@ class Site extends CI_Controller
                 ->row();
             if ($user) {
                 $model['message'] = "Username or email already in use";
-                // redirect(base_url() . 'register');
                 $this->load->view('register', $model);
             } else {
                 $str = rand();
@@ -68,6 +71,7 @@ class Site extends CI_Controller
                 echo $username;
                 echo $password;
                 echo $email;
+                
                 $toinsert = array(
                     'username' => $username,
                     'password' => $password,
@@ -83,11 +87,8 @@ class Site extends CI_Controller
                 $this->email->message($mailmessage);
                 $this->email->send();
                 
+                $this->Billing_model->insertFirstRecordUserPlan($id_user, $id_plan, 'm'); 
                 
-                $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, 'm');
-    
-                //redirect(base_url() . 'billing/createSubscription?id_user=' . $id_user);
-                //redirect(base_url() . 'billing/checkmail);
                 redirect(base_url() . 'billing/paymentMethodRegister?id_user=' . $id_user);
                 
             }
