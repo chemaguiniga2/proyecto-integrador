@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+
 /*
  * Clase Billing
  * Super Clase:
@@ -21,6 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 
 require 'vendor/autoload.php';
+
 
 class Billing extends CI_Controller
 
@@ -193,6 +195,7 @@ class Billing extends CI_Controller
      */
     public function createCustomerSubscription()
     {
+        
         $this->load->model('Billing_model');
         $id_user = $this->input->get('id_user');
 
@@ -228,6 +231,7 @@ class Billing extends CI_Controller
             $this->Billing_model->updatePlanToTrial($id_user, $id_plan);
 
             redirect(base_url() . 'billing/registerSuccses?id_user=' . $id_user);
+            
         } catch (Exception $e) {
             echo 'Exception: ', $e->getMessage(), "\n";
         }
@@ -275,6 +279,7 @@ class Billing extends CI_Controller
         $this->Billing_model->updatePlanToCancel($user);
 
         redirect(base_url() . 'billing/accountBilling');
+        
     }
 
     /**
@@ -343,9 +348,11 @@ class Billing extends CI_Controller
         } catch (Exception $e) {}
 
         redirect(base_url() . 'billing/accountBilling');
+        
 
         // $this->load->model('Billing_model');
         // $email = $this->Billing_model->getCurrentEmail();
+        
 
         // try {
 
@@ -376,6 +383,8 @@ class Billing extends CI_Controller
 
         // redirect(base_url() . 'billing/registerSuccses?id_customer=' . $customer['id']);
     }
+    
+
 
     public function createChargeWithObject()
     {
@@ -565,4 +574,16 @@ class Billing extends CI_Controller
 
         /* href="<?php echo base_url() . 'billing/pdfReportProfitPerPlan'?>">Prueba</a> */
     }
+
+    public function addPlan (){
+        $this->load->model('Billing_model');
+        $name = $this->input->post('name');
+        $monthly_price = $this->input->post('monthly-price');
+        $annual_price = $this->input->post('annual-price'); 
+        $allowed_users = $this->input->post('users');
+        $allowed_users = $this->input->post('clouds');
+        $this->Billing_model->insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_users);
+        
+    }
+    
 }
