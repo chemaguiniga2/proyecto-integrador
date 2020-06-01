@@ -196,7 +196,16 @@ class Billing_model extends CI_Model
     }
     
     public function getActualRecordUserPlan($user, $id_plan){
-        $record_u_p = $this->db->select('id')->from('record_user_plan')->where('id_user', $user)->where('id_plan', $id_plan)->where('status', 'a')->get()->row();
+        $record_u_p = $this->db->select('id')
+        ->from('record_user_plan')
+        ->where('id_user', $user)
+        ->where('id_plan', $id_plan)
+        ->group_start()
+        ->where('status', 'a')
+        ->or_where('status', 't')
+        ->group_end()
+        ->get()->row();
+        
         $id = $record_u_p->id;
         return $id;
         
@@ -225,6 +234,56 @@ class Billing_model extends CI_Model
         ->row();
         
         $id = $query->id_plan_stripe;
+        
+        return $id;
+        
+    }
+    
+    //Cambiar por id scubscription cunado este el cambio de plan
+    public function getTrialIdSubscriptionStripe($id_user){
+        
+        $query = $this->db->select('id')
+        ->from('record_user_plan')
+        ->where('id_user', $id_user)
+        ->where('status', 't')
+        ->get()
+        ->row();
+        if($query){
+            $id = $query->id;            
+            return $id;
+        }else{
+           return $query;
+        }
+        
+    }
+    
+    public function getIdSubscriptionStripe($id_user){
+        
+        $query = $this->db->select('id')
+        ->from('record_user_plan')
+        ->where('id_user', $id_user)
+        ->where('status', 'a')
+        ->get()
+        ->row();
+        
+       if($query){
+            $id = $query->id;
+            return $id;
+        }else{
+            return $query;
+        }
+        
+    }
+    
+    public function getIdCustomerStripe($id_user){
+        
+        $query = $this->db->select('id_customer_stripe')
+        ->from('users')
+        ->where('id', $id_user)
+        ->get()
+        ->row();
+        
+        $id = $query->id_customer_stripe;
         
         return $id;
         
@@ -341,7 +400,7 @@ class Billing_model extends CI_Model
         
     }
 
-    public function insertRecordUserPlan($user, $id_plan, $pay_freq){
+    public function insertRecordUserPlan($user, $id_plan, $pay_freq, $status){
         // update previous status record_user_plan
         $this->Billing_model->updatePlanToInactive($user);
 
@@ -350,7 +409,7 @@ class Billing_model extends CI_Model
             'id_user' => $user,
             'id_plan' => $id_plan,
             'start_date' => date('Y-m-d'),
-            'status' => 'a',
+            'status' => $status,
             'payment_frequency' => $pay_freq
         );
         $this->db->insert('record_user_plan', $toinsert);
@@ -399,10 +458,19 @@ class Billing_model extends CI_Model
     
 /************************************     Updates   **************************************** */
     
+    public function updateRecordUserPlanStatus($id_record_user_plan, $status){        
+        $toupdate = array(
+            'status'=>$status
+        );
+        $this->db->where('id', $id_record_user_plan);
+        $this->db->update('record_user_plan', $toupdate);
+    }
+    
     public function updatePlanToTrial($user, $id_plan){
         $toupdate = array(
             'status'=>'t'
         );
+        $this->db->where('id_user', $user);
         $this->db->where('id_user', $user);
         $this->db->update('record_user_plan', $toupdate);
     }
@@ -414,6 +482,7 @@ class Billing_model extends CI_Model
         );
         $this->db->where('id_user', $user);
         $this->db->where('status', 'a');
+        $this->db->or_where('status', 't');
         $this->db->update('record_user_plan', $toupdate);
     }
     

@@ -547,19 +547,13 @@ a.popup-with-zoom-anim {
 }
 
 /*Options*/
-.button-cancel {
-	/* 	border: 0px solid;
-	background: linear-gradient(to bottom, #91a6c9 5%, #447fc7 100%);
-	border-radius: 5px;
+.option-grid {
 	display: inline-block;
-	cursor: pointer;
-	color: #ffffff;
-	font-family: Arial;
-	font-size: 0.8em;
-	font-weight: bold;
-	padding: 5px 10px 5px 10px;
-	text-decoration: none;
-	margin: 5px; */
+	width: 40%;
+	margin-bottom: 1em;
+}
+
+.button-cancel {
 	background: #028bbf;
 	background: rgba(2, 139, 191, 0.4);
 	margin: 5px;
@@ -577,9 +571,6 @@ a.popup-with-zoom-anim {
 }
 
 .button-cancel:hover {
-	/* 	background: linear-gradient(to bottom, #447fc7 5%, #91a6c9 100%);
-	box-shadow: 0px 1px 5px 0.5px #ffffff;
-	background-color: #447fc7; */
 	background: #00c9ce;
 	cursor: pointer;
 }
@@ -587,4 +578,10 @@ a.popup-with-zoom-anim {
 .button-cancel:active {
 	position: relative;
 	top: 1px;
+}
+
+/*Popup Cancel*/
+#popup-grid-cancel {
+	visibility: hidden;
+	opacity: 0;
 }
