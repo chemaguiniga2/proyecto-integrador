@@ -3,6 +3,12 @@
 <link href="../assets/css/billingRegistration.css" rel="stylesheet" type="text/css" media="all" />
 <link href="https://fonts.googleapis.com/css?family=Monda" rel="stylesheet">
 
+<script src="js/jquery-1.11.0.min.js"></script>
+<script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
+<script src="js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="js/confirmationpopup.js" type="text/javascript"></script>
+<script src="https://js.stripe.com/v3/"></script>
+
 <div class="row">
 
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
@@ -32,6 +38,7 @@ setInterval(function() { ObserveInputValue($('#fname').val()); }, 100);
 					</div>
         </div> 
         
+        <form action='addPlan' method="post">
                 <div class="row">
                     <div class="col-lg-6 col-md-12">
                         <div class="form-group">
@@ -86,6 +93,7 @@ setInterval(function() { ObserveInputValue($('#fname').val()); }, 100);
             </div>
 
         </div>
+        </form>
 
         <div class="price-selet pric-sclr1">
 					<a class="popup-with-zoom-anim"
@@ -106,5 +114,9 @@ setInterval(function() { ObserveInputValue($('#fname').val()); }, 100);
 					<a class="popup-with-zoom-anim"
 					href="<?php echo base_url() . 'billing/pdfReportMonthlyBilling'?>">Monthly Billing</a>
 					
-				</div>
+                </div>
+                
+                
     </div>
+
+    
