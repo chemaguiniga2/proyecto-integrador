@@ -4,11 +4,15 @@ class Billing_model extends CI_Model
 {
     
 /************************************     Consultas   **************************************** */
+
+    // **************** no se usa
+    // Devuelve todos los planes que se encuentran en la base de datos
     public function getPaymentPlans() {
         $query = 'SELECT * FROM `plan`';
         return $this->db->query($query)->result();
     }
 
+    // Consulta que devuelve todos los planes que se encuentran en la base de datos
     public function getPlans(){
 
         $response = array();
@@ -37,7 +41,8 @@ class Billing_model extends CI_Model
 
     }
 
-
+    // Consulta que devuelve las características del record_user_plan y del plan asociado a un usuario dado
+    // y que además tenga un estatus dado en el record_user_plan
     public function getUserPlanFromStatus($user, $status){
 
         $response = array();
@@ -55,6 +60,7 @@ class Billing_model extends CI_Model
 
     }
 
+    //Devuelve el id del plan en el que cierto usuario dado se encuentra activo
     public function getUserIDPlan($user){
 
         $response = array();
@@ -72,18 +78,22 @@ class Billing_model extends CI_Model
 
     }
 
+    // Devuelve el id del usuario que se encuentra actualmente logueado en la aplicación
     public function getCurrentUser(){
         $user = $this->db->select('*')->from('users')->where('id', $this->session->userdata('id'))->get()->row();
         $id = $user->id;
         return $id;
     }
 
+    // ****************** No se está usando
+    // Devuelve el email del usuario que se encuentra actualmente logueado en la aplicación
     public function getCurrentEmail(){
         $user = $this->db->select('*')->from('users')->where('id', $this->session->userdata('id'))->get()->row();
         $email = $user->email;
         return $email;
     }
     
+    // Devuelve el email de un usuario dado
     public function getUserEmail($id_user){
         
         $response = array();
@@ -99,6 +109,7 @@ class Billing_model extends CI_Model
         
     }
     
+    // Devuelve el id_customer_stripe (id del usuario en stripe) de un usuario dado
     public function getUserIdStripe($id_user){
         
         $response = array();
@@ -114,12 +125,16 @@ class Billing_model extends CI_Model
         
     }
 
+    // ********************** no se usa
+    // Devuelve el id_customer_stripe (id del usuario en stripe) de un usuario dado 
     public function getStripeId(){
         $user = $this->db->select('*')->from('users')->where('id', $this->session->userdata('id'))->get()->row();
         $id_stripe = $user->id_stripe;
         return $id_stripe;
     }
 
+    // *********************** obsoleto, hay que cambiarlo
+    // Devuelve las características de un plan
     public function getFeatureCurrentPlan($plan){
 
         $response = array();
@@ -136,6 +151,7 @@ class Billing_model extends CI_Model
         return $response;
     }
 
+    // Devuelve el plan que conincide con el id pasado por parámetros
     public function getSelectedPlan($plan){
 
         $response = array();
@@ -150,6 +166,8 @@ class Billing_model extends CI_Model
         return $response;
     }
 
+    // ****************** obsolte
+    // Devuelve todos los planes con sus características
     public function getFeaturePlan(){
         $response = array();
 
@@ -164,6 +182,7 @@ class Billing_model extends CI_Model
         return $response;
     }
 
+    // Devuelve lo que debe pagar cierto usuario al mes de acuerdo al plan que tiene activado
     public function getMonthlyPrice($user){
         $response = array();
 
@@ -180,6 +199,8 @@ class Billing_model extends CI_Model
         return $response;
     }
 
+    // ***************** no se usa, no corresponde al nombre
+    // Devuelve el id del plan que tiene actividado cierto usuario
     public function getUserPaymentMethod($user){
         $response = array();
 
@@ -195,6 +216,7 @@ class Billing_model extends CI_Model
         return $response;
     }
     
+    // Devuelve el id del record_user_plan donde cierto usuario está activo o en trial
     public function getActualRecordUserPlan($user, $id_plan){
         $record_u_p = $this->db->select('id')
         ->from('record_user_plan')
@@ -211,6 +233,8 @@ class Billing_model extends CI_Model
         
     }
     
+    // ************ falta hacer validación de status??
+    // Devuelve el id de todos los record_user_plan donde se encuentra un usuario dado
     public function getIdPlanFromRecordUserPlan($id_user){
         
         $query = $this->db->select('id_plan')
@@ -225,6 +249,7 @@ class Billing_model extends CI_Model
         
     }
     
+    // Devuelve el id_plan_stripe (id de un plan en stripe) de un plan dado
     public function getIdPlanStripe($id_plan){
         
         $query = $this->db->select('id_plan_stripe')
@@ -240,6 +265,7 @@ class Billing_model extends CI_Model
     }
     
     //Cambiar por id scubscription cunado este el cambio de plan
+    // Devuelve el id de un record_user_plan que conincida con el id de un usuario y que  el status sea t (trial)
     public function getTrialIdSubscriptionStripe($id_user){
         
         $query = $this->db->select('id')
@@ -257,6 +283,7 @@ class Billing_model extends CI_Model
         
     }
     
+    // Devuelve el id de un record_user_plan que conincida con el id de un usuario y que  el status sea a (activo)
     public function getIdSubscriptionStripe($id_user){
         
         $query = $this->db->select('id')
@@ -275,6 +302,7 @@ class Billing_model extends CI_Model
         
     }
     
+    // Devuelve el id de stripe de un usuario dado
     public function getIdCustomerStripe($id_user){
         
         $query = $this->db->select('id_customer_stripe')
@@ -289,6 +317,7 @@ class Billing_model extends CI_Model
         
     }
     
+    // Devuelve el listado de todos los usuarios que se encuentran en la base de datos
     public function listUsers(){
         $response = array();
         
@@ -301,7 +330,7 @@ class Billing_model extends CI_Model
     }
     
     
-    
+    // Devuelve el listado de todos los usuarios que se encuentran en trial
     public function listUsersInTrial(){
         $response = array();
         
@@ -315,6 +344,7 @@ class Billing_model extends CI_Model
         return $response;
     }
     
+    // Devuelve el listado de todos los usuarios que se encuentran activos en un plan
     public function listUsersInPlan(){
         $response = array();
         
@@ -329,6 +359,7 @@ class Billing_model extends CI_Model
         return $response;
     }
     
+    // Devuelve el listado de todos los usuarios que se encuentran idle (cuando no pagan la mensualidad o anualidad de su plan)
     public function listIdleUsers(){
         $response = array();
         
@@ -342,7 +373,8 @@ class Billing_model extends CI_Model
         return $response;
     }
     
-    // Ganancias por plan al mes
+    // ************************** ¿hay que verificar la frecuencia de pago del cliente y si es anual no sumarlo?
+    // Ganancias por plan al mes, 
     public function profitPerPlan(){
         $response = array();
         
@@ -357,7 +389,8 @@ class Billing_model extends CI_Model
         return $response;
     }
     
-    // facturación mensual. Si se decidió pagar al año se incluye aquí??
+    // **************** Si se decidió pagar al año se incluye aquí??
+    // Facturación mensual. 
     public function monthlyBilling(){
         $response = array();
         
@@ -374,7 +407,8 @@ class Billing_model extends CI_Model
     
 
  /************************************     Inserts   **************************************** */
-    
+    // ******************* no se usa
+    // Inserta un record_user_plan
     public function insertUserPlan($user, $plan){
 
         $toinsert = array(
@@ -386,6 +420,8 @@ class Billing_model extends CI_Model
 
     }
     
+    // *********************** ¿por que lo inicializa en inactivo?
+    // Inserta un recors_user_plan
     public function insertFirstRecordUserPlan($user, $plan, $pay_freq){
         
         $toinsert = array(
@@ -400,11 +436,12 @@ class Billing_model extends CI_Model
         
     }
 
+    // Insertar un record_user_plan con un status dado
     public function insertRecordUserPlan($user, $id_plan, $pay_freq, $status){
-        // update previous status record_user_plan
+        // Update previous status record_user_plan a inactivo
         $this->Billing_model->updatePlanToInactive($user);
 
-        // insert record_user_plan
+        // Insert record_user_plan
         $toinsert = array(
             'id_user' => $user,
             'id_plan' => $id_plan,
@@ -416,11 +453,12 @@ class Billing_model extends CI_Model
 
         $idRecordUserPlan = $this->Billing_model->getActualRecordUserPlan($user, $id_plan);
 
-        // insert payment_user_plan
+        // Insert payment_user_plan
         $this->Billing_model->insertPaymentUserPlan($idRecordUserPlan);
 
     }
 
+    // Inserta un nuevo paymentUserPlan a un recod_user_plan
     public function insertPaymentUserPlan($id_record_user_plan){
         $toinsertPayUserPlan = array(
             'id_record_user_plan' => $id_record_user_plan,
@@ -430,6 +468,7 @@ class Billing_model extends CI_Model
     }
 
 
+    // Devuelve el último pago de un usuario
     public function lastPayByUser($id_user){
         $response = array();
 
@@ -445,6 +484,7 @@ class Billing_model extends CI_Model
 
     }
     
+    // Inserta un nuevo plan a la base de datos
     public function insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_clouds){
         $toinsert = array(
             'name' => $name,
@@ -457,7 +497,7 @@ class Billing_model extends CI_Model
     }
     
 /************************************     Updates   **************************************** */
-    
+    // Actualiza el status de un record user plan con el status pasado
     public function updateRecordUserPlanStatus($id_record_user_plan, $status){        
         $toupdate = array(
             'status'=>$status
@@ -466,6 +506,8 @@ class Billing_model extends CI_Model
         $this->db->update('record_user_plan', $toupdate);
     }
     
+    // ***************** hay que refactorizar
+    // Actualiza el status de un record_user_plan a trial
     public function updatePlanToTrial($user, $id_plan){
         $toupdate = array(
             'status'=>'t'
@@ -475,6 +517,8 @@ class Billing_model extends CI_Model
         $this->db->update('record_user_plan', $toupdate);
     }
     
+    // *************** hay que refactorizar
+    // Actualiza el status de un record_user_plan a inactivo
     public function updatePlanToInactive($user){
         $toupdate = array(
             'status'=>'i',
@@ -486,7 +530,8 @@ class Billing_model extends CI_Model
         $this->db->update('record_user_plan', $toupdate);
     }
     
-
+    // ***************** hay que refactorizar
+    // Actualiza el status de un record_user_plan a cancelado
     public function updatePlanToCancel($user){
       $toupdate = array(
           'status'=>'c',
@@ -497,7 +542,9 @@ class Billing_model extends CI_Model
       $this->db->update('record_user_plan', $toupdate);
         
     }
-    
+
+    // ************* no existe id_stripe en record_user_plan
+    // Actualiza el id de stripe en record_user_plan
     public function updateIdStripe($user, $id_stripe){
         $toupdate = array(            
             'id_stripe'=>$id_stripe
@@ -508,6 +555,7 @@ class Billing_model extends CI_Model
         
     }
     
+    // Actualiza el id de stripe en record_user_plan
     public function updateIdSubscription($user, $id_subscription){
         $toupdate = array(
             'id_subscription'=>$id_subscription
@@ -518,6 +566,7 @@ class Billing_model extends CI_Model
         
     }   
     
+    // Actualiza en id del cliente en stripe
     public function updateUserIdCusStripe($user, $id_customer){
         $toupdate = array(
             'id_customer_stripe'=>$id_customer
