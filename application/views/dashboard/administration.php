@@ -38,12 +38,12 @@ setInterval(function() { ObserveInputValue($('#fname').val()); }, 100);
 					</div>
         </div> 
         
-        <form action='addPlan' method="post">
+        <form method="post" action='addPlan' >
                 <div class="row">
                     <div class="col-lg-6 col-md-12">
                         <div class="form-group">
                             <label for="planName">Plan Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Test Plan 1">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Test Plan 1">
                         </div>
 
                     </div>
@@ -54,7 +54,7 @@ setInterval(function() { ObserveInputValue($('#fname').val()); }, 100);
                     <div class="col-lg-6 col-md-12">
                         <div class="form-group">
                             <label for="monthly">Monthly Price</label>
-                            <input input type="number" min="0.00" max="10000.00" step="0.01" class="form-control" id="monthly-price" placeholder="15">
+                            <input input type="number" min="0.00" max="10000.00" step="0.01" class="form-control" id="monthly-price" name="monthly-price" placeholder="15">
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@ setInterval(function() { ObserveInputValue($('#fname').val()); }, 100);
                     <div class="col-lg-6 col-md-12">
                         <div class="form-group">
                             <label for="monthlyprice">Annual Price</label>
-                            <input input type="number" min="0.00" max="10000.00" step="0.01" class="form-control" id="annual-price"placeholder="150">
+                            <input input type="number" min="0.00" max="10000.00" step="0.01" class="form-control" id="annual-price" name="annual-price" placeholder="150">
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@ setInterval(function() { ObserveInputValue($('#fname').val()); }, 100);
                     <div class="col-lg-6 col-md-12">
                         <div class="form-group">
                             <label class="form-label">Allowed Users</label>
-                            <input type="number" class="form-control" id="users" name="website" placeholder="10">
+                            <input type="number" class="form-control" id="users" name="users" placeholder="10">
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ setInterval(function() { ObserveInputValue($('#fname').val()); }, 100);
                     <div class="col-lg-6 col-md-12">
                         <div class="form-group">
                             <label class="form-label">Allowed Clouds</label>
-                            <input type="number" class="form-control" id="clouds" name="website" placeholder="5">
+                            <input type="number" class="form-control" id="clouds" name="clouds" placeholder="5">
                         </div>
                     </div>
 
@@ -94,7 +94,6 @@ setInterval(function() { ObserveInputValue($('#fname').val()); }, 100);
 
         </div>
         </form>
-
         <div class="price-selet pric-sclr1">
 					<a class="popup-with-zoom-anim"
 					href="<?php echo base_url() . 'billing/pdfReportListUsers'?>">List Users</a>

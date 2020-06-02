@@ -40,9 +40,9 @@ class Billing extends CI_Controller
      *
      * Funcion accountBilling()
      * Activa la pantalla principal para account billing en donde se puede ver el plan seleccionado
-     * con la opción de cambiarlo o cancelarlos. A su vez, se puede observar la infomración de pago
+     * con la opciï¿½n de cambiarlo o cancelarlos. A su vez, se puede observar la infomraciï¿½n de pago
      * actual del usario.
-     * Se activa por desde el submenu del perfil, con la sesión iniciada.
+     * Se activa por desde el submenu del perfil, con la sesiï¿½n iniciada.
      * Despliga la vista v/d/accountBilling
      *
      */
@@ -118,19 +118,19 @@ class Billing extends CI_Controller
         
         if ($id_subscription_stripe_trial != NULL) {
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 't');
-            // Cancelar subscripción anterior con trial
+            // Cancelar subscripciï¿½n anterior con trial
             
             // Desde stripe:
             
-            // Crear nueva subscripción con trial
+            // Crear nueva subscripciï¿½n con trial
             
             // Actualizar estatus de record user plan
         } else if ($id_subscription_stripe_active != NULL) {
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
             
-            // Cancelar subscripción anterior activa
+            // Cancelar subscripciï¿½n anterior activa
             
-            // Crear nueva subscripción
+            // Crear nueva subscripciï¿½n
             
             // Actualizar estatus de record user plan
         }
@@ -162,19 +162,19 @@ class Billing extends CI_Controller
         
         if ($id_subscription_stripe_trial) {
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 't');
-            // Cancelar subscripción anterior con trial
+            // Cancelar subscripciï¿½n anterior con trial
             
             // Desde stripe:
             
-            // Crear nueva subscripción con trial
+            // Crear nueva subscripciï¿½n con trial
             
             // Actualizar estatus de record user plan
         } else if ($id_subscription_stripe_active) {
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
             
-            // Cancelar subscripción anterior activa
+            // Cancelar subscripciï¿½n anterior activa
             
-            // Crear nueva subscripción
+            // Crear nueva subscripciï¿½n
             
             // Actualizar estatus de record user plan
         }
@@ -192,10 +192,10 @@ class Billing extends CI_Controller
 
     /*
      *
-     * Función createSubscription()
-     * Crea el customer y la suscirpción asociada al plan en Stripe. Funciona únicamente con el registro
-     * ya que trae el único record user plan que está asociado al usairo al momento del registro del
-     * usuario. Al finalizar la creación de la subscirpicón asigna el status de trial al record user plan.
+     * Funciï¿½n createSubscription()
+     * Crea el customer y la suscirpciï¿½n asociada al plan en Stripe. Funciona ï¿½nicamente con el registro
+     * ya que trae el ï¿½nico record user plan que estï¿½ asociado al usairo al momento del registro del
+     * usuario. Al finalizar la creaciï¿½n de la subscirpicï¿½n asigna el status de trial al record user plan.
      * Se activa a partir de v/d/userPaymentMethod()
      * Redirige a registerSuccess con el id user de parametro
      *
@@ -246,11 +246,11 @@ class Billing extends CI_Controller
 
     /*
      *
-     * Función registerSuccess
-     * Es el último paso del registro de usuario, sí el registro es exitoso ya se tiene
-     * usuario creado y un plan asociado en stripe con información de pago.
+     * Funciï¿½n registerSuccess
+     * Es el ï¿½ltimo paso del registro de usuario, sï¿½ el registro es exitoso ya se tiene
+     * usuario creado y un plan asociado en stripe con informaciï¿½n de pago.
      * Se activa por createCustomerSubscription parametros a definir
-     * Redirección a definir.
+     * Redirecciï¿½n a definir.
      *
      */
     public function registerSuccses()
@@ -268,9 +268,9 @@ class Billing extends CI_Controller
     /*
      *
      * Funcion cancelSubscritption()
-     * Cancela la suscripción del usuario con sesión iniciada.
+     * Cancela la suscripciï¿½n del usuario con sesiï¿½n iniciada.
      * Se activa con v/d/accountBilling
-     * Redirección a definir
+     * Redirecciï¿½n a definir
      *
      */
     public function cancelSubscription()
@@ -591,7 +591,7 @@ class Billing extends CI_Controller
         $annual_price = $this->input->post('annual-price'); 
         $allowed_users = $this->input->post('users');
         $allowed_users = $this->input->post('clouds');
-        #$this->Billing_model->insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_users);
+        $this->Billing_model->insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_users);
 
 		try {
 			\Stripe\Plan::create([
