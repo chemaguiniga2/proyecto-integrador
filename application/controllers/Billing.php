@@ -21,11 +21,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *
  */
 
-require 'vendor/autoload.php';
+//require 'vendor/autoload.php';
+$stripe = [
+	"secret_key"      => "sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb",
+	#"secret_key" => "sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q", #MIMI LLAVE
+    "publishable_key" => "pk_test_lGGGJhkF3gEcI32XiJniXEE200kdxF59K7",
+];
+
 
 
 class Billing extends CI_Controller
-
 {
 
     public function index()
@@ -41,6 +46,8 @@ class Billing extends CI_Controller
      * Despliga la vista v/d/accountBilling
      *
      */
+
+
     public function accountBilling()
     {
         $this->load->model('Billing_model');
@@ -204,7 +211,7 @@ class Billing extends CI_Controller
         $email = $this->Billing_model->getUserEmail($id_user);
 
         try {
-            \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
+            #\Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
 
             $token = $this->input->post('stripeToken');
 
@@ -268,7 +275,7 @@ class Billing extends CI_Controller
      */
     public function cancelSubscription()
     {
-        \Stripe\Stripe::setApiKey('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
+        #\Stripe\Stripe::setApiKey('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
 
         $subscription = \Stripe\Subscription::retrieve('id_bilbi');
         $subscription->delete();
@@ -427,7 +434,7 @@ class Billing extends CI_Controller
 
         // exit();
         try {
-            \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
+            #\Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
 
             $customer_id = $stripe_id;
 
@@ -576,14 +583,29 @@ class Billing extends CI_Controller
     }
 
     public function addPlan (){
+
+		\Stripe\Stripe::setApiKey($stripe['secret_key']);
         $this->load->model('Billing_model');
         $name = $this->input->post('name');
         $monthly_price = $this->input->post('monthly-price');
         $annual_price = $this->input->post('annual-price'); 
         $allowed_users = $this->input->post('users');
         $allowed_users = $this->input->post('clouds');
-        $this->Billing_model->insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_users);
-        
-    }
+        #$this->Billing_model->insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_users);
+
+		try {
+			\Stripe\Plan::create([
+				'amount' => $monthly_price,
+				'currency' => 'usd',
+				'interval' => 'month',
+				'product' => [
+					"name" => $name,
+				],
+			]);
+		}catch (Exception $e) {
+            echo "<pre>", print_r($e->getMessage()), "</pre>";
+            redirect(base_url() . 'billing/paymentMethod');
+        }
+	}
     
 }
