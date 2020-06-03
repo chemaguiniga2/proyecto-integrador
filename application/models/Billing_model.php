@@ -5,12 +5,6 @@ class Billing_model extends CI_Model
     
 /************************************     Consultas   **************************************** */
 
-    // **************** no se usa
-    // Devuelve todos los planes que se encuentran en la base de datos
-    public function getPaymentPlans() {
-        $query = 'SELECT * FROM `plan`';
-        return $this->db->query($query)->result();
-    }
 
     // Consulta que devuelve todos los planes que se encuentran en la base de datos
     public function getPlans(){
@@ -60,37 +54,11 @@ class Billing_model extends CI_Model
 
     }
 
-    //Devuelve el id del plan en el que cierto usuario dado se encuentra activo
-    public function getUserIDPlan($user){
-
-        $response = array();
-
-        $query = $this->db->select('plan.id')
-        ->from('plan')
-        ->join('record_user_plan', 'record_user_plan.id_plan = plan.id')
-        ->where('id_user', $user)
-        ->where('status', 'a')
-        ->get();
-
-        $response = $query->result_array();
-
-        return $response;
-
-    }
-
     // Devuelve el id del usuario que se encuentra actualmente logueado en la aplicación
     public function getCurrentUser(){
         $user = $this->db->select('*')->from('users')->where('id', $this->session->userdata('id'))->get()->row();
         $id = $user->id;
         return $id;
-    }
-
-    // ****************** No se está usando
-    // Devuelve el email del usuario que se encuentra actualmente logueado en la aplicación
-    public function getCurrentEmail(){
-        $user = $this->db->select('*')->from('users')->where('id', $this->session->userdata('id'))->get()->row();
-        $email = $user->email;
-        return $email;
     }
     
     // Devuelve el email de un usuario dado
@@ -123,14 +91,6 @@ class Billing_model extends CI_Model
         $response = $query->id_customer_stripe;
         return $response;
         
-    }
-
-    // ********************** no se usa
-    // Devuelve el id_customer_stripe (id del usuario en stripe) de un usuario dado 
-    public function getStripeId(){
-        $user = $this->db->select('*')->from('users')->where('id', $this->session->userdata('id'))->get()->row();
-        $id_stripe = $user->id_stripe;
-        return $id_stripe;
     }
 
     // *********************** obsoleto, hay que cambiarlo
@@ -198,23 +158,6 @@ class Billing_model extends CI_Model
 
         return $response;
     }
-
-    // ***************** no se usa, no corresponde al nombre
-    // Devuelve el id del plan que tiene actividado cierto usuario
-    public function getUserPaymentMethod($user){
-        $response = array();
-
-        $query = $this->db->select('plan.id')
-        ->from('plan')
-        ->join('record_user_plan', 'record_user_plan.id_plan = plan.id')
-        ->where('id_user', $user)
-        ->where('status', 'a')
-        ->get();
-
-        $response = $query->result_array();
-
-        return $response;
-    }
     
     // Devuelve el id del record_user_plan donde cierto usuario está activo o en trial
     public function getActualRecordUserPlan($user, $id_plan){
@@ -233,8 +176,8 @@ class Billing_model extends CI_Model
         
     }
     
-    // ************ falta hacer validación de status??
-    // Devuelve el id de todos los record_user_plan donde se encuentra un usuario dado
+
+    // Devuelve el id del plan asociado al primer record_user_plan creado del usuario
     public function getIdPlanFromRecordUserPlan($id_user){
         
         $query = $this->db->select('id_plan')
@@ -264,32 +207,14 @@ class Billing_model extends CI_Model
         
     }
     
-    //Cambiar por id scubscription cunado este el cambio de plan
-    // Devuelve el id de un record_user_plan que conincida con el id de un usuario y que  el status sea t (trial)
-    public function getTrialIdSubscriptionStripe($id_user){
-        
-        $query = $this->db->select('id')
-        ->from('record_user_plan')
-        ->where('id_user', $id_user)
-        ->where('status', 't')
-        ->get()
-        ->row();
-        if($query){
-            $id = $query->id;            
-            return $id;
-        }else{
-           return $query;
-        }
-        
-    }
     
-    // Devuelve el id de un record_user_plan que conincida con el id de un usuario y que  el status sea a (activo)
-    public function getIdSubscriptionStripe($id_user){
+    // Devuelve el id de un record_user_plan que conincida con el id de un usuario y que  tenga cierto status
+    public function getIdSubscriptionStripe($id_user, $status){
         
         $query = $this->db->select('id')
         ->from('record_user_plan')
         ->where('id_user', $id_user)
-        ->where('status', 'a')
+        ->where('status', $status)
         ->get()
         ->row();
         
@@ -359,6 +284,7 @@ class Billing_model extends CI_Model
         return $response;
     }
     
+    // Pensar!!!!
     // Devuelve el listado de todos los usuarios que se encuentran idle (cuando no pagan la mensualidad o anualidad de su plan)
     public function listIdleUsers(){
         $response = array();
@@ -366,22 +292,23 @@ class Billing_model extends CI_Model
         $query = $this->db->select('*')
         ->from('users u')
         ->join('record_user_plan r', 'r.id_user = u.id')
-        ->where('r.status', 'd')
+        ->where('r.status', 'c')
         ->get();
         $response = $query->result_array();
         //$response['num']= $query->num_rows() ;
         return $response;
     }
-    
-    // ************************** ¿hay que verificar la frecuencia de pago del cliente y si es anual no sumarlo?
+
+    // *************** nos quedamos aquí    
     // Ganancias por plan al mes, 
-    public function profitPerPlan(){
+    public function profitMonthyPerPlan(){
         $response = array();
         
         $query = $this->db->select('p.name, SUM(p.monthly_price) as profitPlanMonthly')
         ->from('plan p')
         ->join('record_user_plan r', 'r.id_plan = p.id')
         ->where('r.status', 'a')
+        ->where('r.payment_frequency', 'm')
         ->group_by('p.id')
         ->get();
         $response = $query->result_array();

@@ -109,8 +109,8 @@ class Billing extends CI_Controller
         
         $id_user = $this->Billing_model->getCurrentUser();
         
-        $id_subscription_stripe_trial = $this->Billing_model->getTrialIdSubscriptionStripe($id_user);
-        $id_subscription_stripe_active = $this->Billing_model->getIdSubscriptionStripe($id_user);
+        $id_subscription_stripe_trial = $this->Billing_model->getIdSubscriptionStripe($id_user, 't');
+        $id_subscription_stripe_active = $this->Billing_model->getIdSubscriptionStripe($id_user, 'a');
         
         $id_plan = $this->input->get('id_plan');
         $pay_freq = 'm';        
@@ -133,12 +133,15 @@ class Billing extends CI_Controller
             // Crear nueva subscripci�n
             
             // Actualizar estatus de record user plan
+        } 
+            // Si el usuario no tiene plan activo o trial  
+        else{
+            $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
         }
         
         $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
         
         $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
-        $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($id_user);
         
         $model['type'] = 'Monthly';
         $model['ptitle'] = 'Membership Plan Updated';
@@ -152,9 +155,9 @@ class Billing extends CI_Controller
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         
         $id_user = $this->Billing_model->getCurrentUser();
-        
-        $id_subscription_stripe_trial = $this->Billing_model->getTrialIdSubscriptionStripe($id_user);
-        $id_subscription_stripe_active = $this->Billing_model->getIdSubscriptionStripe($id_user);
+
+        $id_subscription_stripe_trial = $this->Billing_model->getIdSubscriptionStripe($id_user, 't');
+        $id_subscription_stripe_active = $this->Billing_model->getIdSubscriptionStripe($id_user, 'a');
         
         $id_plan = $this->input->get('id_plan');
         $pay_freq = 'a';
@@ -177,12 +180,15 @@ class Billing extends CI_Controller
             // Crear nueva subscripci�n
             
             // Actualizar estatus de record user plan
+        }        
+            // Si el usuario no tiene plan activo o trial  
+        else{
+            $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
         }
         
         $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
         
         $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
-        $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($id_user);
         
         $model['type'] = 'Annual';
         $model['ptitle'] = 'Membership Plan Updated';
@@ -297,7 +303,6 @@ class Billing extends CI_Controller
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         $user = $this->Billing_model->getCurrentUser();
-        $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
         $model['ptitle'] = 'Payment Method';
         $data['content'] = $this->load->view('dashboard/userPaymentMethodStripe', $model, true);
         $this->load->view('template', $data);
@@ -358,7 +363,7 @@ class Billing extends CI_Controller
         
 
         // $this->load->model('Billing_model');
-        // $email = $this->Billing_model->getCurrentEmail();
+        // $email = $this->Billing_model->getCurrentEmail(); // getCurrentEmail borrado
         
 
         // try {
