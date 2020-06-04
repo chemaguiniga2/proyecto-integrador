@@ -105,6 +105,8 @@ foreach ($payment_plans as $plan) {
 
 			<div class="container-1">
 				<div class="access-container p-6">
+						
+				<p id="message-top"></p>
           <?php
         $foptions = array(
             'id' => "registerform",
@@ -139,7 +141,7 @@ foreach ($payment_plans as $plan) {
 								class="input-field" type="password" id="pass" name="pass"
 								placeholder="Password">
 						</div>
-						
+						<p id="message-down"></p>
 						<label class="custom-control custom-checkbox mt-4 mb-4"> <input
 							type="checkbox" id="agree" class="custom-control-input"> <span
 							class="custom-control-label">Agree the <a href="terms.html">terms
@@ -156,7 +158,7 @@ foreach ($payment_plans as $plan) {
                   </span>
 						</div>
 						<div class="">
-							<button type="submit" class="btn btn-primary-light btn-block">Register</button>
+							<button type="submit" class="btn btn-primary-light btn-block">Continue</button>
 						</div>
 						<div class="text-center pt-3">
 							<p class="mb-0">
@@ -171,10 +173,7 @@ foreach ($payment_plans as $plan) {
 				
 				</div>
 			</div>
-			<p id="message-top"></p>
-			<p id="message-down"></p>
 			<button id="btnClose" class="cancel">Cancel</button>
-			<button id="btnRegister" class="confirm">Start your free trial!</button>
 			<div class="content"></div>
 		</div>
 	</div>
@@ -187,6 +186,13 @@ foreach ($payment_plans as $plan) {
 		  document.getElementById("popup-grid").style.opacity = "0";
 
 	}
+
+// 	document.getElementById("popup-grid").onclick = function() {
+		
+// 		  document.getElementById("popup-grid").style.visibility = "hidden";
+// 		  document.getElementById("popup-grid").style.opacity = "0";
+
+// 	}
 	
    $(window).on("load", function(e) {
 	        $("#global-loader").fadeOut("slow");
@@ -208,7 +214,7 @@ foreach ($payment_plans as $plan) {
  		document.getElementById("plan-id-division").style.display = "none";
 		
 		document.getElementById("message-top").innerHTML = 'You choose ' + name + '.';
-		document.getElementById("message-down").innerHTML = 'Confirm the payment period and will start on next bill date.';
+		document.getElementById("message-down").innerHTML = 'Enter your payment method and will start on next bill date.';
 		
 		document.getElementById("btnConfirmAnnual").setAttribute("plan", id);
 		document.getElementById("btnConfirmMonthly").setAttribute("plan", id);		

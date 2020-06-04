@@ -25,7 +25,7 @@ class Site extends CI_Controller
     {
         $this->session->unset_userdata('isLogIn');
         $this->session->unset_userdata('id');
-        redirect(base_url());
+        redirect(base_url() . 'site/login');
     }
 
   /*
@@ -275,8 +275,15 @@ class Site extends CI_Controller
     }
 
     public function checkmail()
-    {
-        $this->load->view('checkmail', '');
+    {   
+        
+        $this->load->model('Billing_model');
+        $id_user = $this->input->get('id_user');
+        $email = $this->Billing_model->getUserEmail($id_user);
+        $model['email'] = $email;
+        $model['customer'] = $this->Billing_model->getUserIdStripe($id_user);
+        $data['content'] = $this->load->view('checkmail', $model, true);
+        $this->load->view('checkmail', $data);
     }
 
     public function getmessages()

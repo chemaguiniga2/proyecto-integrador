@@ -1,72 +1,74 @@
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
-<link href="../assets/css/payment_form.css" rel="stylesheet" type="text/css" media="all" />
+
+<link href="../assets/css/payment_form.css" rel="stylesheet"
+	type="text/css" media="all" />
 <style>
-            /**
+/**
     * The CSS shown here will not be introduced in the Quickstart guide, but shows
     * how you can use CSS to style your Element's container.
     */
-    .StripeElement {
-    box-sizing: border-box;
+.StripeElement {
+	background: #616b78;
+	border: 1px solid;
+	border-color: rgba(172, 180, 189, 0.5);
+	border-radius: 5px 5px 5px 5px;
+	width: 100%;
+	padding: 5px;
+	text-align: center;
+	color: #ebebeb;
+	padding: 13px 0px 13px 25px;
+	width: 100%;
+	word-spacing: 3px;
+	outline: none;
+	font-size: 16px;
+	box-sizing: border-box;
+	height: 46px;
+	padding: 10px 12px;
+	-webkit-transition: box-shadow 150ms ease;
+	transition: box-shadow 150ms ease;
+}
 
-    height: 46px;
+.StripeElement--focus {
+	box-shadow: 0 1px 3px 0 #cfd7df;
+}
 
-    padding: 10px 12px;
+.StripeElement--invalid {
+	border-color: #fa755a;
+}
 
-    border: 1px solid transparent;
-    border-radius: 4px;
-    background-color: white;
-
-    box-shadow: 0 1px 3px 0 #e6ebf1;
-    -webkit-transition: box-shadow 150ms ease;
-    transition: box-shadow 150ms ease;
-    }
-
-    .StripeElement--focus {
-    box-shadow: 0 1px 3px 0 #cfd7df;
-    }
-
-    .StripeElement--invalid {
-    border-color: #fa755a;
-    }
-
-    .StripeElement--webkit-autofill {
-    background-color: #fefde5 !important;
-    }
+.StripeElement--webkit-autofill {
+	background-color: #fefde5 !important;
+}
 </style>
 <script src="https://js.stripe.com/v3/"></script>
-<div class="wrapper">
-  <div class="payment-box">
-    <form class="form" action="createCustomerSubscription?id_user=<?php echo $id_user ?>" method="post" id="payment-form">
-      <div class="card space icon-relative">
-        <label class="label">Card holder:</label>
-        <input type="text" class="input" placeholder="OneCloud Ops">
-        <i class="fas fa-user"></i>
-      </div>
-      <div class="card space icon-relative">
-        <div id="card-element" >
-        <!-- <label class="label">Card number:</label>
-        <input type="text" class="input" data-mask="0000 0000 0000 0000" placeholder="Card Number">
-        <i class="far fa-credit-card"></i>
-      </div>
-      <div class="card-grp space">
-        <div class="card icon-relative">
-          <label class="label">Expiry date:</label>
-          <input type="text" name="expiry-data" class="input"  placeholder="00 / 00">
-          <i class="far fa-calendar-alt"></i>
-        </div>
-        <div class="card icon-relative">
-          <label class="label">CVC:</label>
-          <input type="text" class="input" data-mask="000" placeholder="000">
-          <i class="fas fa-lock"></i>
-        </div> -->
-      </div>  
-      <div class="btn">
-        <button>Update</button>
-      </div> 
-      
-    </form>
-  </div>
-</div>
+
+<body>
+
+	<div class="top-div">
+		<img src="../assets/images/logo.png" class="header-image"
+			alt="OneCloud logo">
+	</div>
+	
+	<div class="wrapper">
+
+		<div class="payment-box">
+			<h2>Payment Method</h2>
+			<div class="payment-division"></div>
+			<form class="form"
+				action="createCustomerSubscription?id_user=<?php echo $id_user ?>"
+				method="post" id="payment-form">
+				<div class="card space icon-relative">
+					<label class="label">Enter payment infromation</label> <input
+						type="text" class="input" placeholder="Card holder"> <i
+						class="fas fa-user"></i>
+				</div>
+				<div class="card space icon-relative">
+					<div id="card-element"></div>
+					<button class="btn">Finish Registration</button>
+			
+			</form>
+		</div>
+	</div>
+</body>
 <script>
     // Create a Stripe client.
     var stripe = Stripe('pk_test_PTOEOqFvaAZ69shGcfHc4Jud00Hh9l9Z9C');
@@ -78,7 +80,7 @@
   // (Note that this demo uses a wider set of styles than the guide below.)
   var style = {
   base: {
-      color: '#32325d',
+      color: '#ffffff',
       fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
       fontSmoothing: 'antialiased',
       fontSize: '16px',

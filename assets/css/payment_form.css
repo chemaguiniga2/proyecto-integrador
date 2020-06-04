@@ -1,140 +1,207 @@
-@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan|Ubuntu');
-
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  /* font-family: 'Ubuntu', sans-serif; */
+.top-div {
+	position:fixed;
+	top: 0;
+	left: 0;
+	background: #2d2d3e;
+	border: 1px solid;
+	border-color: #1f1f29;
+	border-radius: 0px 0px 15px 15px;
+	/*  margin: -10% 0% 0% 0%;*/
+	width : 100%;
+	height: 5em;
+	width: 99.9%;
 }
 
-body{
-  background: #2196F3;
-  margin: 0 10px;
+.header-image {
+	height: 3rem;
+	line-height: 2rem;
+	vertical-align: middle;
+	margin: 1% 0% 0% 44%;
+	width: auto;
 }
 
-.payment-box{
-  background: #2c2d3b;
-  max-width: 360px;
-  margin: 80px auto;
-  height: auto;
-  padding: 35px;
-  padding-top: 70px;
-  border-radius: 5px;
-  position: relative;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	/* font-family: 'Ubuntu', sans-serif; */
 }
 
-.payment h2{
-  text-align: center;
-  letter-spacing: 2px;
-  margin-bottom: 40px;
-  color: #0d3c61;
+body {
+	background: rgb(81, 53, 125);
+	background: radial-gradient(circle, rgba(81, 53, 125, 1) 0%,
+		rgba(56, 55, 55, 1) 100%);
+	margin: 0 10px;
 }
 
-.form .label{
-  display: block;
-  color: #ffffff;
-  margin-bottom: 6px;
+.payment-box {
+	background: #353748;
+	max-width: 360px;
+	margin: 140px auto;
+	height: auto;
+	padding: 35px;
+	padding-top: 15px;
+	border: 1px solid;
+	border-color: rgba(39,40,52);
+	border-radius: 8px;
+	position: relative;
 }
 
-.input{
-  padding: 13px 0px 13px 25px;
-  width: 100%;
-  text-align: center;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  letter-spacing: 1px;
-  word-spacing: 3px;
-  outline: none;
-  /* background: rgba(0, 0, 0, 0.4); */
-  font-size: 16px;
-  
+.payment-box:hover {
+	box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0
+		rgba(255, 255, 255, 0.19);
 }
 
-
-.card-grp{
-  display: flex;
-  justify-content: space-between;
+.payment-box h2{	
+	display: block;
+	color: rgba(235, 235, 235, 1);	
+	margin-bottom: 10px;
+	text-align: center;
+	font-family: Arial;
+	font-weight: 50;
+	font-size: 1.5em;
 }
 
-.card-item{
-  width: 48%;
-  top: 10px;
+.form .label {
+	display: block;
+	color: #ebebeb;	
+	margin-bottom: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
 }
 
-.space{
-  margin-bottom: 20px;
-  height: 80px;
+.payment-division {
+	border-top: 1px solid rgba(173, 173, 192, .3);
+	width: 100%;
+	margin: 0.5em 0em 1em 0em;
 }
 
-.icon-relative{
-  position: relative;
+.input {
+	background: #616b78;
+	border: 1px solid;
+	border-color: rgba(172, 180, 189, 0.5);
+	border-radius: 5px 5px 5px 5px;	
+	width: 100%;
+	padding: 5px;
+	text-align: center;
+	color: #ebebeb;	
+	padding: 13px 0px 13px 25px;
+	width: 100%;
+	outline: none;
+	font-size: 16px;
+	
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
 }
 
-.icon-relative .fas,
-.icon-relative .far{
-  position: absolute;
-  bottom: 1px;
-  top: 45px;
-  left: 15px;
-  font-size: 20px;
-  color: #f8f8f8;
+.input::placeholder {
+	color: rgba(235, 235, 235, 0.5);
 }
 
-.btn{
-  margin-left: 5em;
-  margin-top: 1em;
-  background: rgba(0, 0, 0, 0.5);
-  /* padding: 12px; */
-  text-align: center;
-  color: #f8f8f8;
-  border-radius: 5px;
-  font-size: 20px;
-  cursor: pointer;
+.input--focus {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+    }
+
+.card-grp {
+	display: flex;
+	justify-content: space-between;
 }
 
-
-.payment-logo{
-  position: absolute;
-  top: -50px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 100px;
-  background: #f8f8f8;
-  border-radius: 50%;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  text-align: center;
-  line-height: 85px;
+.card-item {
+	width: 48%;
+	top: 10px;
 }
 
-.payment-logo:before{
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  width: 90px;
-  height: 90px;
-  background: #7046cf;
-  border-radius: 50%;
+.space {
+	margin-bottom: 20px;
+	height: 80px;
 }
 
-.payment-logo p{
-  position: relative;
-  color: #f8f8f8;
-  /* font-family: 'Baloo Bhaijaan', cursive; */
-  font-size: 58px;
+.icon-relative {
+	position: relative;
+}
+
+.icon-relative .fas, .icon-relative .far {
+	position: absolute;
+	bottom: 1px;
+	top: 45px;
+	left: 15px;
+	font-size: 20px;
+	color: #f8f8f8;
 }
 
 
-@media screen and (max-width: 420px){
-  .card-grp{
-    flex-direction: column;
-  }
-  .card-item{
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  .btn{
-    margin-top: 20px;
-  }
+.payment-logo {
+	position: absolute;
+	top: -50px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100px;
+	height: 100px;
+	background: #f8f8f8;
+	border-radius: 50%;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	line-height: 85px;
+}
+
+.payment-logo:before {
+	content: "";
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 90px;
+	height: 90px;
+	background: #7046cf;
+	border-radius: 50%;
+}
+
+.payment-logo p {
+	position: relative;
+	color: #f8f8f8;
+	/* font-family: 'Baloo Bhaijaan', cursive; */
+	font-size: 58px;
+}
+
+@media screen and (max-width: 420px) {
+	.card-grp {
+		flex-direction: column;
+	}
+	.card-item {
+		width: 100%;
+		margin-bottom: 20px;
+	}
+	.btn {
+		margin-top: 20px;
+	}
+}
+
+.btn{	
+	background: #028bbf;
+	background: rgba(2, 139, 191, 0.4);
+	margin: 20px 20px 10px 30px;
+	border: 1px solid;
+	border-color: rgba(2, 139, 191);
+	border-radius: 5px 5px 5px 5px;
+	display: inline-block;
+	color: #ffffff;
+	padding: 7px 50px 7px 50px;
+	text-decoration: none;
+	font-size: 1em;
+	font-weight: 100;
+	transition: background-color 0.3s ease;
+	text-align: center;
+}
+
+.btn:hover {
+	/* 	background: linear-gradient(to bottom, #447fc7 5%, #91a6c9 100%);
+	box-shadow: 0px 1px 5px 0.5px #ffffff;
+	background-color: #447fc7; */
+	background: #00c9ce;
+	cursor: pointer;
+}
+
+.btn:active {
+	position: relative;
+	top: 1px;
 }

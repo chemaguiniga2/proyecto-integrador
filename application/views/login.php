@@ -92,8 +92,7 @@
 							<!-- 
 								<p class="mb-0">Not registered?<a href="<?php echo base_url() . 'register' ?>" class="text-primary ml-1">Sign up</a></p>
 								-->
-								<p class="mb-0">Not registered?<a href="<?php echo base_url() . 'site/register' ?>" class="text-primary ml-1">Sign up</a></p>								
-								<p class="mb-0">Not registered?<a href="<?php echo base_url() . 'billing/showPlans' ?>" class="text-primary ml-1">Sign up Plans</a></p>
+								<p class="mb-0">Not registered?<a href="<?php echo base_url() . 'site/register' ?>" class="text-primary ml-1">Sign up</a></p>				
 							</div>
 
 						<?php echo form_close() ?>

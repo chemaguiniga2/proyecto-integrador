@@ -32,11 +32,18 @@
 			<h2>Type</h3>
 			<p><?php echo $type?></p>
 			<p class="informative" >Your next charge will be on</p>
-			<button class="generic-button">Back to Dashboard</button>
+			<button class="generic-button" id="btnBack" >Back to Account billing</button>
 		</div>
 
 	</div>
+<script type="text/javascript">
 
+document.getElementById("btnBack").onclick = function() {	
+
+	location.href='<?php echo base_url() . 'billing/accountBilling'?>';
+
+}
+</script>
 </body>
 </html>
 

@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-
 /*
  * Clase Billing
  * Super Clase:
@@ -22,15 +21,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 
 require 'vendor/autoload.php';
-// $stripe = [
-// 	"secret_key"      => "sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb",
-// 	#"secret_key" => "sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q", #MIMI LLAVE
-//     "publishable_key" => "pk_test_lGGGJhkF3gEcI32XiJniXEE200kdxF59K7",
-// ];
-
-
 
 class Billing extends CI_Controller
+
 {
 
     public function index()
@@ -42,12 +35,17 @@ class Billing extends CI_Controller
      * Activa la pantalla principal para account billing en donde se puede ver el plan seleccionado
      * con la opciï¿½n de cambiarlo o cancelarlos. A su vez, se puede observar la infomraciï¿½n de pago
      * actual del usario.
-     * Se activa por desde el submenu del perfil, con la sesiï¿½n iniciada.
+<<<<<<< HEAD
+     * Se activa por desde el submenu del perfil, con la sesión iniciada.
      * Despliga la vista v/d/accountBilling
      *
      */
-
-
+=======
+     * Se activa por desde el submenu del perfil, con la sesiï¿½n iniciada.
+     * Despliga la vista v/d/accountBilling 
+     * 
+     * */
+>>>>>>> a2e1770508a71e6b6cbba6bd92d3f928ba682e9d
     public function accountBilling()
     {
         $this->load->model('Billing_model');
@@ -109,8 +107,8 @@ class Billing extends CI_Controller
         
         $id_user = $this->Billing_model->getCurrentUser();
         
-        $id_subscription_stripe_trial = $this->Billing_model->getIdSubscriptionStripe($id_user, 't');
-        $id_subscription_stripe_active = $this->Billing_model->getIdSubscriptionStripe($id_user, 'a');
+        $id_subscription_stripe_trial = $this->Billing_model->getTrialIdSubscriptionStripe($id_user);
+        $id_subscription_stripe_active = $this->Billing_model->getIdSubscriptionStripe($id_user);
         
         $id_plan = $this->input->get('id_plan');
         $pay_freq = 'm';        
@@ -118,30 +116,27 @@ class Billing extends CI_Controller
         
         if ($id_subscription_stripe_trial != NULL) {
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 't');
-            // Cancelar subscripciï¿½n anterior con trial
+            // Cancelar subscripción anterior con trial
             
             // Desde stripe:
             
-            // Crear nueva subscripciï¿½n con trial
+            // Crear nueva subscripción con trial
             
             // Actualizar estatus de record user plan
         } else if ($id_subscription_stripe_active != NULL) {
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
             
-            // Cancelar subscripciï¿½n anterior activa
+            // Cancelar subscripción anterior activa
             
-            // Crear nueva subscripciï¿½n
+            // Crear nueva subscripción
             
             // Actualizar estatus de record user plan
-        } 
-            // Si el usuario no tiene plan activo o trial  
-        else{
-            $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
         }
         
         $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
         
         $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
+        $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($id_user);
         
         $model['type'] = 'Monthly';
         $model['ptitle'] = 'Membership Plan Updated';
@@ -155,9 +150,9 @@ class Billing extends CI_Controller
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         
         $id_user = $this->Billing_model->getCurrentUser();
-
-        $id_subscription_stripe_trial = $this->Billing_model->getIdSubscriptionStripe($id_user, 't');
-        $id_subscription_stripe_active = $this->Billing_model->getIdSubscriptionStripe($id_user, 'a');
+        
+        $id_subscription_stripe_trial = $this->Billing_model->getTrialIdSubscriptionStripe($id_user);
+        $id_subscription_stripe_active = $this->Billing_model->getIdSubscriptionStripe($id_user);
         
         $id_plan = $this->input->get('id_plan');
         $pay_freq = 'a';
@@ -165,30 +160,27 @@ class Billing extends CI_Controller
         
         if ($id_subscription_stripe_trial) {
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 't');
-            // Cancelar subscripciï¿½n anterior con trial
+            // Cancelar subscripción anterior con trial
             
             // Desde stripe:
             
-            // Crear nueva subscripciï¿½n con trial
+            // Crear nueva subscripción con trial
             
             // Actualizar estatus de record user plan
         } else if ($id_subscription_stripe_active) {
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
             
-            // Cancelar subscripciï¿½n anterior activa
+            // Cancelar subscripción anterior activa
             
-            // Crear nueva subscripciï¿½n
+            // Crear nueva subscripción
             
             // Actualizar estatus de record user plan
-        }        
-            // Si el usuario no tiene plan activo o trial  
-        else{
-            $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
         }
         
         $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
         
         $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
+        $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($id_user);
         
         $model['type'] = 'Annual';
         $model['ptitle'] = 'Membership Plan Updated';
@@ -197,18 +189,25 @@ class Billing extends CI_Controller
     }
 
     /*
+<<<<<<< HEAD
      *
+     * Función createSubscription()
+     * Crea el customer y la suscirpción asociada al plan en Stripe. Funciona únicamente con el registro
+     * ya que trae el único record user plan que está asociado al usairo al momento del registro del
+     * usuario. Al finalizar la creación de la subscirpicón asigna el status de trial al record user plan.
+=======
+     * 
      * Funciï¿½n createSubscription()
-     * Crea el customer y la suscirpciï¿½n asociada al plan en Stripe. Funciona ï¿½nicamente con el registro
-     * ya que trae el ï¿½nico record user plan que estï¿½ asociado al usairo al momento del registro del
+     * Crea el customer y la suscirpciï¿½n asociada al plan en Stripe. Funciona ï¿½nicamente con el registro 
+     * ya que trae el ï¿½nico record user plan que estï¿½ asociado al usairo al momento del registro del 
      * usuario. Al finalizar la creaciï¿½n de la subscirpicï¿½n asigna el status de trial al record user plan.
+>>>>>>> a2e1770508a71e6b6cbba6bd92d3f928ba682e9d
      * Se activa a partir de v/d/userPaymentMethod()
      * Redirige a registerSuccess con el id user de parametro
      *
      */
     public function createCustomerSubscription()
     {
-        
         $this->load->model('Billing_model');
         $id_user = $this->input->get('id_user');
 
@@ -242,9 +241,8 @@ class Billing extends CI_Controller
             $this->Billing_model->updateIdSubscription($id_user, $id_subscription);
 
             $this->Billing_model->updatePlanToTrial($id_user, $id_plan);
-            
-            //redirect(base_url() . 'billing/registerSuccses?id_user=' . $id_user);
-            redirect(base_url() . 'site/checkmail?id_user=' . $id_user);
+
+            redirect(base_url() . 'billing/registerSuccses?id_user=' . $id_user);
         } catch (Exception $e) {
             echo 'Exception: ', $e->getMessage(), "\n";
         }
@@ -252,9 +250,15 @@ class Billing extends CI_Controller
 
     /*
      *
+<<<<<<< HEAD
+     * Función registerSuccess
+     * Es el último paso del registro de usuario, sí el registro es exitoso ya se tiene
+     * usuario creado y un plan asociado en stripe con información de pago.
+=======
      * Funciï¿½n registerSuccess
-     * Es el ï¿½ltimo paso del registro de usuario, sï¿½ el registro es exitoso ya se tiene
+     * Es el ï¿½ltimo paso del registro de usuario, sï¿½ el registro es exitoso ya se tiene 
      * usuario creado y un plan asociado en stripe con informaciï¿½n de pago.
+>>>>>>> a2e1770508a71e6b6cbba6bd92d3f928ba682e9d
      * Se activa por createCustomerSubscription parametros a definir
      * Redirecciï¿½n a definir.
      *
@@ -276,12 +280,18 @@ class Billing extends CI_Controller
      * Funcion cancelSubscritption()
      * Cancela la suscripciï¿½n del usuario con sesiï¿½n iniciada.
      * Se activa con v/d/accountBilling
-     * Redirecciï¿½n a definir
+<<<<<<< HEAD
+     * Redirección a definir
      *
      */
+=======
+     * Redirecciï¿½n a definir
+     * 
+     * */
+>>>>>>> a2e1770508a71e6b6cbba6bd92d3f928ba682e9d
     public function cancelSubscription()
     {
-        #\Stripe\Stripe::setApiKey('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
+        \Stripe\Stripe::setApiKey('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
 
         $subscription = \Stripe\Subscription::retrieve('id_bilbi');
         $subscription->delete();
@@ -292,7 +302,6 @@ class Billing extends CI_Controller
         $this->Billing_model->updatePlanToCancel($user);
 
         redirect(base_url() . 'billing/accountBilling');
-        
     }
 
     /**
@@ -303,6 +312,7 @@ class Billing extends CI_Controller
         $this->load->model('Billing_model');
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         $user = $this->Billing_model->getCurrentUser();
+        $model['current_payment_method'] = $this->Billing_model->getUserPaymentMethod($user);
         $model['ptitle'] = 'Payment Method';
         $data['content'] = $this->load->view('dashboard/userPaymentMethodStripe', $model, true);
         $this->load->view('template', $data);
@@ -360,11 +370,9 @@ class Billing extends CI_Controller
         } catch (Exception $e) {}
 
         redirect(base_url() . 'billing/accountBilling');
-        
 
         // $this->load->model('Billing_model');
-        // $email = $this->Billing_model->getCurrentEmail(); // getCurrentEmail borrado
-        
+        // $email = $this->Billing_model->getCurrentEmail();
 
         // try {
 
@@ -395,8 +403,6 @@ class Billing extends CI_Controller
 
         // redirect(base_url() . 'billing/registerSuccses?id_customer=' . $customer['id']);
     }
-    
-
 
     public function createChargeWithObject()
     {
@@ -439,7 +445,7 @@ class Billing extends CI_Controller
 
         // exit();
         try {
-            #\Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
+            \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
 
             $customer_id = $stripe_id;
 
@@ -586,10 +592,10 @@ class Billing extends CI_Controller
 
         /* href="<?php echo base_url() . 'billing/pdfReportProfitPerPlan'?>">Prueba</a> */
     }
+<<<<<<< HEAD
+=======
 
     public function addPlan (){
-
-		\Stripe\Stripe::setApiKey($stripe['secret_key']);
         $this->load->model('Billing_model');
         $name = $this->input->post('name');
         $monthly_price = $this->input->post('monthly-price');
@@ -597,20 +603,8 @@ class Billing extends CI_Controller
         $allowed_users = $this->input->post('users');
         $allowed_users = $this->input->post('clouds');
         $this->Billing_model->insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_users);
-
-		try {
-			\Stripe\Plan::create([
-				'amount' => $monthly_price,
-				'currency' => 'usd',
-				'interval' => 'month',
-				'product' => [
-					"name" => $name,
-				],
-			]);
-		}catch (Exception $e) {
-            echo "<pre>", print_r($e->getMessage()), "</pre>";
-            redirect(base_url() . 'billing/paymentMethod');
-        }
-	}
+        
+    }
     
+>>>>>>> a2e1770508a71e6b6cbba6bd92d3f928ba682e9d
 }

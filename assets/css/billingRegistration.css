@@ -1,12 +1,16 @@
 .top-div {
+	position:fixed;
+	top: 0;
+	left: 0;
 	background: #2d2d3e;
 	border: 1px solid;
 	border-color: #1f1f29;
 	border-radius: 0px 0px 15px 15px;
-	position: absolute;
-	margin: -10% 0% 0% 0%; width : 99.9%;
+	/*  margin: -10% 0% 0% 0%;*/
+	width : 100%;
 	height: 5em;
 	width: 99.9%;
+	min-width: 1400px;
 }
 
 .header-image {
@@ -18,10 +22,14 @@
 }
 
 .billing-table {
+	position:absolute;
+	top: 10%;
+	left: 15%;
+    margin-right: 20%;
 	border: 1px solid;
 	border-color: #1f1f29;
 	background: #2d2d3e;
-	margin: 10% 0% 0% 15%;
+	/*margin: 10% 0% 0% 15%;*/
 	border-radius: 15px 15px 15px 15px;
 	width: 70%;
 	min-width: 1000px;

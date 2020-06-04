@@ -26,8 +26,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- COLOR-THEMES CSS -->
 		<link href="../assets/css/color-themes.css" rel="stylesheet"/>
 
-
-
 		<!--- FONT-ICONS CSS -->
 		<link href="../assets/css/icons.css" rel="stylesheet"/>
 
@@ -51,8 +49,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<h5 class="error-details text-white">
 							You will receive an confirmation email to activate your account.
 						</h5>
+						<h6 class="error-details text-white">
+							Email: <?php echo $email ?>
+						</h6>
+						<h6 class="error-details text-white">
+							Id Customer Stripe: <?php echo $customer ?>
+						</h6>
 						<div class="text-center">
-							<a class="btn btn-primary-light mt-5 mb-5" href="https://omp.onecloudops.com"> <i class="fa fa-long-arrow-left"></i> Home </a>
+							<a class="btn btn-primary-light mt-5 mb-5" href="<?php echo base_url() . 'site/login' ?>"> <i class="fa fa-long-arrow-left"></i> Home </a>
 						</div>
                     </div>
 				</div>
