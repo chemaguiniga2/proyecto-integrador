@@ -22,11 +22,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 
 require 'vendor/autoload.php';
-// $stripe = [
-// 	"secret_key"      => "sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb",
-// 	#"secret_key" => "sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q", #MIMI LLAVE
-//     "publishable_key" => "pk_test_lGGGJhkF3gEcI32XiJniXEE200kdxF59K7",
-// ];
+require 'vendor/stripe/stripe-php/init.php';
 
 
 
@@ -480,6 +476,7 @@ class Billing extends CI_Controller
      */
     public function administration()
     {
+
         $this->load->model('Billing_model');
         $model['ptitle'] = 'Administration';
         $data['content'] = $this->load->view('dashboard/administration', $model, true);
@@ -588,8 +585,13 @@ class Billing extends CI_Controller
     }
 
     public function addPlan (){
-
+	
+	    $stripe = [
+        "secret_key"      => "sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb",
+        "publishable_key" => "pk_test_lGGGJhkF3gEcI32XiJniXEE200kdxF59K7",
+		];
 		\Stripe\Stripe::setApiKey($stripe['secret_key']);
+
         $this->load->model('Billing_model');
         $name = $this->input->post('name');
         $monthly_price = $this->input->post('monthly-price');
@@ -607,9 +609,11 @@ class Billing extends CI_Controller
 					"name" => $name,
 				],
 			]);
+
+			redirect(base_url() . 'billing/accountBilling');
 		}catch (Exception $e) {
             echo "<pre>", print_r($e->getMessage()), "</pre>";
-            redirect(base_url() . 'billing/paymentMethod');
+            redirect(base_url() . 'billing/administration');
         }
 	}
     
