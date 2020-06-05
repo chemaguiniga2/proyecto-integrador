@@ -111,9 +111,15 @@ class Billing extends CI_Controller
         $id_plan = $this->input->get('id_plan');
         $pay_freq = 'm';        
         $id_customer_stripe = $this->Billing_model->getIdCustomerStripe($id_user);
+
+		$model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
         
+		$stripe = new \Stripe\StripeClient(
+			'sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q'
+		);
+
         if ($id_subscription_stripe_trial != NULL) {
-            $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 't');
+           
             // Cancelar subscripci�n anterior con trial
             
             // Desde stripe:
@@ -121,14 +127,28 @@ class Billing extends CI_Controller
             // Crear nueva subscripci�n con trial
             
             // Actualizar estatus de record user plan
-			//$stripe->subscriptions->update(
-				// $id_subscription_stripe_active,
-					//'items' => [
-					//[
-						//'plan' => $id_plan
-					//]
-				//]
-            //);
+			//echo "ID: ", print_r($model['selected_plan']['0']['id_plan_stripe']), "FIN";
+			try {
+
+				$id_plan_stripe = $model['selected_plan']['0']['id_plan_stripe'];
+				$active_sub = $this->Billing_model->getSubscription($id_user);
+				$sub = $stripe->subscriptions->retrieve($active_sub);
+				$stripe->subscriptions->update(
+					$active_sub, [
+						'cancel_at_period_end' => false,
+						'proration_behavior' => 'create_prorations',
+						'items' => [
+						[
+							'id' => $sub->items->data[0]->id,
+							'plan' => $id_plan_stripe,
+						],
+					],
+				]);
+
+				$this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 't');
+			}catch (Exception $e) {
+				redirect(base_url() . 'billing/administration');
+			}
 	
 
 
@@ -140,12 +160,33 @@ class Billing extends CI_Controller
             // Crear nueva subscripci�n
             
             // Actualizar estatus de record user plan
-        } 
+			try {
+
+				$id_plan_stripe = $model['selected_plan']['0']['id_plan_stripe'];
+				$active_sub = $this->Billing_model->getSubscription($id_user);
+				$sub = $stripe->subscriptions->retrieve($active_sub);
+				$stripe->subscriptions->update(
+					$active_sub, [
+						'cancel_at_period_end' => false,
+						'proration_behavior' => 'create_prorations',
+						'items' => [
+						[
+							'id' => $sub->items->data[0]->id,
+							'plan' => $id_plan_stripe,
+						],
+					],
+				]);
+
+				$this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 't');
+			}catch (Exception $e) {
+				redirect(base_url() . 'billing/administration');
+			}
+         
             // Si el usuario no tiene plan activo o trial  
-        else{
+        }else{
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
         }
-        
+
         $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
         
         $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
@@ -223,35 +264,36 @@ class Billing extends CI_Controller
         $id_plan_stripe = $this->Billing_model->getIdPlanStripe($id_plan);
         $email = $this->Billing_model->getUserEmail($id_user);
 
+		$stripe = new \Stripe\StripeClient(
+			'sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q'
+		);
         try {
-            \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
-
+    
             $token = $this->input->post('stripeToken');
 
-            $customer = \Stripe\Customer::create([
+            $customer = $stripe->customers->create([
                 'source' => $token,
                 'email' => $email
             ]);
 
             $id_customer = $customer['id'];
             $this->Billing_model->updateUserIdCusStripe($id_user, $id_customer);
-
-            $subscription = \Stripe\Subscription::create([
+            $subscription = $stripe->subscriptions->create([
                 'customer' => $customer['id'],
 
                 'items' => [
                     [
-                        'plan' => $id_plan_stripe
-                    ]
-                ]
+                        'plan' => $id_plan_stripe,
+                    ],
+                ],
+				'trial_period_days' => 30,
             ]);
             $id_subscription = $subscription['id'];
             $this->Billing_model->updateIdSubscription($id_user, $id_subscription);
-
             $this->Billing_model->updatePlanToTrial($id_user, $id_plan);
-            
             //redirect(base_url() . 'billing/registerSuccses?id_user=' . $id_user);
             redirect(base_url() . 'site/checkmail?id_user=' . $id_user);
+			
         } catch (Exception $e) {
             echo 'Exception: ', $e->getMessage(), "\n";
         }
@@ -598,12 +640,12 @@ class Billing extends CI_Controller
     public function addPlan (){
 	
 	    //$stripe = [
-        //"secret_key"      => "sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb",
+        //"secret_key"      => "sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q",
         //"publishable_key" => "pk_test_lGGGJhkF3gEcI32XiJniXEE200kdxF59K7",
 		//];
 
 		$stripe = new \Stripe\StripeClient(
-			'sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb'
+			'sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q'
 		);
 		//\Stripe\Stripe::setApiKey($stripe['secret_key']);
 
@@ -631,7 +673,7 @@ class Billing extends CI_Controller
 			redirect(base_url() . 'billing/accountBilling');
 		}catch (Exception $e) {
             echo "<pre>", print_r($e->getMessage()), "</pre>";
-            redirect(base_url() . 'billing/administration');
+            //redirect(base_url() . 'billing/administration');
         }
 	}
     

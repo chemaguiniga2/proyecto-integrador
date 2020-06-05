@@ -226,6 +226,23 @@ class Billing_model extends CI_Model
         }
         
     }
+
+	public function getSubscription($id_user){
+        
+        $query = $this->db->select('id_subscription')
+        ->from('record_user_plan')
+        ->where('id_user', $id_user)
+        ->get()
+        ->row();
+        
+       if($query){
+            $id = $query->id_subscription;
+            return $id;
+        }else{
+            return $query;
+        }
+        
+    }
     
     // Devuelve el id de stripe de un usuario dado
     public function getIdCustomerStripe($id_user){
@@ -489,7 +506,7 @@ class Billing_model extends CI_Model
             'id_subscription'=>$id_subscription
         );
         $this->db->where('id_user', $user);
-        $this->db->where('status', 'a');
+        //$this->db->where('status', 'a');
         $this->db->update('record_user_plan', $toupdate);
         
     }   
