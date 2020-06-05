@@ -412,13 +412,14 @@ class Billing_model extends CI_Model
     }
     
     // Inserta un nuevo plan a la base de datos
-    public function insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_clouds){
+    public function insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_clouds, $id_plan_stripe){
         $toinsert = array(
             'name' => $name,
             'monthly_price' => $monthly_price,
             'annual_price' => $annual_price,
             'allowed_users' => $allowed_users,
-            'allowed_clouds' => $allowed_clouds
+            'allowed_clouds' => $allowed_clouds,
+			'id_plan_stripe' => $id_plan_stripe
         );
         $this->db->insert('plan', $toinsert);
     }

@@ -121,6 +121,17 @@ class Billing extends CI_Controller
             // Crear nueva subscripci�n con trial
             
             // Actualizar estatus de record user plan
+			//$stripe->subscriptions->update(
+				// $id_subscription_stripe_active,
+					//'items' => [
+					//[
+						//'plan' => $id_plan
+					//]
+				//]
+            //);
+	
+
+
         } else if ($id_subscription_stripe_active != NULL) {
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
             
@@ -586,11 +597,15 @@ class Billing extends CI_Controller
 
     public function addPlan (){
 	
-	    $stripe = [
-        "secret_key"      => "sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb",
-        "publishable_key" => "pk_test_lGGGJhkF3gEcI32XiJniXEE200kdxF59K7",
-		];
-		\Stripe\Stripe::setApiKey($stripe['secret_key']);
+	    //$stripe = [
+        //"secret_key"      => "sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb",
+        //"publishable_key" => "pk_test_lGGGJhkF3gEcI32XiJniXEE200kdxF59K7",
+		//];
+
+		$stripe = new \Stripe\StripeClient(
+			'sk_test_bXdEP17tdmIqySk2H0vMfmrv00plrCFFXb'
+		);
+		//\Stripe\Stripe::setApiKey($stripe['secret_key']);
 
         $this->load->model('Billing_model');
         $name = $this->input->post('name');
@@ -598,10 +613,10 @@ class Billing extends CI_Controller
         $annual_price = $this->input->post('annual-price'); 
         $allowed_users = $this->input->post('users');
         $allowed_users = $this->input->post('clouds');
-        $this->Billing_model->insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_users);
+
 
 		try {
-			\Stripe\Plan::create([
+			$sub = $stripe->plans->create([
 				'amount' => $monthly_price,
 				'currency' => 'usd',
 				'interval' => 'month',
@@ -610,6 +625,9 @@ class Billing extends CI_Controller
 				],
 			]);
 
+			//echo "<pre>", print_r($sub['id']), "</pre>";
+
+			$this->Billing_model->insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_users, $sub['id']);
 			redirect(base_url() . 'billing/accountBilling');
 		}catch (Exception $e) {
             echo "<pre>", print_r($e->getMessage()), "</pre>";
