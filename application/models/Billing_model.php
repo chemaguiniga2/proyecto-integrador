@@ -231,7 +231,7 @@ class Billing_model extends CI_Model
         $query = $this->db->select('id_subscription')
         ->from('record_user_plan')
         ->where('id_user', $id_user)
-        ->where('status', $status)
+		->where('status !=', 'c')
         ->get()
         ->row();
         

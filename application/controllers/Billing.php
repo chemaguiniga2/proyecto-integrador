@@ -138,8 +138,18 @@ class Billing extends CI_Controller
             ]);
             $current_subscription = $sub['id'];
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a', $current_subscription);
-        }catch (Exception $e) {
-            redirect(base_url() . 'billing/administration');
+            $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
+        
+			$model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
+        
+			$model['type'] = 'Monthly';
+			$model['ptitle'] = 'Membership Plan Updated';
+			$data['content'] = $this->load->view('dashboard/confirmationPlan', $model, true);
+			$this->load->view('template', $data);
+		
+		
+		}catch (Exception $e) {
+            redirect(base_url() . 'billing/accountBilling');
         }
 
         /*if ($id_subscription_stripe_trial != NULL) {
@@ -211,14 +221,7 @@ class Billing extends CI_Controller
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
         }*/
 
-        $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
-        
-        $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
-        
-        $model['type'] = 'Monthly';
-        $model['ptitle'] = 'Membership Plan Updated';
-        $data['content'] = $this->load->view('dashboard/confirmationPlan', $model, true);
-        $this->load->view('template', $data);
+
     }
 
     public function confirmAnnualPlanChange()
