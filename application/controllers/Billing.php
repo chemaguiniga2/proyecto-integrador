@@ -75,6 +75,8 @@ class Billing extends CI_Controller
         $model['ptitleOptions'] = 'Options';
         $model['contentOptions'] = $this->load->view('dashboard/cancelMembership', $model, true);
 
+        $model['mssg'] = isset($_GET['mssg']) ? implode(explode('%20', $_GET['mssg'])) : '' ; 
+
         $data['content'] = $this->load->view('dashboard/accountbilling', $model, true);
         $this->load->view('template', $data);
     }
@@ -350,6 +352,7 @@ class Billing extends CI_Controller
     public function paymentMethod()
     {
         $this->load->model('Billing_model');
+        $model['mssg'] = isset($_GET['mssg']) ? implode(explode('%20', $_GET['mssg'])) : '' ;  
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         $user = $this->Billing_model->getCurrentUser();
         $model['ptitle'] = 'Payment Method';
@@ -388,7 +391,12 @@ class Billing extends CI_Controller
         $cvc = $this->input->post('cvc');
 
         $this->load->model('Billing_model');
+        $user = $this->Billing_model->getCurrentUser();
+        //OBTENER ID DE STRIPE (CUSTOMER)
+        //$stripeId = $this->Billing_model->getUserIdStripe($user);
+        // $stripeId = $this->Billing_model->getStripeId();
 
+        //echo "<pre>", print_r($stripeId), "</pre>";
         try {
 
             $stripe = new \Stripe\StripeClient('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
@@ -404,45 +412,21 @@ class Billing extends CI_Controller
             $attach = $stripe->paymentMethods->attach($new['id'], [
                 'customer' => 'cus_HNOPVHhAfmI3OW'
             ]);
-
+            
             $upd = $stripe->paymentMethods->update($new['id']);
-        } catch (Exception $e) {}
+            //echo "<pre>", print_r($new['card']['last4']), "</pre>"; GUARDAR ULTIMOS 4 DIGITOS
+        } catch (Exception $e) {
 
-        redirect(base_url() . 'billing/accountBilling');
+            redirect(base_url() . 'billing/paymentMethod?mssg='.$e->getMessage());
+        }
+
+        redirect(base_url() . 'billing/accountBilling?mssg=Success!');
         
 
-        // $this->load->model('Billing_model');
-        // $email = $this->Billing_model->getCurrentEmail(); // getCurrentEmail borrado
-        
 
-        // try {
-
-        // \Stripe\Stripe::setApiKey("sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q");
-
-        // //Creacion usuario Stripe
-        // $token = $this->input->post('stripeToken');
-
-        // $customer = \Stripe\Customer::create([
-        // 'source' => $token,
-        // 'email' => $email,
-        // ]);
-
-        // //Guardar id stripe en BD
-
-        // $user = $this->Billing_model->getCurrentUser();
-        // $id_stripe = $customer['id'];
-        // $this->Billing_model->updateIdStripe($user, $id_stripe);
-
-        // //$this->chargeWithObject($id_stripe);
-        // } catch (Exception $e) {
 
         // //echo "<pre>", print_r($e->getMessage()), "</pre>";
-        // redirect(base_url() . 'billing/paymentMethod');
-        // }
-
-        // redirect(base_url() . 'billing/accountBilling');
-
-        // redirect(base_url() . 'billing/registerSuccses?id_customer=' . $customer['id']);
+      
     }
     
 

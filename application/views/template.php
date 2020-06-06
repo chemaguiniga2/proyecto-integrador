@@ -245,6 +245,13 @@ if ($this->session->userdata('securitylevel') < 2) {
 						<!-- PAGE-HEADER -->
 						<div class="page-header">
 							<h4 class="page-title"><?php echo $ptitle ?></h4>
+							
+							<?php if (isset($mssg)): ?>
+								<?php if (!empty($mssg)): ?>
+									<h6 class="page-title"><?php echo $mssg ?></h6>
+								<?php endif; ?>
+							<?php endif; ?>
+							
 						</div>
 						<!-- PAGE-HEADER END -->
             <?php echo $content ?>

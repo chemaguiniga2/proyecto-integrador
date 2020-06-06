@@ -78,19 +78,24 @@ class Billing_model extends CI_Model
     }
     
     // Devuelve el id_customer_stripe (id del usuario en stripe) de un usuario dado
-    public function getUserIdStripe($id_user){
+    // public function getUserIdStripe($id_user){
         
-        $response = array();
+    //     $response = array();
         
-        $query = $this->db->select('id_customer_stripe')
-        ->from('users')
-        ->where('id', $id_user)
-        ->get()
-        ->row();
+    //     $query = $this->db->select('id_customer_stripe')
+    //     ->from('users')
+    //     ->where('id', $id_user)
+    //     ->get()
+    //     ->row();
         
-        $response = $query->id_customer_stripe;
-        return $response;
+    //     $response = $query->id_customer_stripe;
+    //     return $response;
         
+    // }
+    public function getStripeId(){
+        $user = $this->db->select('*')->from('users')->where('id', $this->session->userdata('id'))->get()->row();
+        $id_stripe = $user->id_stripe;
+        return $id_stripe;
     }
 
     // *********************** obsoleto, hay que cambiarlo
