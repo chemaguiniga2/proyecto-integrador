@@ -116,9 +116,31 @@ class Billing extends CI_Controller
         
 		$stripe = new \Stripe\StripeClient(
 			'sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q'
-		);
+        );
+        
+        try {
 
-        if ($id_subscription_stripe_trial != NULL) {
+            $id_plan_stripe = $model['selected_plan']['0']['id_plan_stripe'];
+            $active_sub = $this->Billing_model->getSubscription($id_user, 'a');
+            $sub = $stripe->subscriptions->retrieve($active_sub);
+            $stripe->subscriptions->update(
+                $active_sub, [
+                    'cancel_at_period_end' => false,
+                    'proration_behavior' => 'create_prorations',
+                    'items' => [
+                    [
+                        'id' => $sub->items->data[0]->id,
+                        'plan' => $id_plan_stripe,
+                    ],
+                ],
+            ]);
+            $current_subscription = $sub['id'];
+            $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a', $current_subscription);
+        }catch (Exception $e) {
+            redirect(base_url() . 'billing/administration');
+        }
+
+        /*if ($id_subscription_stripe_trial != NULL) {
            
             // Cancelar subscripci�n anterior con trial
             
@@ -185,7 +207,7 @@ class Billing extends CI_Controller
             // Si el usuario no tiene plan activo o trial  
         }else{
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
-        }
+        }*/
 
         $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
         
@@ -330,18 +352,20 @@ class Billing extends CI_Controller
      */
     public function cancelSubscription()
     {
-        #\Stripe\Stripe::setApiKey('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
-
-        $subscription = \Stripe\Subscription::retrieve('id_bilbi');
-        $subscription->delete();
-
         $this->load->model('Billing_model');
+        $stripe = new \Stripe\StripeClient('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
         $user = $this->Billing_model->getCurrentUser();
+        //$subscription = \Stripe\Subscription::retrieve('id_bilbi');
+        $id_subscription_stripe_active = $this->Billing_model->getSubscription($user, 'a');
+        $stripe->subscriptions->cancel(
+          $id_subscription_stripe_active,
+          []
+        );       
+        
 
         $this->Billing_model->updatePlanToCancel($user);
 
         redirect(base_url() . 'billing/accountBilling');
-        
     }
 
     /**

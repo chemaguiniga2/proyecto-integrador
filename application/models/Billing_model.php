@@ -224,14 +224,14 @@ class Billing_model extends CI_Model
         }else{
             return $query;
         }
-        
     }
 
-	public function getSubscription($id_user){
+	public function getSubscription($id_user, $status){
         
         $query = $this->db->select('id_subscription')
         ->from('record_user_plan')
         ->where('id_user', $id_user)
+        ->where('status', $status)
         ->get()
         ->row();
         
@@ -381,7 +381,7 @@ class Billing_model extends CI_Model
     }
 
     // Insertar un record_user_plan con un status dado
-    public function insertRecordUserPlan($user, $id_plan, $pay_freq, $status){
+    public function insertRecordUserPlan($user, $id_plan, $pay_freq, $status, $id_subscription){
         // Update previous status record_user_plan a inactivo
         $this->Billing_model->updatePlanToInactive($user);
 
@@ -391,7 +391,8 @@ class Billing_model extends CI_Model
             'id_plan' => $id_plan,
             'start_date' => date('Y-m-d'),
             'status' => $status,
-            'payment_frequency' => $pay_freq
+            'payment_frequency' => $pay_freq,
+            'id_subscription' => $id_subscription
         );
         $this->db->insert('record_user_plan', $toinsert);
 
