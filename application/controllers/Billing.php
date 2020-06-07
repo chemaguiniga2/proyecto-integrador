@@ -377,8 +377,11 @@ class Billing extends CI_Controller
     public function plansAdministration()
     {        
         $this->load->model('Billing_model');
+        $model['payment_plans'] = $this->Billing_model->getPlans();
         $model['ptitle'] = 'Administration';
-        $data['content'] = $this->load->view('dashboard/plansAdministration', $model, true);
+        $model['contentPlans'] = $this->load->view('dashboard/administrationShowPlans', $model, true);
+        $model['contentAddNewPlan'] = $this->load->view('dashboard/administrationAddPlan', $model, true);
+        $data['content'] = $this->load->view('dashboard/administrationPlans', $model, true);
         $this->load->view('template', $data);
     }
     
@@ -387,7 +390,7 @@ class Billing extends CI_Controller
         
         $this->load->model('Billing_model');
         $model['ptitle'] = 'Administration';
-        $data['content'] = $this->load->view('dashboard/usersAdministration', $model, true);
+        $data['content'] = $this->load->view('dashboard/administrationUsers', $model, true);
         $this->load->view('template', $data);
     }
     
@@ -736,7 +739,7 @@ class Billing extends CI_Controller
 			//echo "<pre>", print_r($sub['id']), "</pre>";
 
 			$this->Billing_model->insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_users, $sub['id']);
-			redirect(base_url() . 'billing/accountBilling');
+			redirect(base_url() . 'billing/plansAdministration');
 		}catch (Exception $e) {
             echo "<pre>", print_r($e->getMessage()), "</pre>";
             //redirect(base_url() . 'billing/administration');
