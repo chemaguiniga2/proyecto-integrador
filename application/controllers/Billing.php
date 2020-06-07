@@ -478,10 +478,9 @@ class Billing extends CI_Controller
         $this->load->model('Billing_model');
         $user = $this->Billing_model->getCurrentUser();
         //OBTENER ID DE STRIPE (CUSTOMER)
-        //$stripeId = $this->Billing_model->getUserIdStripe($user);
-        // $stripeId = $this->Billing_model->getStripeId();
+        $stripeId = $this->Billing_model->getIdCustomerStripe($user);
 
-        //echo "<pre>", print_r($stripeId), "</pre>";
+        
         try {
 
             $stripe = new \Stripe\StripeClient('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
@@ -495,7 +494,7 @@ class Billing extends CI_Controller
                 ]
             ]);
             $attach = $stripe->paymentMethods->attach($new['id'], [
-                'customer' => 'cus_HNOPVHhAfmI3OW'
+                'customer' => $stripeId
             ]);
             
             $upd = $stripe->paymentMethods->update($new['id']);
