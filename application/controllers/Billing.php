@@ -368,7 +368,7 @@ class Billing extends CI_Controller
         );       
         
 
-        $this->Billing_model->updatePlanToCancel($user);
+        $this->Billing_model->updatePlanStatusFromActive($user, 'c');
 
         redirect(base_url() . 'billing/accountBilling');
     }

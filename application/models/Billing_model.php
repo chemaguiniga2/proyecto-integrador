@@ -315,8 +315,7 @@ class Billing_model extends CI_Model
         //$response['num']= $query->num_rows() ;
         return $response;
     }
-
-    // *************** nos quedamos aquí    
+  
     // Ganancias por plan al mes, 
     public function profitMonthyPerPlan(){
         $response = array();
@@ -332,8 +331,23 @@ class Billing_model extends CI_Model
         
         return $response;
     }
+
+    // Ganancias por plan al año,
+    public function profitAnnualPerPlan(){
+        $response = array();
+        
+        $query = $this->db->select('p.name, SUM(p.annual_price) as profitPlanAnnual')
+        ->from('plan p')
+        ->join('record_user_plan r', 'r.id_plan = p.id')
+        ->where('r.status', 'a')
+        ->where('r.payment_frequency', 'a')
+        ->group_by('p.id')
+        ->get();
+        $response = $query->result_array();
+        
+        return $response;
+    }
     
-    // **************** Si se decidió pagar al año se incluye aquí??
     // Facturación mensual. 
     public function monthlyBilling(){
         $response = array();
@@ -342,6 +356,22 @@ class Billing_model extends CI_Model
         ->from('plan p')
         ->join('record_user_plan r', 'r.id_plan = p.id')
         ->where('r.status', 'a')
+        ->where('r.payment_frequency', 'm')
+        ->get();
+        $response = $query->result_array();
+        
+        return $response;
+    }
+
+    // Facturación anual. 
+    public function annualBilling(){
+        $response = array();
+        
+        $query = $this->db->select('SUM(p.annual_price) as profitPlanAnnual')
+        ->from('plan p')
+        ->join('record_user_plan r', 'r.id_plan = p.id')
+        ->where('r.status', 'a')
+        ->where('r.payment_frequency', 'a')
         ->get();
         $response = $query->result_array();
         
@@ -351,21 +381,8 @@ class Billing_model extends CI_Model
     
 
  /************************************     Inserts   **************************************** */
-    // ******************* no se usa
-    // Inserta un record_user_plan
-    public function insertUserPlan($user, $plan){
-
-        $toinsert = array(
-            'id_user' => $user,
-            'id_plan' => $plan
-        );
-
-        $this->db->insert('record_user_plan', $toinsert);
-
-    }
     
-    // *********************** ¿por que lo inicializa en inactivo?
-    // Inserta un recors_user_plan
+    // Inserta un record_user_plan
     public function insertFirstRecordUserPlan($user, $plan, $pay_freq){
         
         $toinsert = array(
@@ -383,7 +400,7 @@ class Billing_model extends CI_Model
     // Insertar un record_user_plan con un status dado
     public function insertRecordUserPlan($user, $id_plan, $pay_freq, $status, $id_subscription){
         // Update previous status record_user_plan a inactivo
-        $this->Billing_model->updatePlanToInactive($user);
+        $this->Billing_model->updatePlanStatusFromActive($user, 'i');
 
         // Insert record_user_plan
         $toinsert = array(
@@ -463,42 +480,18 @@ class Billing_model extends CI_Model
         $this->db->update('record_user_plan', $toupdate);
     }
     
-    // *************** hay que refactorizar
-    // Actualiza el status de un record_user_plan a inactivo
-    public function updatePlanToInactive($user){
+    // Actualiza el status de un record_user_plan a status de parámetro
+    public function updatePlanStatusFromActive($user, $status){
         $toupdate = array(
-            'status'=>'i',
+            'status'=>$status,
             'end_date'=>date('Y-m-d')
         );
         $this->db->where('id_user', $user);
+        $this->db->group_start();
         $this->db->where('status', 'a');
         $this->db->or_where('status', 't');
+        $this->db->group_end();
         $this->db->update('record_user_plan', $toupdate);
-    }
-    
-    // ***************** hay que refactorizar
-    // Actualiza el status de un record_user_plan a cancelado
-    public function updatePlanToCancel($user){
-      $toupdate = array(
-          'status'=>'c',
-          'end_date'=>date('Y-m-d')
-        );
-      $this->db->where('id_user', $user);
-      $this->db->where('status', 'a');
-      $this->db->update('record_user_plan', $toupdate);
-        
-    }
-
-    // ************* no existe id_stripe en record_user_plan
-    // Actualiza el id de stripe en record_user_plan
-    public function updateIdStripe($user, $id_stripe){
-        $toupdate = array(            
-            'id_stripe'=>$id_stripe
-        );
-        $this->db->where('id_user', $user);
-        $this->db->where('status', 'a');
-        $this->db->update('record_user_plan', $toupdate);
-        
     }
     
     // Actualiza el id de stripe en record_user_plan
