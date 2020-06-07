@@ -94,26 +94,6 @@ setInterval(function() { ObserveInputValue($('#fname').val()); }, 100);
 
         </div>
         </form>
-        <div class="price-selet pric-sclr1">
-					<a class="popup-with-zoom-anim"
-					href="<?php echo base_url() . 'billing/pdfReportListUsers'?>">List Users</a>
-
-					<a class="popup-with-zoom-anim"
-					href="<?php echo base_url() . 'billing/pdfReportListUsersInTrial'?>">List Users In Trial</a>
-
-					<a class="popup-with-zoom-anim"
-					href="<?php echo base_url() . 'billing/pdfReportListUsersInPlan'?>">List Users In Plan</a>
-
-					<a class="popup-with-zoom-anim"
-					href="<?php echo base_url() . 'billing/pdfReportListIdleUsers'?>">List Idle Users</a>
-
-					<a class="popup-with-zoom-anim"
-					href="<?php echo base_url() . 'billing/pdfReportProfitPerPlan'?>">Profit Per Plan</a>
-
-					<a class="popup-with-zoom-anim"
-					href="<?php echo base_url() . 'billing/pdfReportMonthlyBilling'?>">Monthly Billing</a>
-					
-                </div>
                 
                 
     </div>

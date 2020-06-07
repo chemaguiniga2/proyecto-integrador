@@ -263,7 +263,7 @@ class Billing_model extends CI_Model
     public function listUsers(){
         $response = array();
         
-        $query = $this->db->select('*')
+        $query = $this->db->select('id, username, email, id_customer_stripe')
         ->from('users')
         ->get();
         $response = $query->result_array();
@@ -290,14 +290,13 @@ class Billing_model extends CI_Model
     public function listUsersInPlan(){
         $response = array();
         
-        $query = $this->db->select('u.*')
+        $query = $this->db->select('*')
         ->from('users u')
         ->join('record_user_plan r', 'r.id_user = u.id')
-        ->join('plan p', 'r.id_plan = p.id')
         ->where('r.status', 'a')
         ->get();
         $response = $query->result_array();
-        
+        //$response['num']= $query->num_rows() ;
         return $response;
     }
     

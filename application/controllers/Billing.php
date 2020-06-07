@@ -372,6 +372,61 @@ class Billing extends CI_Controller
 
         redirect(base_url() . 'billing/accountBilling');
     }
+    
+    
+    public function plansAdministration()
+    {        
+        $this->load->model('Billing_model');
+        $model['ptitle'] = 'Administration';
+        $data['content'] = $this->load->view('dashboard/plansAdministration', $model, true);
+        $this->load->view('template', $data);
+    }
+    
+    public function usersAdministration()
+    {
+        
+        $this->load->model('Billing_model');
+        $model['ptitle'] = 'Administration';
+        $data['content'] = $this->load->view('dashboard/usersAdministration', $model, true);
+        $this->load->view('template', $data);
+    }
+    
+    public function listUsers()
+    {        
+        $this->load->model('Billing_model');
+        $model['ptitle'] = 'Administration';
+        $model['ptitleList'] = 'Administration';
+        $titles = array("id","Username","Email","Id Stripe");
+        $model['tableTitles'] = $titles;
+        $model['users'] = $this->Billing_model->listUsers();
+        $data['content'] = $this->load->view('dashboard/listMetrics', $model, true);
+        $this->load->view('template', $data);     
+    }
+    
+    public function listUsersInTrial()
+    {
+        $this->load->model('Billing_model');
+        $model['ptitle'] = 'Administration';
+        $model['ptitleList'] = 'Administration';
+        $titles = array("id","Username","Email","Id Stripe");
+        $model['tableTitles'] = $titles;
+        $model['users'] = $this->Billing_model->listUsersInTrial();
+        $data['content'] = $this->load->view('dashboard/listMetrics', $model, true);
+        $this->load->view('template', $data);
+    }
+    
+    public function listUsersInPlan()
+    {
+        $this->load->model('Billing_model');
+        $model['ptitle'] = 'Administration';
+        $model['ptitleList'] = 'Administration';
+        $titles = array("id","Username","Email","Id Stripe");
+        $model['tableTitles'] = $titles;
+        $model['users'] = $this->Billing_model->listUsersInPlan();
+        $data['content'] = $this->load->view('dashboard/listMetrics', $model, true);
+        $this->load->view('template', $data);
+    }
+    
 
     /**
      * ************************** Metodos no ocupados ******************************
