@@ -94,6 +94,7 @@
 	-moz-transition: 0.5s all;
 	-o-transition: 0.5s all;
 	min-width: 250px;
+	max-height: 250px;
 	border-radius: 7px 7px 7px 7px;
 }
 
@@ -262,17 +263,17 @@
 .price-gd-bottom {
 	text-align: center;
 	padding: -0em 0em;
-	min-height: 150px;
+	min-height: 50px;
 }
 
 /* no hace cambios */
-.price-list ul {
-	padding: -50em 0em list-style: none;
+.price-list ul{
+	padding: -5em 0em 5em 0em;
 }
 
 /*List de features  */
-.price-list ul li {
-	padding: 0.4em 0em;
+.price-list li {
+	padding: 0.5em 0.5em 0.5em 0.5em;
 	font-size: 1.0em;
 	color: #fffff;
 }

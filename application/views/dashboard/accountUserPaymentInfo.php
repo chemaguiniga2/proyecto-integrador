@@ -34,7 +34,7 @@ Falta a�adir bot�n otrogar recibo
 				<div class="payment-grid">
 					<div class="card-info">
 						<p>Alexis Rubio</p><br>
-						<i class="mdi mdi-credit-card"></i><i>   4444</i>
+						<i class="mdi mdi-credit-card"></i><i>   <?php echo $last4 ?></i>
 						<a href="<?php echo base_url() . 'billing/paymentMethod'?>">Change</a>
 					</div>
 					<div class="payment-division"></div>

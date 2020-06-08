@@ -67,19 +67,22 @@ class Billing extends CI_Controller
 
         $model['last_payment_user'] = $this->Billing_model->lastPayByUser($user);
 
+        
+        
+        
         $model['ptitle'] = 'Account Billing';
         $model['ptitlePlans'] = 'Membership Plans';
-        $model['contentPlans'] = $this->load->view('dashboard/userPlans', $model, true);
+        $model['contentPlans'] = $this->load->view('dashboard/accountUserPlans', $model, true);
         $model['ptitlePayment'] = 'Payment';
-        $model['contentPaymentInfo'] = $this->load->view('dashboard/userpaymentinfo', $model, true);
+        $model['last4'] = $this->getCustomerPaymentMethod();
+        $model['contentPaymentInfo'] = $this->load->view('dashboard/accountUserPaymentInfo', $model, true);
         $model['ptitleOptions'] = 'Options';
-        $model['contentOptions'] = $this->load->view('dashboard/cancelMembership', $model, true);
+        $model['contentOptions'] = $this->load->view('dashboard/accountCancelMembership', $model, true);
 
         $model['mssg'] = isset($_GET['mssg']) ? implode(explode('%20', $_GET['mssg'])) : '' ; 
         //agregarlo a variable, OJO ESTA VARIABLE NO LLEGA A LA VISTA USERPAYMENTINFO.PHP
-        $model['last4'] = $this->getCustomerPaymentMethod();
 
-        $data['content'] = $this->load->view('dashboard/accountbilling', $model, true);
+        $data['content'] = $this->load->view('dashboard/accountBilling', $model, true);
         $this->load->view('template', $data);
     }
 
@@ -95,7 +98,7 @@ class Billing extends CI_Controller
             'type' => 'card',
         ]);
 
-
+        
         return $methods['data'][0]['card']['last4'];
 
     }
@@ -115,8 +118,8 @@ class Billing extends CI_Controller
         $this->load->model('Billing_model');
         $model['id_user'] = $user;
         $model['ptitle'] = 'Payment Method';
-        $data['content'] = $this->load->view('dashboard/userPaymentMethod', $model, true);
-        $this->load->view('dashboard/userPaymentMethod', $data);
+        $data['content'] = $this->load->view('registerPaymentMethod', $model, true);
+        $this->load->view('registerPaymentMethod', $data);
     }
 
     public function confirmMonthlyPlanChange()
@@ -163,7 +166,7 @@ class Billing extends CI_Controller
         
 			$model['type'] = 'Monthly';
 			$model['ptitle'] = 'Membership Plan Updated';
-			$data['content'] = $this->load->view('dashboard/confirmationPlan', $model, true);
+			$data['content'] = $this->load->view('dashboard/accountChangeConfirmationPlan', $model, true);
 			$this->load->view('template', $data);
 		
 		
@@ -286,7 +289,7 @@ class Billing extends CI_Controller
         
         $model['type'] = 'Annual';
         $model['ptitle'] = 'Membership Plan Updated';
-        $data['content'] = $this->load->view('dashboard/confirmationPlan', $model, true);
+        $data['content'] = $this->load->view('dashboard/accountChangeConfirmationPlan', $model, true);
         $this->load->view('template', $data);
     }
 
@@ -337,33 +340,22 @@ class Billing extends CI_Controller
             $id_subscription = $subscription['id'];
             $this->Billing_model->updateIdSubscription($id_user, $id_subscription);
             $this->Billing_model->updatePlanToTrial($id_user, $id_plan);
-            //redirect(base_url() . 'billing/registerSuccses?id_user=' . $id_user);
             redirect(base_url() . 'site/checkmail?id_user=' . $id_user);
 			
         } catch (Exception $e) {
             echo 'Exception: ', $e->getMessage(), "\n";
         }
     }
-
-    /*
-     *
-     * Funci�n registerSuccess
-     * Es el �ltimo paso del registro de usuario, s� el registro es exitoso ya se tiene
-     * usuario creado y un plan asociado en stripe con informaci�n de pago.
-     * Se activa por createCustomerSubscription parametros a definir
-     * Redirecci�n a definir.
-     *
-     */
-    public function registerSuccses()
+        
+    public function paymentMethod()
     {
         $this->load->model('Billing_model');
-        $id_user = $this->input->get('id_user');
-        $email = $this->Billing_model->getUserEmail($id_user);
-        $model['email'] = $email;
-        $model['customer'] = $this->Billing_model->getUserIdStripe($id_user);
-        $model['ptitle'] = 'Membership Plan';
-        $data['content'] = $this->load->view('dashboard/temp_view', $model, true);
-        $this->load->view('dashboard/temp_view', $data);
+        $model['mssg'] = isset($_GET['mssg']) ? implode(explode('%20', $_GET['mssg'])) : '' ;
+        $model['current_user'] = $this->Billing_model->getCurrentUser();
+        $user = $this->Billing_model->getCurrentUser();
+        $model['ptitle'] = 'Payment Method';
+        $data['content'] = $this->load->view('dashboard/accountChangePaymentMethod', $model, true);
+        $this->load->view('template', $data);
     }
 
     /*
@@ -421,7 +413,7 @@ class Billing extends CI_Controller
         $titles = array("id","Username","Email","Id Stripe");
         $model['tableTitles'] = $titles;
         $model['users'] = $this->Billing_model->listUsers();
-        $data['content'] = $this->load->view('dashboard/listMetrics', $model, true);
+        $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
         $this->load->view('template', $data);     
     }
     
@@ -433,7 +425,7 @@ class Billing extends CI_Controller
         $titles = array("id","Username","Email","Id Stripe");
         $model['tableTitles'] = $titles;
         $model['users'] = $this->Billing_model->listUsersInTrial();
-        $data['content'] = $this->load->view('dashboard/listMetrics', $model, true);
+        $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
         $this->load->view('template', $data);
     }
     
@@ -445,7 +437,7 @@ class Billing extends CI_Controller
         $titles = array("id","Username","Email","Id Stripe");
         $model['tableTitles'] = $titles;
         $model['users'] = $this->Billing_model->listUsersInPlan();
-        $data['content'] = $this->load->view('dashboard/listMetrics', $model, true);
+        $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
         $this->load->view('template', $data);
     }
     
@@ -453,16 +445,6 @@ class Billing extends CI_Controller
     /**
      * ************************** Metodos no ocupados ******************************
      */
-    public function paymentMethod()
-    {
-        $this->load->model('Billing_model');
-        $model['mssg'] = isset($_GET['mssg']) ? implode(explode('%20', $_GET['mssg'])) : '' ;  
-        $model['current_user'] = $this->Billing_model->getCurrentUser();
-        $user = $this->Billing_model->getCurrentUser();
-        $model['ptitle'] = 'Payment Method';
-        $data['content'] = $this->load->view('dashboard/userPaymentMethodStripe', $model, true);
-        $this->load->view('template', $data);
-    }
 
     public function addPaymentMethod()
     {
