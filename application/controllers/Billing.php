@@ -410,6 +410,7 @@ class Billing extends CI_Controller
         $model['ptitle'] = 'Administration';
         $model['ptitleList'] = 'All Users';
         $model['list'] = 'csvReportListUsers';
+        $model['metric'] = 'pdfMetricsListUsers';
         $titles = array("id","Username","Email","Id Stripe");
         $columns = array("id","username","email","id_customer_stripe");
         $model['tableTitles'] = $titles;
@@ -425,13 +426,15 @@ class Billing extends CI_Controller
         $model['ptitle'] = 'Administration';
         $model['ptitleList'] = 'Users in Trial';
         $model['list'] = 'csvReportListUsersInTrial';
+        $model['metric'] = 'pdfMetricsListUsersInTrial';
         $titles = array("id","Username","Email","Id Stripe");
         $columns = array("id","username","email","id_customer_stripe");
         $model['tableTitles'] = $titles;
         $model['tableColumns'] = $columns;
         $model['elements'] = $this->Billing_model->listUsersInTrial();
         $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
-        $this->load->view('template', $data);
+        
+        $this->load->view('template', $data);       
     }
     
     public function listUsersInPlan()
@@ -440,6 +443,7 @@ class Billing extends CI_Controller
         $model['ptitle'] = 'Administration';
         $model['ptitleList'] = 'Active Users';
         $model['list'] = 'csvReportListUsersInPlan';
+        $model['metric'] = 'pdfMetricsListUsersInPlan';
         $titles = array("id","Username","Email","Id Stripe");
         $columns = array("id","username","email","id_customer_stripe");
         $model['tableTitles'] = $titles;
@@ -455,6 +459,7 @@ class Billing extends CI_Controller
         $model['ptitle'] = 'Administration';
         $model['ptitleList'] = 'Idle Users';
         $model['list'] = 'csvReportListIdleUsers';
+        $model['metric'] = 'pdfMetricsListIdleUsers';
         $titles = array("id","Username","Email","Id Stripe");
         $columns = array("id","username","email","id_customer_stripe");
         $model['tableTitles'] = $titles;
@@ -470,6 +475,7 @@ class Billing extends CI_Controller
         $model['ptitle'] = 'Administration';
         $model['ptitleList'] = 'Monthly Profit Per Plan';
         $model['list'] = 'csvReportMonthyProfitPerPlan';
+        $model['metric'] = 'pdfMetricsListMonthyProfitPerPlan';
         $titles = array('Plan name',  'Monthy profit');
         $columns = array('name','profitPlanMonthly');
         $model['tableTitles'] = $titles;
@@ -485,6 +491,7 @@ class Billing extends CI_Controller
         $model['ptitle'] = 'Administration';
         $model['ptitleList'] = 'Annual Profit Per Plan';
         $model['list'] = 'csvReportAnnualProfitPerPlan';
+        $model['metric'] = 'pdfMetricsListAnnualProfitPerPlan';
         $titles = array('Plan name',  'Annual profit');
         $columns = array('name','profitPlanAnnual');
         $model['tableTitles'] = $titles;
@@ -500,6 +507,7 @@ class Billing extends CI_Controller
         $model['ptitle'] = 'Administration';
         $model['ptitleList'] = 'Monthly Billing';
         $model['list'] = 'csvReportMonthlyBilling';
+        $model['metric'] = 'pdfMetricsListMonthlyBilling';
         $titles = array('Monthy billing');
         $columns = array('profitPlanMonthly');
         $model['tableTitles'] = $titles;
@@ -515,6 +523,7 @@ class Billing extends CI_Controller
         $model['ptitle'] = 'Administration';
         $model['ptitleList'] = 'Annual Billing';
         $model['list'] = 'csvReportAnnualBilling';
+        $model['metric'] = 'pdfMetricsListAnnualBilling';
         $titles = array('Annual billing');
         $columns = array('profitPlanAnnual');
         $model['tableTitles'] = $titles;
@@ -522,6 +531,126 @@ class Billing extends CI_Controller
         $model['elements'] = $this->Billing_model->annualBilling();
         $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
         $this->load->view('template', $data);
+    }
+
+    public function pdfMetricsListUsers(){
+        $this->listUsers();
+        $html = $this->output->get_output();
+        
+        // Cargamos la librería
+        $this->load->library('pdf');
+        // Load HTML content
+        $this->dompdf->loadHtml($html);
+        // Render the HTML as PDFy
+        $this->dompdf->render();
+        
+        // Output the generated PDF (1 = download and 0 = preview)
+        $this->dompdf->stream("metrics.pdf", array("Attachment"=>0));        
+    }
+
+    public function pdfMetricsListUsersInTrial(){
+        $this->listUsersInTrial();
+        $html = $this->output->get_output();
+        
+        // Cargamos la librería
+        $this->load->library('pdf');
+        // Load HTML content
+        $this->dompdf->loadHtml($html);
+        // Render the HTML as PDFy
+        $this->dompdf->render();
+        
+        // Output the generated PDF (1 = download and 0 = preview)
+        $this->dompdf->stream("metrics.pdf", array("Attachment"=>0));        
+    }
+
+    public function pdfMetricsListUsersInPlan(){
+        $this->listUsersInPlan();
+        $html = $this->output->get_output();
+        
+        // Cargamos la librería
+        $this->load->library('pdf');
+        // Load HTML content
+        $this->dompdf->loadHtml($html);
+        // Render the HTML as PDFy
+        $this->dompdf->render();
+        
+        // Output the generated PDF (1 = download and 0 = preview)
+        $this->dompdf->stream("metrics.pdf", array("Attachment"=>0));        
+    }
+
+    public function pdfMetricsListIdleUsers(){
+        $this->listIdleUsers();
+        $html = $this->output->get_output();
+        
+        // Cargamos la librería
+        $this->load->library('pdf');
+        // Load HTML content
+        $this->dompdf->loadHtml($html);
+        // Render the HTML as PDFy
+        $this->dompdf->render();
+        
+        // Output the generated PDF (1 = download and 0 = preview)
+        $this->dompdf->stream("metrics.pdf", array("Attachment"=>0));        
+    }
+
+    public function pdfMetricsListMonthyProfitPerPlan(){
+        $this->listMonthyProfitPerPlan();
+        $html = $this->output->get_output();
+        
+        // Cargamos la librería
+        $this->load->library('pdf');
+        // Load HTML content
+        $this->dompdf->loadHtml($html);
+        // Render the HTML as PDFy
+        $this->dompdf->render();
+        
+        // Output the generated PDF (1 = download and 0 = preview)
+        $this->dompdf->stream("metrics.pdf", array("Attachment"=>0));        
+    }
+
+    public function pdfMetricsListAnnualProfitPerPlan(){
+        $this->listAnnualProfitPerPlan();
+        $html = $this->output->get_output();
+        
+        // Cargamos la librería
+        $this->load->library('pdf');
+        // Load HTML content
+        $this->dompdf->loadHtml($html);
+        // Render the HTML as PDFy
+        $this->dompdf->render();
+        
+        // Output the generated PDF (1 = download and 0 = preview)
+        $this->dompdf->stream("metrics.pdf", array("Attachment"=>0));        
+    }
+
+    public function pdfMetricsListMonthlyBilling(){
+        $this->listMonthlyBilling();
+        $html = $this->output->get_output();
+        
+        // Cargamos la librería
+        $this->load->library('pdf');
+        // Load HTML content
+        $this->dompdf->loadHtml($html);
+        // Render the HTML as PDFy
+        $this->dompdf->render();
+        
+        // Output the generated PDF (1 = download and 0 = preview)
+        $this->dompdf->stream("metrics.pdf", array("Attachment"=>0));        
+    }
+
+    public function pdfMetricsListAnnualBilling(){
+        $this->listAnnualBilling();
+        $html = $this->output->get_output();
+        
+        // Cargamos la librería
+        $this->load->library('pdf');
+        // Load HTML content
+        $this->dompdf->loadHtml($html);
+        // Render the HTML as PDFy
+        $this->dompdf->render();
+        
+        // Output the generated PDF (1 = download and 0 = preview)
+        $this->dompdf->stream("metrics.pdf", array("Attachment"=>0));        
     }
     
 
@@ -1045,36 +1174,7 @@ class Billing extends CI_Controller
         exit;  
     }
 
-    // No funcionaaa
-    public function pruebaPDF(){
-        $this->load->model('Billing_model');
-        $this->load->view('dashboard/listMetrics');
-        //$model['ptitle'] = $ptitle;
-
-        ////
-        $model['ptitle'] = 'Administration';
-        $model['ptitleList'] = 'Administration';
-        $titles = array("id","Username","Email","Id Stripe");
-        $model['tableTitles'] = $titles;
-        $model['users'] = $this->Billing_model->listUsersInTrial();
-        //$data['content'] = $this->load->view('dashboard/listMetrics', $model, true);
-        //$this->load->view('template', $data);
-        ////
-        
-        $html = $this->output->get_output();
-        
-        //$data['content'] = $this->load->view('dashboard/listMetrics', $model, true);
-        // Cargamos la librería
-        $this->load->library('pdf');
-        // Load HTML content
-        $this->dompdf->loadHtml($html);
-        // Render the HTML as PDF
-        $this->dompdf->render();
-        
-        // Output the generated PDF (1 = download and 0 = preview)
-        $this->dompdf->stream("welcome.pdf", array("Attachment"=>0));
-        
-    }
+    
 
     public function addPlan (){
 	
