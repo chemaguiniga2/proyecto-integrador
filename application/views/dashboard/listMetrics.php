@@ -16,8 +16,8 @@
 
 <!-- notas 
 
-Falta añadir botón cancelar suscripción
-Falta añadir botón otrogar recibo
+Falta aï¿½adir botï¿½n cancelar suscripciï¿½n
+Falta aï¿½adir botï¿½n otrogar recibo
 
 -->
 
@@ -53,6 +53,8 @@ Falta añadir botón otrogar recibo
     						<?php }?>
 						</tbody>
 					</table>
+					<a class="popup-with-zoom-anim"
+					href="<?php echo base_url() . 'billing/pruebaPDF?ptitleList=' . $ptitleList?>">Download pdf</a>
 				</div>
 			</div>
 		</div>
@@ -76,7 +78,7 @@ productos.forEach(producto => {
  	let $tdPrecio = document.createElement("td");
  	$tdPrecio.textContent = producto.precio;
  	$tr.appendChild($tdPrecio);
- // El td del código
+ // El td del cï¿½digo
  	let $tdCodigo = document.createElement("td");
  		$tdCodigo.textContent = producto.codigo;
  	$tr.appendChild($tdCodigo);

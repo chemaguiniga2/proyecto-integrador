@@ -612,8 +612,9 @@ class Billing extends CI_Controller
         $cant = sizeof($query);
         $mpdf->WriteHTML("Amount of users: " . $cant);
         $mpdf->WriteHTML("List of users");
+        $mpdf->WriteHTML('Id' . ' | ' .'Username' . ' | ' . 'Email' . '    |    ' . 'Id_customer_stripe');
         foreach ($query as $l) {
-            $mpdf->WriteHTML($l['username']);
+            $mpdf->WriteHTML($l['id'] . ' | ' . $l['username'] . ' | ' . $l['email'] . ' | ' . $l['id_customer_stripe']);
         }
 
         $mpdf->Output();
@@ -627,8 +628,9 @@ class Billing extends CI_Controller
         $cant = sizeof($query);
         $mpdf->WriteHTML("Amount of users in trial: " . $cant);
         $mpdf->WriteHTML("List of users in trial");
+        $mpdf->WriteHTML('Id' . ' | ' .'Username' . ' | ' . 'Email' . ' | ' . 'Id_customer_stripe');
         foreach ($query as $l) {
-            $mpdf->WriteHTML($l['username']);
+            $mpdf->WriteHTML($l['id'] . ' | ' . $l['username'] . ' | ' . $l['email'] . ' | ' . $l['id_customer_stripe']);
         }
 
         $mpdf->Output();
@@ -663,16 +665,32 @@ class Billing extends CI_Controller
         $mpdf->Output();
     }
 
-    public function pdfReportProfitPerPlan()
+    public function pdfReportMonthyProfitPerPlan()
     {
         $this->load->model('Billing_model');
         $mpdf = new \Mpdf\Mpdf();
-        $query = $this->Billing_model->profitPerPlan();
-        $mpdf->WriteHTML("Profit per plan");
+        $query = $this->Billing_model->monthyProfitPerPlan();
+        $mpdf->WriteHTML("Monthy profit per plan");
         $mpdf->WriteHTML("     ");
         foreach ($query as $l) {
             // array_push($html, $l['username']) ;
             $line = $l['name'] . '  ' . $l['profitPlanMonthly'];
+            $mpdf->WriteHTML($line);
+        }
+        // $mpdf->WriteHTML($html);
+        $mpdf->Output(); // opens in browser
+    }
+
+    public function pdfReportAnnualProfitPerPlan()
+    {
+        $this->load->model('Billing_model');
+        $mpdf = new \Mpdf\Mpdf();
+        $query = $this->Billing_model->annualProfitPerPlan();
+        $mpdf->WriteHTML("Annual profit per plan");
+        $mpdf->WriteHTML("     ");
+        foreach ($query as $l) {
+            // array_push($html, $l['username']) ;
+            $line = $l['name'] . '  ' . $l['profitPlanAnnual'];
             $mpdf->WriteHTML($line);
         }
         // $mpdf->WriteHTML($html);
@@ -694,15 +712,290 @@ class Billing extends CI_Controller
         $mpdf->Output(); // opens in browser
     }
 
-    public function pdfReportProfitPerPlan2()
+    public function pdfReportAnnualBilling()
     {
         $this->load->model('Billing_model');
-        $text = $this->input->get('text');
-        print_r($text);
+        $query = $this->Billing_model->annualBilling();
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->WriteHTML("     ");
+        foreach ($query as $l) {
+            // array_push($html, $l['username']) ;
+            $line = "Monthy billing" . ':' . $l['profitPlanAnnual'];
+            $mpdf->WriteHTML($line);
+        }
         // $mpdf->WriteHTML($html);
-        $text->Output(); // opens in browser
+        $mpdf->Output(); // opens in browser
+    }
 
-        /* href="<?php echo base_url() . 'billing/pdfReportProfitPerPlan'?>">Prueba</a> */
+    public function csvReportListUsers()
+    {        
+         
+        $this->load->model('Billing_model');
+
+        // file name 
+        $filename = 'users_'.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+        
+        // get data 
+        $query = $this->Billing_model->listUsers();
+
+        // file creation 
+        $file = fopen('php://output', 'w');
+        
+        $header = array('Id', 'Username', 'Email', 'Id Stripe'); 
+        fputcsv($file, $header);
+        foreach ($query as $key=>$line){ 
+            fputcsv($file,$line); 
+        }
+        fclose($file); 
+        exit; 
+    
+        /*$this->load->model('Billing_model');
+        // get data 
+        $query = $this->Billing_model->listIdleUsers2();
+
+        if($query->num_rows() > 0){
+            $delimiter = ",";
+            $filename = "list_users_" . date('Y-m-d') . ".csv";
+            
+            //create a file pointer
+            $f = fopen('php://memory', 'w');
+            
+            //set column headers
+            $fields = array('Id', 'Username', 'Email', 'Id Stripe');
+            fputcsv($f, $fields, $delimiter = ",");
+            
+            //output each row of the data, format line as csv and write to file pointer
+            foreach($query->result_array() as $row){
+                $lineData = array($row['id'], $row['username'], $row['email'], $row['id_customer_stripe']);
+                fputcsv($f, $lineData, $delimiter = ",");
+            }
+            
+            //move back to beginning of file
+            fseek($f, 0);
+            
+            //set headers to download file rather than displayed
+            header('Content-Type: text/csv');
+            header('Content-Disposition: attachment; filename="' . $filename . '";');
+            
+            //output all remaining data on a file pointer
+            fpassthru($f);
+            exit;
+            */
+        /*}else{
+            redirect(base_url() . 'billing/usersAdministration');
+        }*/  
+    }
+
+    public function csvReportListUsersInTrial()
+    {       
+         
+        $this->load->model('Billing_model');
+
+        // file name 
+        $filename = 'users_in_trial_'.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+        
+        // get data 
+        $query = $this->Billing_model->listUsersInTrial();
+
+        // file creation 
+        $file = fopen('php://output', 'w');
+        
+        $header = array('Id', 'Username', 'Email', 'Id Stripe'); 
+        fputcsv($file, $header);
+        foreach ($query as $key=>$line){ 
+            fputcsv($file,$line); 
+        }
+        fclose($file); 
+        exit;  
+    }
+
+    public function csvReportListUsersInPlan()
+    {        
+         
+        $this->load->model('Billing_model');
+
+        // file name 
+        $filename = 'users_in_plan_'.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+        
+        // get data 
+        $query = $this->Billing_model->listUsersInPlan();
+
+        // file creation 
+        $file = fopen('php://output', 'w');
+        
+        $header = array('Id', 'Username', 'Email', 'Id Stripe'); 
+        fputcsv($file, $header);
+        foreach ($query as $key=>$line){ 
+            fputcsv($file,$line); 
+        }
+        fclose($file); 
+        exit;  
+    }
+
+    public function csvReportListIdleUsers()
+    {        
+         
+        $this->load->model('Billing_model');
+
+        // file name 
+        $filename = 'users_idle_'.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+        
+        // get data 
+        $query = $this->Billing_model->listIdleUsers();
+
+        // file creation 
+        $file = fopen('php://output', 'w');
+        
+        $header = array('Id', 'Username', 'Email', 'Id Stripe'); 
+        fputcsv($file, $header);
+        foreach ($query as $key=>$line){ 
+            fputcsv($file,$line); 
+        }
+        fclose($file); 
+        exit;  
+    }
+
+    public function csvReportMonthyProfitPerPlan()
+    {        
+        $this->load->model('Billing_model');
+
+        // file name 
+        $filename = 'monthy_profit_plan_'.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+        
+        // get data 
+        $query = $this->Billing_model->monthyProfitPerPlan();
+
+        // file creation 
+        $file = fopen('php://output', 'w');
+        
+        $header = array('Plan name',  'Monthy profit'); 
+        fputcsv($file, $header);
+        foreach ($query as $key=>$line){ 
+            fputcsv($file,$line); 
+        }
+        fclose($file); 
+        exit;  
+    }
+
+    public function csvReportAnnualProfitPerPlan()
+    {        
+        $this->load->model('Billing_model');
+
+        // file name 
+        $filename = 'annual_profit_plan_'.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+        
+        // get data 
+        $query = $this->Billing_model->annualProfitPerPlan();
+
+        // file creation 
+        $file = fopen('php://output', 'w');
+        
+        $header = array('Plan name',  'Annual profit'); 
+        fputcsv($file, $header);
+        foreach ($query as $key=>$line){ 
+            fputcsv($file,$line); 
+        }
+        fclose($file); 
+        exit;  
+    }
+
+    public function csvReportMonthlyBilling()
+    {        
+        $this->load->model('Billing_model');
+
+        // file name 
+        $filename = 'monthy_billing_'.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+        
+        // get data 
+        $query = $this->Billing_model->monthlyBilling();
+
+        // file creation 
+        $file = fopen('php://output', 'w');
+        
+        $header = array('Monthy billing'); 
+        fputcsv($file, $header);
+        foreach ($query as $key=>$line){ 
+            fputcsv($file,$line); 
+        }
+        fclose($file); 
+        exit;  
+    }
+
+    public function csvReportAnnualBilling()
+    {        
+        $this->load->model('Billing_model');
+
+        // file name 
+        $filename = 'annual_billing_'.date('Ymd').'.csv'; 
+        header("Content-Description: File Transfer"); 
+        header("Content-Disposition: attachment; filename=$filename"); 
+        header("Content-Type: application/csv; ");
+        
+        // get data 
+        $query = $this->Billing_model->annualBilling();
+
+        // file creation 
+        $file = fopen('php://output', 'w');
+        
+        $header = array('Annual billing'); 
+        fputcsv($file, $header);
+        foreach ($query as $key=>$line){ 
+            fputcsv($file,$line); 
+        }
+        fclose($file); 
+        exit;  
+    }
+
+    // No funcionaaa
+    public function pruebaPDF(){
+        $this->load->model('Billing_model');
+        $this->load->view('dashboard/listMetrics');
+        //$model['ptitle'] = $ptitle;
+
+        ////
+        $model['ptitle'] = 'Administration';
+        $model['ptitleList'] = 'Administration';
+        $titles = array("id","Username","Email","Id Stripe");
+        $model['tableTitles'] = $titles;
+        $model['users'] = $this->Billing_model->listUsersInTrial();
+        //$data['content'] = $this->load->view('dashboard/listMetrics', $model, true);
+        //$this->load->view('template', $data);
+        ////
+        
+        $html = $this->output->get_output();
+        
+        //$data['content'] = $this->load->view('dashboard/listMetrics', $model, true);
+        // Cargamos la librería
+        $this->load->library('pdf');
+        // Load HTML content
+        $this->dompdf->loadHtml($html);
+        // Render the HTML as PDF
+        $this->dompdf->render();
+        
+        // Output the generated PDF (1 = download and 0 = preview)
+        $this->dompdf->stream("welcome.pdf", array("Attachment"=>0));
+        
     }
 
     public function addPlan (){

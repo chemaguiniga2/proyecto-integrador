@@ -276,7 +276,7 @@ class Billing_model extends CI_Model
     public function listUsersInTrial(){
         $response = array();
         
-        $query = $this->db->select('*')
+        $query = $this->db->select('u.id, u.username, u.email, u.id_customer_stripe')
         ->from('users u')
         ->join('record_user_plan r', 'r.id_user = u.id')
         ->where('r.status', 't')
@@ -290,7 +290,7 @@ class Billing_model extends CI_Model
     public function listUsersInPlan(){
         $response = array();
         
-        $query = $this->db->select('*')
+        $query = $this->db->select('u.id, u.username, u.email, u.id_customer_stripe')
         ->from('users u')
         ->join('record_user_plan r', 'r.id_user = u.id')
         ->where('r.status', 'a')
@@ -305,7 +305,7 @@ class Billing_model extends CI_Model
     public function listIdleUsers(){
         $response = array();
         
-        $query = $this->db->select('*')
+        $query = $this->db->select('u.id, u.username, u.email, u.id_customer_stripe')
         ->from('users u')
         ->join('record_user_plan r', 'r.id_user = u.id')
         ->where('r.status', 'c')
@@ -316,7 +316,7 @@ class Billing_model extends CI_Model
     }
   
     // Ganancias por plan al mes, 
-    public function profitMonthyPerPlan(){
+    public function monthyProfitPerPlan(){
         $response = array();
         
         $query = $this->db->select('p.name, SUM(p.monthly_price) as profitPlanMonthly')
@@ -332,7 +332,7 @@ class Billing_model extends CI_Model
     }
 
     // Ganancias por plan al año,
-    public function profitAnnualPerPlan(){
+    public function annualProfitPerPlan(){
         $response = array();
         
         $query = $this->db->select('p.name, SUM(p.annual_price) as profitPlanAnnual')
@@ -375,6 +375,37 @@ class Billing_model extends CI_Model
         $response = $query->result_array();
         
         return $response;
+    }
+
+    public function listIdleUsers2(){
+        /*$response = array();
+        
+        $query = $this->db->select('u.username, u.email, u.phone')
+        ->from('users u')
+        ->join('record_user_plan r', 'r.id_user = u.id')
+        ->where('r.status', 'c')
+        ->get();
+        $response = $query->result_array();
+        //$response['num']= $query->num_rows() ;*/
+        $response = $this->db->query("SELECT * FROM users");
+        return $response;
+        //return $query;
+    }
+
+    //funciona para caso 1
+    public function listIdleUsers22(){
+        $response = array();
+        
+        $query = $this->db->select('u.username, u.email, u.phone')
+        ->from('users u')
+        ->join('record_user_plan r', 'r.id_user = u.id')
+        ->where('r.status', 'c')
+        ->get();
+        $response = $query->result_array();
+        //$response['num']= $query->num_rows() ;
+        
+        return $response;
+        //return $query;
     }
     
     
