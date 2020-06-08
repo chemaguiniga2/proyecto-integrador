@@ -62,13 +62,10 @@ foreach ($payment_plans as $plan) {
 						<div class="price-gd-bottom">
 							<div class="price-list">
 								<ul>
-        									<?php foreach ($feature_current_plan as $f){?>
-        										<?php if($f['id'] == $plan['id']){ ?>
-        												<li class="mdi mdi-check-circle">  <?php echo $f['name'] ?></li>
+									<li class="mdi mdi-check-circle">  <?php echo $plan['allowed_users'] ?> Users</li>
 									<br>
-        										<?php } ?>
-        									<?php } ?>
-        								</ul>
+									<li class="mdi mdi-check-circle">  <?php echo $plan['allowed_clouds'] ?> Clouds</li>
+								</ul>
 							</div>
 						</div>
 						<div class="price-selet-selected">
@@ -87,13 +84,10 @@ foreach ($payment_plans as $plan) {
 						<div class="price-gd-bottom">
 							<div class="price-list">
 								<ul>
-        									<?php foreach ($feature_current_plan as $f){?>
-        										<?php if($f['id'] == $plan['id']){ ?>
-        												<li class="mdi mdi-check-circle">  <?php echo $f['name'] ?></li>
+									<li class="mdi mdi-check-circle">  <?php echo $plan['allowed_users'] ?> Users</li>
 									<br>
-        										<?php } ?>
-        									<?php } ?>
-        								</ul>
+									<li class="mdi mdi-check-circle">  <?php echo $plan['allowed_clouds'] ?> Clouds</li>
+								</ul>
 							</div>
 						</div>
 						<div class="price-selet-selected">
@@ -112,13 +106,10 @@ foreach ($payment_plans as $plan) {
 						<div class="price-gd-bottom">
 							<div class="price-list">
 								<ul>
-        									<?php foreach ($feature_current_plan as $f){?>
-        										<?php if($f['id'] == $plan['id']){ ?>
-        												<li class="mdi mdi-check-circle">  <?php echo $f['name'] ?></li>
+									<li class="mdi mdi-check-circle">  <?php echo $plan['allowed_users'] ?> Users</li>
 									<br>
-        										<?php } ?>
-        									<?php } ?>
-        								</ul>
+									<li class="mdi mdi-check-circle">  <?php echo $plan['allowed_clouds'] ?> Clouds</li>
+								</ul>
 							</div>
 						</div>
 						<div class="price-selet">
@@ -130,7 +121,7 @@ foreach ($payment_plans as $plan) {
 				</div>
 
 			<?php
-        }
+    }
 }
 ?>
 			</div>
@@ -142,10 +133,8 @@ foreach ($payment_plans as $plan) {
 			<h2 id="sel-plan">Membership Change Confirmation</h2>
 			<p id="message-top"></p>
 			<p id="message-down"></p>
-			<button id="btnClose" class="cancel">Cancel</button>
-			<button id="btnConfirmAnnual" class="confirm">Confirm annual plan</button>
-			<button id="btnConfirmMonthly" class="confirm" onclick="close()">Confirm
-				monthly plan</button>
+			<button id="btnClose" class="cancel">Cancel</button>			
+			<button id="btnConfirmMonthly" class="confirm">Confirm monthly plan</button>
 			<div class="content"></div>
 		</div>
 	</div>
@@ -158,9 +147,7 @@ foreach ($payment_plans as $plan) {
 		document.getElementById("popup-grid").style.opacity = "1";
 		document.getElementById("message-top").innerHTML = 'Your membership will change to ' + name + '.';
 		document.getElementById("message-down").innerHTML = 'Confirm the payment period and will start on next bill date.';
-		document.getElementById("btnConfirmAnnual").setAttribute("plan", id);
 		document.getElementById("btnConfirmMonthly").setAttribute("plan", id);
-
 	}
 
 	document.getElementById("btnClose").onclick = function() {
@@ -168,13 +155,8 @@ foreach ($payment_plans as $plan) {
 		  document.getElementById("popup-grid").style.opacity = "0";
 	}
 
-	document.getElementById("btnConfirmAnnual").onclick = function() {
-		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
-		location.href='<?php echo base_url() . 'billing/confirmAnnualPlanChange?id_plan='?>' + plan;
-	}
-
 	document.getElementById("btnConfirmMonthly").onclick = function() {
-		var plan = document.getElementById("btnConfirmAnnual").getAttribute("plan");
+		var plan = document.getElementById("btnConfirmMonthly").getAttribute("plan");
 		location.href='<?php echo base_url() . 'billing/confirmMonthlyPlanChange?id_plan='?>' + plan;
 	}
 
