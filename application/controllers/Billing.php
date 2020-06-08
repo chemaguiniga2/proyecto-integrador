@@ -72,6 +72,7 @@ class Billing extends CI_Controller
         $model['ptitlePlans'] = 'Membership Plans';
         $model['contentPlans'] = $this->load->view('dashboard/accountUserPlans', $model, true);
         $model['ptitlePayment'] = 'Payment';
+        //$model['last4'] = '4444';
         $model['last4'] = $this->getCustomerPaymentMethod();
         $model['username'] =  $this->Billing_model->getUserName($user);
         $model['contentPaymentInfo'] = $this->load->view('dashboard/accountUserPaymentInfo', $model, true);
@@ -128,12 +129,9 @@ class Billing extends CI_Controller
         
         $id_user = $this->Billing_model->getCurrentUser();
         
-        $id_subscription_stripe_trial = $this->Billing_model->getIdSubscriptionStripe($id_user, 't');
-        $id_subscription_stripe_active = $this->Billing_model->getIdSubscriptionStripe($id_user, 'a');
         
         $id_plan = $this->input->get('id_plan');
         $pay_freq = 'm';        
-        $id_customer_stripe = $this->Billing_model->getIdCustomerStripe($id_user);
 
 		$model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
         
@@ -173,76 +171,6 @@ class Billing extends CI_Controller
             redirect(base_url() . 'billing/accountBilling');
         }
 
-        /*if ($id_subscription_stripe_trial != NULL) {
-           
-            // Cancelar subscripci�n anterior con trial
-            
-            // Desde stripe:
-            
-            // Crear nueva subscripci�n con trial
-            
-            // Actualizar estatus de record user plan
-			//echo "ID: ", print_r($model['selected_plan']['0']['id_plan_stripe']), "FIN";
-			try {
-
-				$id_plan_stripe = $model['selected_plan']['0']['id_plan_stripe'];
-				$active_sub = $this->Billing_model->getSubscription($id_user);
-				$sub = $stripe->subscriptions->retrieve($active_sub);
-				$stripe->subscriptions->update(
-					$active_sub, [
-						'cancel_at_period_end' => false,
-						'proration_behavior' => 'create_prorations',
-						'items' => [
-						[
-							'id' => $sub->items->data[0]->id,
-							'plan' => $id_plan_stripe,
-						],
-					],
-				]);
-
-				$this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 't');
-			}catch (Exception $e) {
-				redirect(base_url() . 'billing/administration');
-			}
-	
-
-
-        } else if ($id_subscription_stripe_active != NULL) {
-            $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
-            
-            // Cancelar subscripci�n anterior activa
-            
-            // Crear nueva subscripci�n
-            
-            // Actualizar estatus de record user plan
-			try {
-
-				$id_plan_stripe = $model['selected_plan']['0']['id_plan_stripe'];
-				$active_sub = $this->Billing_model->getSubscription($id_user);
-				$sub = $stripe->subscriptions->retrieve($active_sub);
-				$stripe->subscriptions->update(
-					$active_sub, [
-						'cancel_at_period_end' => false,
-						'proration_behavior' => 'create_prorations',
-						'items' => [
-						[
-							'id' => $sub->items->data[0]->id,
-							'plan' => $id_plan_stripe,
-						],
-					],
-				]);
-
-				$this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 't');
-			}catch (Exception $e) {
-				redirect(base_url() . 'billing/administration');
-			}
-         
-            // Si el usuario no tiene plan activo o trial  
-        }else{
-            $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
-        }*/
-
-
     }
 
     public function confirmAnnualPlanChange()
@@ -251,45 +179,48 @@ class Billing extends CI_Controller
         $model['current_user'] = $this->Billing_model->getCurrentUser();
         
         $id_user = $this->Billing_model->getCurrentUser();
-
-        $id_subscription_stripe_trial = $this->Billing_model->getIdSubscriptionStripe($id_user, 't');
-        $id_subscription_stripe_active = $this->Billing_model->getIdSubscriptionStripe($id_user, 'a');
         
         $id_plan = $this->input->get('id_plan');
         $pay_freq = 'a';
-        $id_customer_stripe = $this->Billing_model->getIdCustomerStripe($id_user);
-        
-        if ($id_subscription_stripe_trial) {
-            $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 't');
-            // Cancelar subscripci�n anterior con trial
-            
-            // Desde stripe:
-            
-            // Crear nueva subscripci�n con trial
-            
-            // Actualizar estatus de record user plan
-        } else if ($id_subscription_stripe_active) {
-            $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
-            
-            // Cancelar subscripci�n anterior activa
-            
-            // Crear nueva subscripci�n
-            
-            // Actualizar estatus de record user plan
-        }        
-            // Si el usuario no tiene plan activo o trial  
-        else{
-            $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a');
-        }
         
         $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
         
-        $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
+        $stripe = new \Stripe\StripeClient(
+            'sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q'
+            );
         
-        $model['type'] = 'Annual';
-        $model['ptitle'] = 'Membership Plan Updated';
-        $data['content'] = $this->load->view('dashboard/accountChangeConfirmationPlan', $model, true);
-        $this->load->view('template', $data);
+        try {
+            
+            $id_plan_stripe = $model['selected_plan']['0']['id_plan_stripe'];
+            $active_sub = $this->Billing_model->getSubscription($id_user, 'a');
+            $sub = $stripe->subscriptions->retrieve($active_sub);
+            $stripe->subscriptions->update(
+                $active_sub, [
+                    'cancel_at_period_end' => false,
+                    'proration_behavior' => 'create_prorations',
+                    'items' => [
+                        [
+                            'id' => $sub->items->data[0]->id,
+                            'plan' => $id_plan_stripe,
+                        ],
+                    ],
+                ]);
+            $current_subscription = $sub['id'];
+            $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a', $current_subscription);
+            $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
+            
+            $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
+            
+            $model['type'] = 'Monthly';
+            $model['ptitle'] = 'Membership Plan Updated';
+            $data['content'] = $this->load->view('dashboard/accountChangeConfirmationPlan', $model, true);
+            $this->load->view('template', $data);
+            
+            
+        }catch (Exception $e) {
+            redirect(base_url() . 'billing/accountBilling');
+        }
+        
     }
 
     /*
@@ -381,8 +312,7 @@ class Billing extends CI_Controller
         $this->Billing_model->updatePlanStatusFromActive($user, 'c');
 
         redirect(base_url() . 'billing/accountBilling');
-    }
-    
+    }    
     
     public function plansAdministration()
     {        
@@ -524,6 +454,38 @@ class Billing extends CI_Controller
         $this->load->view('template', $data);
     }
     
+    
+    public function addPlan (){
+                
+        $stripe = new \Stripe\StripeClient(
+            'sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q'
+            );
+        
+        $this->load->model('Billing_model');
+        $name = $this->input->post('name');
+        $monthly_price = $this->input->post('monthly-price');
+        $annual_price = $this->input->post('annual-price');
+        $allowed_users = $this->input->post('users');
+        $allowed_users = $this->input->post('clouds');
+        
+        
+        try {
+            $sub = $stripe->plans->create([
+                'amount' => $monthly_price,
+                'currency' => 'usd',
+                'interval' => 'month',
+                'product' => [
+                    "name" => $name,
+                ],
+            ]);
+            
+            
+            $this->Billing_model->insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_users, $sub['id']);
+            redirect(base_url() . 'billing/plansAdministration');
+        }catch (Exception $e) {
+            echo "<pre>", print_r($e->getMessage()), "</pre>";
+        }
+    }
 
     /**
      * ************************** Metodos no ocupados ******************************
@@ -673,14 +635,6 @@ class Billing extends CI_Controller
     /**
      * *********************Reportes*****************************************************
      */
-    public function administration()
-    {
-
-        $this->load->model('Billing_model');
-        $model['ptitle'] = 'Administration';
-        $data['content'] = $this->load->view('dashboard/administration', $model, true);
-        $this->load->view('template', $data);
-    }
 
     public function pdfReportListUsers()
     {
@@ -828,43 +782,7 @@ class Billing extends CI_Controller
             fputcsv($file,$line); 
         }
         fclose($file); 
-        exit; 
-    
-        /*$this->load->model('Billing_model');
-        // get data 
-        $query = $this->Billing_model->listIdleUsers2();
-
-        if($query->num_rows() > 0){
-            $delimiter = ",";
-            $filename = "list_users_" . date('Y-m-d') . ".csv";
-            
-            //create a file pointer
-            $f = fopen('php://memory', 'w');
-            
-            //set column headers
-            $fields = array('Id', 'Username', 'Email', 'Id Stripe');
-            fputcsv($f, $fields, $delimiter = ",");
-            
-            //output each row of the data, format line as csv and write to file pointer
-            foreach($query->result_array() as $row){
-                $lineData = array($row['id'], $row['username'], $row['email'], $row['id_customer_stripe']);
-                fputcsv($f, $lineData, $delimiter = ",");
-            }
-            
-            //move back to beginning of file
-            fseek($f, 0);
-            
-            //set headers to download file rather than displayed
-            header('Content-Type: text/csv');
-            header('Content-Disposition: attachment; filename="' . $filename . '";');
-            
-            //output all remaining data on a file pointer
-            fpassthru($f);
-            exit;
-            */
-        /*}else{
-            redirect(base_url() . 'billing/usersAdministration');
-        }*/  
+        exit;   
     }
 
     public function csvReportListUsersInTrial()
@@ -1076,44 +994,5 @@ class Billing extends CI_Controller
         
     }
 
-    public function addPlan (){
-	
-	    //$stripe = [
-        //"secret_key"      => "sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q",
-        //"publishable_key" => "pk_test_lGGGJhkF3gEcI32XiJniXEE200kdxF59K7",
-		//];
-
-		$stripe = new \Stripe\StripeClient(
-			'sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q'
-		);
-		//\Stripe\Stripe::setApiKey($stripe['secret_key']);
-
-        $this->load->model('Billing_model');
-        $name = $this->input->post('name');
-        $monthly_price = $this->input->post('monthly-price');
-        $annual_price = $this->input->post('annual-price'); 
-        $allowed_users = $this->input->post('users');
-        $allowed_users = $this->input->post('clouds');
-
-
-		try {
-			$sub = $stripe->plans->create([
-				'amount' => $monthly_price,
-				'currency' => 'usd',
-				'interval' => 'month',
-				'product' => [
-					"name" => $name,
-				],
-			]);
-
-			//echo "<pre>", print_r($sub['id']), "</pre>";
-
-			$this->Billing_model->insertPlan($name, $monthly_price, $annual_price, $allowed_users, $allowed_users, $sub['id']);
-			redirect(base_url() . 'billing/plansAdministration');
-		}catch (Exception $e) {
-            echo "<pre>", print_r($e->getMessage()), "</pre>";
-            //redirect(base_url() . 'billing/administration');
-        }
-	}
     
 }

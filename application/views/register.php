@@ -74,18 +74,15 @@ foreach ($payment_plans as $plan) {
 						<div class="price-gd-bottom">
 							<div class="price-list">
 								<ul>
-        									<?php foreach ($feature_current_plan as $f){?>
-        										<?php if($f['id'] == $plan['id']){ ?>
-        												<li class="mdi mdi-check-circle">  <?php echo $f['name'] ?></li>
-									<br>	
-        										<?php } ?>
-        									<?php } ?>
-        								</ul>
+									<li class="mdi mdi-check-circle">  <?php echo $current_payment_plan[0]['id_plan'] ?> Users</li>
+									<br>
+									<li class="mdi mdi-check-circle">  <?php echo $plan['allowed_clouds'] ?> Clouds</li>
+								</ul>
 							</div>
 						</div>
 						<div class="price-selet">
 							<button class="button-change"
-								onclick="confirmPlan(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Suscribe</button>
+								onclick="confirmPlan(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Suscribe Monthly</button>
 
 
 						</div>

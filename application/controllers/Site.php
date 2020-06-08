@@ -281,7 +281,7 @@ class Site extends CI_Controller
         $id_user = $this->input->get('id_user');
         $email = $this->Billing_model->getUserEmail($id_user);
         $model['email'] = $email;
-        $model['customer'] = $this->Billing_model->getUserIdStripe($id_user);
+        //$model['customer'] = $this->Billing_model->getUserIdStripe($id_user);
         $data['content'] = $this->load->view('checkmail', $model, true);
         $this->load->view('checkmail', $data);
     }
