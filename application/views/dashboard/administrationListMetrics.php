@@ -54,7 +54,7 @@ Falta a�adir bot�n otrogar recibo
 					</table>
 				</div>
 				<br> <a class="popup-with-zoom-anim"
-					href="<?php echo base_url() . 'billing/pruebaPDF?ptitleList=' . $ptitleList?>">Download
+					href="<?php echo base_url() . 'billing/' . $metric?>">Download
 					pdf</a> <a class="popup-with-zoom-anim"
 					href="<?php echo base_url() . 'billing/' . $list?>">Download csv</a>
 			</div>

@@ -605,3 +605,84 @@ a.popup-with-zoom-anim {
 	visibility: hidden;
 	opacity: 0;
 }
+
+.admin-select {
+	padding: 1em 0em;
+	text-align: center;
+	background: #27262e;
+	border-radius: 0px 0px 5px 5px;
+}
+
+.admin-select .button-change {
+
+	background: #028bbf;
+	background: rgba(2, 139, 191, 0.4);
+	margin: 5px;
+	border: 1px solid;
+	border-color: rgba(2, 139, 191);
+	border-radius: 5px 5px 5px 5px;
+	display: inline-block;
+	color: #ffffff;
+	padding: 5px 10px 5px 10px;
+	text-decoration: none;
+	font-size: 0.8em;
+	font-weight: bold;
+	transition: background-color 0.3s ease;
+	text-align: center;
+}
+
+.admin-select .button-change:hover {
+	background: #00c9ce;
+	cursor: pointer;
+}
+
+.admin-select .button-change:active {
+	position: relative;
+	top: 1px;
+}
+
+.admin-select-selected {
+	padding: 1em 0em;
+	text-align: center;
+	background: #27262e;
+	border-radius: 0px 0px 5px 5px;
+}
+
+.admin-select a {
+	font-size: 0.8em;
+	color: #2d2e3d;
+	display: block;
+}
+
+.admin-select-selected a {
+	font-size: 0.8em;
+	color: #ff8000;
+	display: block;
+}
+
+.admin-select a {
+	font-size: 0.8em;
+	color: #455163;
+	display: inline-block;
+	padding: 1em 1.5em;
+	margin: 0.5em;
+	background: #94c4f3;
+	border-radius: 3px;
+}
+
+.admin-select-selected a {
+	font-size: 0.8em;
+	color: #ffffff;
+	display: inline-block;
+	padding: 0.5em 1.5em;
+	background: #455163;
+	border-radius: 3px;
+}
+
+a.popup-with-zoom-anim {
+	outline: none;
+}
+
+.admin-select-selected a.popup-with-zoom-anim {
+	outline: none;
+}
