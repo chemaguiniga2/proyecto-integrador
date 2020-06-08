@@ -16,8 +16,8 @@
 
 <!-- notas 
 
-Falta añadir botón cancelar suscripción
-Falta añadir botón otrogar recibo
+Falta aï¿½adir botï¿½n cancelar suscripciï¿½n
+Falta aï¿½adir botï¿½n otrogar recibo
 
 -->
 
