@@ -65,9 +65,7 @@ class Billing extends CI_Controller
         $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
 
-        $model['last_payment_user'] = $this->Billing_model->lastPayByUser($user);
-
-        
+        $model['last_payment_user'] = $this->Billing_model->lastPayByUser($user);       
         
         
         $model['ptitle'] = 'Account Billing';
@@ -75,6 +73,7 @@ class Billing extends CI_Controller
         $model['contentPlans'] = $this->load->view('dashboard/accountUserPlans', $model, true);
         $model['ptitlePayment'] = 'Payment';
         $model['last4'] = $this->getCustomerPaymentMethod();
+        $model['username'] =  $this->Billing_model->getUserName($user);
         $model['contentPaymentInfo'] = $this->load->view('dashboard/accountUserPaymentInfo', $model, true);
         $model['ptitleOptions'] = 'Options';
         $model['contentOptions'] = $this->load->view('dashboard/accountCancelMembership', $model, true);
@@ -409,10 +408,13 @@ class Billing extends CI_Controller
     {        
         $this->load->model('Billing_model');
         $model['ptitle'] = 'Administration';
-        $model['ptitleList'] = 'Administration';
+        $model['ptitleList'] = 'All Users';
+        $model['list'] = 'csvReportListUsers';
         $titles = array("id","Username","Email","Id Stripe");
+        $columns = array("id","username","email","id_customer_stripe");
         $model['tableTitles'] = $titles;
-        $model['users'] = $this->Billing_model->listUsers();
+        $model['tableColumns'] = $columns;
+        $model['elements'] = $this->Billing_model->listUsers();
         $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
         $this->load->view('template', $data);     
     }
@@ -421,10 +423,13 @@ class Billing extends CI_Controller
     {
         $this->load->model('Billing_model');
         $model['ptitle'] = 'Administration';
-        $model['ptitleList'] = 'Administration';
+        $model['ptitleList'] = 'Users in Trial';
+        $model['list'] = 'csvReportListUsersInTrial';
         $titles = array("id","Username","Email","Id Stripe");
+        $columns = array("id","username","email","id_customer_stripe");
         $model['tableTitles'] = $titles;
-        $model['users'] = $this->Billing_model->listUsersInTrial();
+        $model['tableColumns'] = $columns;
+        $model['elements'] = $this->Billing_model->listUsersInTrial();
         $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
         $this->load->view('template', $data);
     }
@@ -433,10 +438,88 @@ class Billing extends CI_Controller
     {
         $this->load->model('Billing_model');
         $model['ptitle'] = 'Administration';
-        $model['ptitleList'] = 'Administration';
+        $model['ptitleList'] = 'Active Users';
+        $model['list'] = 'csvReportListUsersInPlan';
         $titles = array("id","Username","Email","Id Stripe");
+        $columns = array("id","username","email","id_customer_stripe");
         $model['tableTitles'] = $titles;
-        $model['users'] = $this->Billing_model->listUsersInPlan();
+        $model['tableColumns'] = $columns;
+        $model['elements'] = $this->Billing_model->listUsersInPlan();
+        $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
+        $this->load->view('template', $data);
+    }
+    
+    public function listIdleUsers()
+    {
+        $this->load->model('Billing_model');
+        $model['ptitle'] = 'Administration';
+        $model['ptitleList'] = 'Idle Users';
+        $model['list'] = 'csvReportListIdleUsers';
+        $titles = array("id","Username","Email","Id Stripe");
+        $columns = array("id","username","email","id_customer_stripe");
+        $model['tableTitles'] = $titles;
+        $model['tableColumns'] = $columns;
+        $model['elements'] = $this->Billing_model->listIdleUsers();
+        $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
+        $this->load->view('template', $data);
+    }
+    
+    public function listMonthyProfitPerPlan()
+    {
+        $this->load->model('Billing_model');
+        $model['ptitle'] = 'Administration';
+        $model['ptitleList'] = 'Monthly Profit Per Plan';
+        $model['list'] = 'csvReportMonthyProfitPerPlan';
+        $titles = array('Plan name',  'Monthy profit');
+        $columns = array('name','profitPlanMonthly');
+        $model['tableTitles'] = $titles;
+        $model['tableColumns'] = $columns;
+        $model['elements'] = $this->Billing_model->monthyProfitPerPlan();
+        $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
+        $this->load->view('template', $data);
+    }
+    
+    public function listAnnualProfitPerPlan()
+    {
+        $this->load->model('Billing_model');
+        $model['ptitle'] = 'Administration';
+        $model['ptitleList'] = 'Annual Profit Per Plan';
+        $model['list'] = 'csvReportAnnualProfitPerPlan';
+        $titles = array('Plan name',  'Annual profit');
+        $columns = array('name','profitPlanAnnual');
+        $model['tableTitles'] = $titles;
+        $model['tableColumns'] = $columns;
+        $model['elements'] = $this->Billing_model->annualProfitPerPlan();
+        $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
+        $this->load->view('template', $data);
+    }
+    
+    public function listMonthlyBilling()
+    {
+        $this->load->model('Billing_model');
+        $model['ptitle'] = 'Administration';
+        $model['ptitleList'] = 'Monthly Billing';
+        $model['list'] = 'csvReportMonthlyBilling';
+        $titles = array('Monthy billing');
+        $columns = array('profitPlanMonthly');
+        $model['tableTitles'] = $titles;
+        $model['tableColumns'] = $columns;
+        $model['elements'] = $this->Billing_model->monthlyBilling();
+        $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
+        $this->load->view('template', $data);
+    }
+    
+    public function listAnnualBilling()
+    {
+        $this->load->model('Billing_model');
+        $model['ptitle'] = 'Administration';
+        $model['ptitleList'] = 'Annual Billing';
+        $model['list'] = 'csvReportAnnualBilling';
+        $titles = array('Annual billing');
+        $columns = array('profitPlanAnnual');
+        $model['tableTitles'] = $titles;
+        $model['tableColumns'] = $columns;
+        $model['elements'] = $this->Billing_model->annualBilling();
         $data['content'] = $this->load->view('dashboard/administrationListMetrics', $model, true);
         $this->load->view('template', $data);
     }

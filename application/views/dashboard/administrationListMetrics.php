@@ -43,19 +43,20 @@ Falta a�adir bot�n otrogar recibo
     						</tr>
 						</thead>
 						<tbody id="cuerpoTabla" class="table-body">
-							<?php foreach ($users as $user){?>
+							<?php foreach ($elements as $element){?>
 							<tr>
-								    <td><?php echo $user['id'] ?></td>
-								    <td><?php echo $user['username'] ?></td>
-								    <td><?php echo $user['email'] ?></td>
-								    <td><?php echo $user['id_customer_stripe'] ?></td>
+								<?php foreach ($tableColumns as $column){?>
+							    <td><?php echo $element[$column] ?></td>
+							    <?php }?>
     						</tr>
     						<?php }?>
 						</tbody>
 					</table>
-					<a class="popup-with-zoom-anim"
-					href="<?php echo base_url() . 'billing/pruebaPDF?ptitleList=' . $ptitleList?>">Download pdf</a>
 				</div>
+				<br> <a class="popup-with-zoom-anim"
+					href="<?php echo base_url() . 'billing/pruebaPDF?ptitleList=' . $ptitleList?>">Download
+					pdf</a> <a class="popup-with-zoom-anim"
+					href="<?php echo base_url() . 'billing/' . $list?>">Download csv</a>
 			</div>
 		</div>
 	</div>

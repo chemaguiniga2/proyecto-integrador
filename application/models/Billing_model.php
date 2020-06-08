@@ -7,17 +7,33 @@ class Billing_model extends CI_Model
 
 
     // Consulta que devuelve todos los planes que se encuentran en la base de datos
-    public function getPlans(){
-
+    public function getUserName($id_user){
+        
         $response = array();
+        
+        $query = $this->db->select('username')
+        ->from('users')
+        ->where('id', $id_user)
+        ->get()
+        ->row();
+        
+        $response = $query->username;
+        return $response;
 
+    }
+    
+    // Consulta que devuelve todos los planes que se encuentran en la base de datos
+    public function getPlans(){
+        
+        $response = array();
+        
         //Select record
         $this->db->select('*');
         $query = $this->db->get('plan');
         $response = $query->result_array();
-
+        
         return $response;
-
+        
     }
 
     //Regresa todos los planes, tiene que discriminar el plan al aque est� asociado el usuario

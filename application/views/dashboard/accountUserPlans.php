@@ -91,7 +91,9 @@ foreach ($payment_plans as $plan) {
 							</div>
 						</div>
 						<div class="price-selet-selected">
-							<a class="popup-with-zoom-anim">Current Plan</a>
+							<button class="button-change"
+								onclick="changeAnnualConfirmation(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Change Annual</button>
+
 						</div>
 					</div>
 				</div>
@@ -148,6 +150,11 @@ foreach ($payment_plans as $plan) {
 		document.getElementById("message-top").innerHTML = 'Your membership will change to ' + name + '.';
 		document.getElementById("message-down").innerHTML = 'Confirm the payment period and will start on next bill date.';
 		document.getElementById("btnConfirmMonthly").setAttribute("plan", id);
+	}
+
+	function changeAnnualConfirmation(id,name,monthly,annnual) {
+		
+		location.href='<?php echo base_url() . 'billing/confirmAnnualPlanChange?id_plan='?>' + id;
 	}
 
 	document.getElementById("btnClose").onclick = function() {

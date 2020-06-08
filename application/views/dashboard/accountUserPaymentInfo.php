@@ -33,15 +33,15 @@ Falta a�adir bot�n otrogar recibo
 				<div class="billing-table-division"></div>
 				<div class="payment-grid">
 					<div class="card-info">
-						<p>Alexis Rubio</p><br>
+						<p><?php echo $username ?></p><br>
 						<i class="mdi mdi-credit-card"></i><i>   <?php echo $last4 ?></i>
 						<a href="<?php echo base_url() . 'billing/paymentMethod'?>">Change</a>
 					</div>
 					<div class="payment-division"></div>
-					<div class="payment-info">
-						<p>Last Payment</p><br>
-						<i class="mdi mdi-calendar"></i><i>   May 11, 2011</i>
-					</div>
+<!-- 					<div class="payment-info"> -->
+<!-- 						<p>Last Payment</p><br> -->
+<!-- 						<i class="mdi mdi-calendar"></i><i>   May 11, 2011</i> -->
+<!-- 					</div> -->
 				</div>
 			</div>
 		</div>
