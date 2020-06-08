@@ -76,9 +76,28 @@ class Billing extends CI_Controller
         $model['contentOptions'] = $this->load->view('dashboard/cancelMembership', $model, true);
 
         $model['mssg'] = isset($_GET['mssg']) ? implode(explode('%20', $_GET['mssg'])) : '' ; 
+        //agregarlo a variable, OJO ESTA VARIABLE NO LLEGA A LA VISTA USERPAYMENTINFO.PHP
+        $model['last4'] = $this->getCustomerPaymentMethod();
 
         $data['content'] = $this->load->view('dashboard/accountbilling', $model, true);
         $this->load->view('template', $data);
+    }
+
+    public function getCustomerPaymentMethod() {
+        $this->load->model('Billing_model');
+        $user = $this->Billing_model->getCurrentUser();
+        
+        $stripeId = $this->Billing_model->getIdCustomerStripe($user);
+
+        $stripe = new \Stripe\StripeClient('sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q');
+        $methods = $stripe->paymentMethods->all([
+            'customer' => $stripeId,
+            'type' => 'card',
+        ]);
+
+
+        return $methods['data'][0]['card']['last4'];
+
     }
 
     /*
@@ -479,7 +498,6 @@ class Billing extends CI_Controller
         $user = $this->Billing_model->getCurrentUser();
         //OBTENER ID DE STRIPE (CUSTOMER)
         $stripeId = $this->Billing_model->getIdCustomerStripe($user);
-
         
         try {
 
@@ -505,11 +523,6 @@ class Billing extends CI_Controller
         }
 
         redirect(base_url() . 'billing/accountBilling?mssg=Success!');
-        
-
-
-
-        // //echo "<pre>", print_r($e->getMessage()), "</pre>";
       
     }
     
