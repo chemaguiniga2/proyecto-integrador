@@ -38,7 +38,7 @@ class Site extends CI_Controller
     {
         $this->load->model('Billing_model');
         $model['payment_plans'] = $this->Billing_model->getPlans();
-        $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
+        //$model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         
         if (($this->input->post('username') == NULL) || ($this->input->post('pass') == NULL) || ($this->input->post('email')) == NULL) {
             

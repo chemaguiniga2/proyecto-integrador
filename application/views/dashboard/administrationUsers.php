@@ -21,15 +21,9 @@
 		<li><a class="popup-with-zoom-anim"
 			href="<?php echo base_url() . 'billing/listMonthyProfitPerPlan'?>">Monthy Profit
 			Per Plan</a>
-			<a class="popup-with-zoom-anim"
-			href="<?php echo base_url() . 'billing/listAnnualProfitPerPlan'?>">Annual Profit
-			Per Plan</a></li> 
 		<li><a class="popup-with-zoom-anim"
 			href="<?php echo base_url() . 'billing/listMonthlyBilling'?>">Monthly
 			Billing</a> 
-			<a class="popup-with-zoom-anim"
-			href="<?php echo base_url() . 'billing/listAnnualBilling'?>">Annual
-			Billing</a></li>
 	</ul>
 	
 </div>

@@ -111,21 +111,21 @@ class Billing_model extends CI_Model
 
     // *********************** obsoleto, hay que cambiarlo
     // Devuelve las características de un plan
-    public function getFeatureCurrentPlan($plan){
+//     public function getFeatureCurrentPlan($plan){
 
-        $response = array();
+//         $response = array();
 
-        $query = $this->db->select('plan.id, feature.name')
-        ->from('plan')
-        ->join('plan_feature', 'plan.id = plan_feature.id_plan')
-        ->join('feature', 'plan_feature.id_feature = feature.id')
-        ->where('plan.id', $plan)
-        ->get();
+//         $query = $this->db->select('plan.id, feature.name')
+//         ->from('plan')
+//         ->join('plan_feature', 'plan.id = plan_feature.id_plan')
+//         ->join('feature', 'plan_feature.id_feature = feature.id')
+//         ->where('plan.id', $plan)
+//         ->get();
 
-        $response = $query->result_array();
+//         $response = $query->result_array();
 
-        return $response;
-    }
+//         return $response;
+//     }
 
     // Devuelve el plan que conincide con el id pasado por parámetros
     public function getSelectedPlan($plan){
@@ -144,19 +144,19 @@ class Billing_model extends CI_Model
 
     // ****************** obsolte
     // Devuelve todos los planes con sus características
-    public function getFeaturePlan(){
-        $response = array();
+//     public function getFeaturePlan(){
+//         $response = array();
 
-        $query = $this->db->select( 'plan.id, feature.name')
-        ->from('feature')
-        ->join('plan_feature', 'plan_feature.id_feature = feature.id')
-        ->join('plan', 'plan.id = plan_feature.id_plan')
-        ->get();
+//         $query = $this->db->select( 'plan.id, feature.name')
+//         ->from('feature')
+//         ->join('plan_feature', 'plan_feature.id_feature = feature.id')
+//         ->join('plan', 'plan.id = plan_feature.id_plan')
+//         ->get();
 
-        $response = $query->result_array();
+//         $response = $query->result_array();
 
-        return $response;
-    }
+//         return $response;
+//     }
 
     // Devuelve lo que debe pagar cierto usuario al mes de acuerdo al plan que tiene activado
     public function getMonthlyPrice($user){

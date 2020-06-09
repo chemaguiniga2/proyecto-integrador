@@ -84,7 +84,7 @@ foreach ($payment_plans as $plan) {
 						<div class="price-gd-bottom">
 							<div class="price-list">
 								<ul>
-									<li class="mdi mdi-check-circle">  <?php echo $current_payment_plan[0]['id_plan'] ?> Users</li>
+									<li class="mdi mdi-check-circle">  <?php echo $plan['allowed_users'] ?> Users</li>
 									<br>
 									<li class="mdi mdi-check-circle">  <?php echo $plan['allowed_clouds'] ?> Clouds</li>
 								</ul>
@@ -93,10 +93,10 @@ foreach ($payment_plans as $plan) {
 						<div class="price-selet-selected">
 							<?php if($current_payment_plan[0]['payment_frequency'] == 'm'){?>
 							<button class="button-change"
-								onclick="changeAnnualConfirmation(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Change to Annual</button>
+								onclick="changeAnnualConfirmation(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Current Plan</button>
 							<?php }else{?>
 							<button class="button-change"
-								onclick="changeMonthlylConfirmation(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Change to Montlhy</button>
+								onclick="changeMonthlylConfirmation(<?php echo $plan['id']?>, '<?php echo $plan['name'] ?>', <?php echo $plan['monthly_price']?>, <?php echo $plan['annual_price']?>)">Current Plan</button>
 							<?php }?>
 						</div>
 					</div>

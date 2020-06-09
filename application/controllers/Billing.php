@@ -62,7 +62,7 @@ class Billing extends CI_Controller
 
         $model['payment_plans'] = $this->Billing_model->getPlans();
 
-        $model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
+        //$model['feature_current_plan'] = $this->Billing_model->getFeaturePlan();
         $model['monthly_price_user'] = $this->Billing_model->getMonthlyPrice($user);
 
         $model['last_payment_user'] = $this->Billing_model->lastPayByUser($user);       
@@ -129,18 +129,21 @@ class Billing extends CI_Controller
         
         $id_user = $this->Billing_model->getCurrentUser();
         
+        $id_subscription_stripe_trial = $this->Billing_model->getIdSubscriptionStripe($id_user, 't');
+        $id_subscription_stripe_active = $this->Billing_model->getIdSubscriptionStripe($id_user, 'a');
         
         $id_plan = $this->input->get('id_plan');
-        $pay_freq = 'm';        
-
-		$model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
+        $pay_freq = 'm';
+        $id_customer_stripe = $this->Billing_model->getIdCustomerStripe($id_user);
         
-		$stripe = new \Stripe\StripeClient(
-			'sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q'
-        );
+        $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
+        
+        $stripe = new \Stripe\StripeClient(
+            'sk_test_nI9j5uAwf5DtiF6spzejxTsV00wWHeLg9Q'
+            );
         
         try {
-
+            
             $id_plan_stripe = $model['selected_plan']['0']['id_plan_stripe'];
             $active_sub = $this->Billing_model->getSubscription($id_user, 'a');
             $sub = $stripe->subscriptions->retrieve($active_sub);
@@ -149,25 +152,25 @@ class Billing extends CI_Controller
                     'cancel_at_period_end' => false,
                     'proration_behavior' => 'create_prorations',
                     'items' => [
-                    [
-                        'id' => $sub->items->data[0]->id,
-                        'plan' => $id_plan_stripe,
+                        [
+                            'id' => $sub->items->data[0]->id,
+                            'plan' => $id_plan_stripe,
+                        ],
                     ],
-                ],
-            ]);
+                ]);
             $current_subscription = $sub['id'];
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a', $current_subscription);
             $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
-        
-			$model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
-        
-			$model['type'] = 'Monthly';
-			$model['ptitle'] = 'Membership Plan Updated';
-			$data['content'] = $this->load->view('dashboard/accountChangeConfirmationPlan', $model, true);
-			$this->load->view('template', $data);
-		
-		
-		}catch (Exception $e) {
+            
+           // $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
+            
+            $model['type'] = 'Monthly';
+            $model['ptitle'] = 'Membership Plan Updated';
+            $data['content'] = $this->load->view('dashboard/accountChangeConfirmationPlan', $model, true);
+            $this->load->view('template', $data);
+            
+            
+        }catch (Exception $e) {
             redirect(base_url() . 'billing/accountBilling');
         }
 
@@ -209,7 +212,7 @@ class Billing extends CI_Controller
             $this->Billing_model->insertRecordUserPlan($id_user, $id_plan, $pay_freq, 'a', $current_subscription);
             $model['selected_plan'] = $this->Billing_model->getSelectedPlan($id_plan);
             
-            $model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
+            //$model['feature_current_plan'] = $this->Billing_model->getFeatureCurrentPlan($id_plan);
             
             $model['type'] = 'Monthly';
             $model['ptitle'] = 'Membership Plan Updated';
